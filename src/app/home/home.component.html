@@ -37,7 +37,7 @@
 
   <span class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : '1.2' }}</span>
 
-  <p *ngIf="!workHasStarted()">You are starting work in {{getRemainingTimeToStartWork()}}</p>
+  <p *ngIf="!workHasStarted()">You start working in {{getRemainingTimeToStartWork()}}</p>
 
   <p *ngIf="workHasStarted() && !workFinished()">You are at work :( {{getRemainingTimeToFinishWork()}} more to go.</p>
 
