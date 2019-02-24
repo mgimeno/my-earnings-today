@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatBottomSheet } from '@angular/material';
+import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-sheet.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'myearningstoday';
+
+
+  constructor(private bottomSheet: MatBottomSheet) {
+  }
+
+  openShareBottomSheet(): void {
+    this.bottomSheet.open(ShareBottomSheetComponent);
+  }
 }

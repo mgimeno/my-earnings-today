@@ -19,7 +19,7 @@
     color: #fff;
     font-size: 18px;
     position: relative;
-    top: 2px;
+    top: 1px;
   }
 
   .sidenav-container {
@@ -30,8 +30,12 @@
     }
 
     mat-sidenav-content {
-      padding: 40px 50px;
-      text-align: center;
+      padding: 30px 45px;
+
+      .share-icon {
+        color: #ccc;
+        margin-right: 5px;
+      }
     }
   }
 }

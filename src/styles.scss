@@ -3,10 +3,11 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300');
 
-html, body {
+* {
   font-family: 'Montserrat', sans-serif;
 }
 
+//This is for the arrows not to appear on inputs of type number
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */
@@ -16,4 +17,8 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield; /* Firefox */
+}
+
+.text-center {
+  text-align: center;
 }

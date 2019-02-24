@@ -1,15 +1,26 @@
-<div *ngIf="!showResults">
+
+<div *ngIf="!showResults" class="text-center">
 
   <h1>Let's see how much you've already earned today</h1>
 
   <mat-form-field class="rate-form-field">
-    <input type="number" min="1" matInput placeholder="What is your daily rate?" [(ngModel)]="dailyRate" autofocus>
+    <input type="number" min="1" matInput placeholder="What is your rate?" [(ngModel)]="rate" autofocus>
   </mat-form-field>
 
   <mat-form-field class="currency-form-field">
     <mat-select [(ngModel)]="currencySymbol">
       <mat-option *ngFor="let symbol of currencySymbols" [value]="symbol">
         {{symbol}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <br />
+
+  <mat-form-field class="rate-frequency-form-field">
+    <mat-select [(ngModel)]="rateFrequency">
+      <mat-option *ngFor="let frequency of rateFrequencies" [value]="frequency">
+        {{frequency.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -23,7 +34,7 @@
     <input type="time" matInput placeholder="End time" [(ngModel)]="endTime">
   </mat-form-field>
 
-  <br /><br /><br />
+  <br /><br />
 
   <button mat-raised-button color="primary" (click)="calculate()" [disabled]="!canCalculate()">Calculate</button>
 
@@ -31,20 +42,33 @@
 
 
 
-<div *ngIf="showResults">
+  <div *ngIf="showResults" class="text-center" >
 
-  <h1>You have already earned</h1>
+    <div *ngIf="!workHasStarted()">
 
-  <span class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : '1.2' }}</span>
+      <h1>Nothing yet!</h1>
+      <div class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : '1.2' }}</div>
+      <p>You start working in {{getRemainingTimeToStartWork()}}</p>
 
-  <p *ngIf="!workHasStarted()">You start working in {{getRemainingTimeToStartWork()}}</p>
+    </div>
 
-  <p *ngIf="workHasStarted() && !workFinished()">You are at work :( {{getRemainingTimeToFinishWork()}} more to go.</p>
+    <div *ngIf="workHasStarted() && !workFinished()">
 
-  <p *ngIf="workFinished()">You are done for today! Enjoy!</p>
+      <h1>You already earned</h1>
+      <div class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : '1.2' }}</div>
+      <p>Keep it up! {{getRemainingTimeToFinishWork()}} more to go</p>
 
-  <p>
-    <button mat-button (click)="bookmarkWebsite()">⭐ Bookmark this website</button>
-  </p>
+    </div>
 
-</div>
+    <div *ngIf="workFinished()">
+
+      <h1>Today you earned</h1>
+      <div class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : '1.2' }}</div>
+      <p>You are done for today! Enjoy!</p>
+
+    </div>
+
+    <a mat-stroked-button routerLink=""><mat-icon>reply</mat-icon> back</a>
+
+  </div>
+

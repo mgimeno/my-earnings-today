@@ -1,6 +1,7 @@
 
 
 <div class="main-container">
+
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
@@ -16,9 +17,21 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content role="main">
-      <router-outlet></router-outlet>
+    <mat-sidenav-content role="main" fxLayout="column" fxFlexFill>
+
+      <div fxLayout="row" fxFlex fxLayoutAlign="center">
+        <router-outlet></router-outlet>
+      </div>
+
+      <footer>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <button mat-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
+          
+        </div>
+      </footer>
+
     </mat-sidenav-content>
+
   </mat-sidenav-container>
 </div>
 

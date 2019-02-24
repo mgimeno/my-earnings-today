@@ -2,30 +2,31 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule
-} from '@angular/material';
+  MatListModule, MatBottomSheetModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { AboutComponent } from './about/about.component';
+import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-sheet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PageNotFoundComponent,
-    AboutComponent
+    AboutComponent,
+    ShareBottomSheetComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -35,8 +36,10 @@ import { AboutComponent } from './about/about.component';
     MatIconModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatBottomSheetModule
   ],
+  entryComponents: [ShareBottomSheetComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

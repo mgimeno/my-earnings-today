@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
-import { Router, NavigationStart, Event } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, filter, scan } from 'rxjs/operators';
-import {
-  Subject, asapScheduler, pipe, of, from,
-  interval, merge, fromEvent
-} from 'rxjs';
+import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { NameValue } from '../intefaces/name-value.interface';
+
 
 @Component({
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
 
@@ -18,24 +16,28 @@ export class HomeComponent implements OnInit {
 
   currentAmount: number = null;
 
-
-  dailyRate: number = null;
-
-  startTime: string = "09:00";
-  endTime: string = "17:00";
-
   startFullDate: Date = null;
   endFullDate: Date = null;
 
-  amountPerMilisecond: number = null;
-
   intervalId: number = null;
-  updateFrequencyInMs: number = 100;
+  updateAmountFrequencyInMs: number = 100;
 
-  readonly currencySymbols: Array<any> = ["£", "$", "€"];
-  currencySymbol: any = this.currencySymbols[0];
+  rate: number = null;
+  startTime: string = "09:00";
+  endTime: string = "17:00";
 
-  constructor(private router: Router) {
+  readonly currencySymbols: Array<string> = ["£", "$", "€", "‎₽", "CN¥", "C$", "₣", "₹", "kr", "￥", "zł", "R$", "₴", "₩", "฿", "₫", "₲", "₱", "₦", "₪", "₡", "৳"];
+  currencySymbol: string = this.currencySymbols[0];
+
+  readonly rateFrequencies: Array<NameValue> = [{ name: "Per day", value: "day" }, { name: "Per hour", value: "hour" }];
+  rateFrequency: NameValue = this.rateFrequencies[0];
+
+  fullPeriodRateInPennies: number = null;
+  amountEarnedPerMilisecond: number = null;
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+
+    this.loadUserSelectionFromURL();
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationStart))
@@ -52,29 +54,40 @@ export class HomeComponent implements OnInit {
   }
 
   canCalculate(): boolean {
-    return (this.dailyRate && this.dailyRate > 0
-      && this.currencySymbol && this.startTime && this.endTime
+    return (this.rate && this.rate > 0
+      && this.currencySymbol
+      && this.rateFrequency
+      && this.startTime && this.endTime
       && (this.endTime > this.startTime));
   }
 
   calculate(): void {
 
-    this.setUserSelectionOnURL();
-
-
-    this.showResults = true;
-
-    let dailyRateInPennies: number = (this.dailyRate * 100);
+    this.saveUserSelectionOnURL();
 
     let now: Date = new Date();
     this.startFullDate = this.buildDate(now, this.startTime);
     this.endFullDate = this.buildDate(now, this.endTime);
 
-    this.amountPerMilisecond = (dailyRateInPennies / this.milisecondsBetweenDates(this.startFullDate, this.endFullDate));
+    let rateInPennies: number = (this.rate * 100);
+
+    switch (this.rateFrequency.value) {
+      case "day":
+        this.fullPeriodRateInPennies = rateInPennies;
+        break
+      case "hour":
+        let hoursOfWork: number = this.hoursBetweenDates(this.startFullDate, this.endFullDate);
+        this.fullPeriodRateInPennies = (rateInPennies * hoursOfWork);
+        break;
+    }
+
+    this.amountEarnedPerMilisecond = (this.fullPeriodRateInPennies / this.milisecondsBetweenDates(this.startFullDate, this.endFullDate));
+
+    this.showResults = true;
 
     this.intervalId = window.setInterval(() => {
       this.updateCurrentAmount();
-    }, this.updateFrequencyInMs);
+    }, this.updateAmountFrequencyInMs);
 
   }
 
@@ -103,20 +116,23 @@ export class HomeComponent implements OnInit {
   private updateCurrentAmount(): void {
 
     let now = new Date();
+    let fullPeriodRate = (this.fullPeriodRateInPennies / 100);
 
     if (!this.workHasStarted()) {
       this.currentAmount = 0;
       return;
     }
     else if (this.workFinished()) {
-      this.currentAmount = this.dailyRate;
+      this.currentAmount = fullPeriodRate;
       clearInterval(this.intervalId);
       return;
     }
 
     let milisecondsFromStart = this.milisecondsBetweenDates(this.startFullDate, now);
 
-    this.currentAmount = Math.min(this.dailyRate, ((milisecondsFromStart * this.amountPerMilisecond) / 100));
+    let currentAmount = ((milisecondsFromStart * this.amountEarnedPerMilisecond) / 100);
+
+    this.currentAmount = Math.min(fullPeriodRate, currentAmount);
 
   }
 
@@ -124,6 +140,10 @@ export class HomeComponent implements OnInit {
     let diff = date1.getTime() - date2.getTime();
 
     return Math.abs(diff);
+  }
+
+  private hoursBetweenDates(date1: Date, date2: Date): number {
+    return (this.milisecondsBetweenDates(date1, date2) / 1000 / 60 / 60);
   }
 
   private buildDate(date: Date, time: string): Date {
@@ -135,13 +155,80 @@ export class HomeComponent implements OnInit {
     return result;
   }
 
-  private setUserSelectionOnURL(): void {
+  private isValidTime(text: string): boolean {
+    let result = false;
+
+    if (text.length === 5) {
+      let hours = +text.substring(0, 2);
+      let separator = text.substring(2, 3);
+      let minutes = +text.substring(3, 5);
+
+      if (separator === ":" && !isNaN(hours) && !isNaN(minutes)) {
+        if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
+          result = true;
+        }
+      }
+
+    }
+
+    return result;
+  }
+
+  private loadUserSelectionFromURL(): void {
+
+    let queryParams = this.activatedRoute.snapshot.queryParams;
+    
+    if (queryParams.rate
+      || queryParams.frequency
+      || queryParams.currency
+      || queryParams.start
+      || queryParams.end) {
+
+      this.rate = null;
+      this.startTime = null;
+      this.endTime = null;
+
+      if (queryParams.rate && !isNaN(queryParams.rate) && queryParams.rate > 0) {
+        this.rate = queryParams.rate;
+      }
+      if (queryParams.frequency) {
+        let indexOnArray = this.rateFrequencies.map(rf => rf.value).indexOf(queryParams.frequency);
+        if (indexOnArray != -1) {
+          this.rateFrequency = this.rateFrequencies[indexOnArray];
+        }
+      }
+      if (queryParams.currency) {
+        let indexOnArray = this.currencySymbols.map(cs => cs).indexOf(queryParams.currency);
+        if (indexOnArray != -1) {
+          this.currencySymbol = queryParams.currency;
+        }
+      }
+      if (queryParams.start) {
+        if (this.isValidTime(queryParams.start)) {
+          this.startTime = queryParams.start;
+        }
+      }
+      if (queryParams.end) {
+        if (this.isValidTime(queryParams.end)) {
+          this.endTime = queryParams.end;
+        }
+      }
+
+      if (this.canCalculate()) {
+        this.calculate();
+      }
+
+    }
+  }
+
+  private saveUserSelectionOnURL(): void {
 
     let params = {
-      dailyRate: this.dailyRate,
-      currencySymbol: this.currencySymbol,
-      startTime: this.startTime,
-      endTime: this.endTime
+      rate: this.rate,
+      frequency: this.rateFrequency.value,
+      currency: this.currencySymbol,
+      start: this.startTime,
+      end: this.endTime
     };
 
     this.router.navigate(['.'], { queryParams: params });
