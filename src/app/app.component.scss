@@ -1,4 +1,9 @@
+@import 'variables';
 
+
+mat-toolbar {
+  height: $headerHeight;
+}
 
 .main-container {
   display: flex;
@@ -30,12 +35,9 @@
     }
 
     mat-sidenav-content {
-      padding: 30px 45px;
+      padding: $matSidenavContentVerticalPadding 45px;
 
-      .share-icon {
-        color: #ccc;
-        margin-right: 5px;
-      }
+      
     }
   }
 }

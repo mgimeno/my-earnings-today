@@ -1,16 +1,18 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { NameValue } from '../intefaces/name-value.interface';
-
+import { environment } from '../../environments/environment';
+import { MatBottomSheet } from '@angular/material';
+import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
 
 @Component({
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   showResults: boolean = false;
 
@@ -19,7 +21,7 @@ export class HomeComponent implements OnInit {
   startFullDate: Date = null;
   endFullDate: Date = null;
 
-  intervalId: number = null;
+  updateCurrentAmountIntervalId: number = null;
   updateAmountFrequencyInMs: number = 100;
 
   rate: number = null;
@@ -35,23 +37,35 @@ export class HomeComponent implements OnInit {
   fullPeriodRateInPennies: number = null;
   amountEarnedPerMilisecond: number = null;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private bottomSheet: MatBottomSheet) {
 
-    this.loadUserSelectionFromURL();
+    if (this.hasUserSelectionOnURL()) {
+      this.loadUserSelectionFromURL();
+    }
+    else if (this.hasUserSelectionOnLocalStorage()) {
+      this.loadUserSelectionFromLocalStorage();
+    }
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationStart))
       .subscribe((event: NavigationStart) => {
         if (event.url === "/" && event.navigationTrigger === "imperative") {
+          this.clearUpdateCurrentAmountInterval();
           this.showResults = false;
         }
       });
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
   }
+
+  ngOnDestroy(): void {
+    this.clearUpdateCurrentAmountInterval();
+  }
+
+
 
   canCalculate(): boolean {
     return (this.rate && this.rate > 0
@@ -63,7 +77,8 @@ export class HomeComponent implements OnInit {
 
   calculate(): void {
 
-    this.saveUserSelectionOnURL();
+    this.saveUserSelectionOnLocalStorage();
+    this.setUserSelectionOnURL();
 
     let now: Date = new Date();
     this.startFullDate = this.buildDate(now, this.startTime);
@@ -85,10 +100,14 @@ export class HomeComponent implements OnInit {
 
     this.showResults = true;
 
-    this.intervalId = window.setInterval(() => {
+    this.updateCurrentAmountIntervalId = window.setInterval(() => {
       this.updateCurrentAmount();
     }, this.updateAmountFrequencyInMs);
 
+  }
+
+  openShareBottomSheet(): void {
+    this.bottomSheet.open(ShareBottomSheetComponent);
   }
 
   workHasStarted(): boolean {
@@ -124,7 +143,7 @@ export class HomeComponent implements OnInit {
     }
     else if (this.workFinished()) {
       this.currentAmount = fullPeriodRate;
-      clearInterval(this.intervalId);
+      this.clearUpdateCurrentAmountInterval();
       return;
     }
 
@@ -155,6 +174,10 @@ export class HomeComponent implements OnInit {
     return result;
   }
 
+  getCurrencyPipeDigitsInfo(amount: number): string {
+    return Number.isInteger(amount) ? "1.0" : "1.2";
+  }
+
   private isValidTime(text: string): boolean {
     let result = false;
 
@@ -174,15 +197,57 @@ export class HomeComponent implements OnInit {
     return result;
   }
 
+  private hasUserSelectionOnLocalStorage(): boolean {
+    //TODO move localStorage stuff to a service or helper.
+    let prefix = environment.localStoragePrefix;
+
+    return (localStorage[`${prefix}rate`]
+      && localStorage[`${prefix}frequency`]
+      && localStorage[`${prefix}currency`]
+      && localStorage[`${prefix}start`]
+      && localStorage[`${prefix}end`]);
+  }
+
+  private loadUserSelectionFromLocalStorage(): void {
+    let prefix = environment.localStoragePrefix;
+
+    this.rate = localStorage[`${prefix}rate`];
+    this.currencySymbol = localStorage[`${prefix}currency`];
+    this.startTime = localStorage[`${prefix}start`];
+    this.endTime = localStorage[`${prefix}end`];
+
+    let indexOnArray = this.rateFrequencies.map(rf => rf.value).indexOf(localStorage[`${prefix}frequency`]);
+    if (indexOnArray != -1) {
+      this.rateFrequency = this.rateFrequencies[indexOnArray];
+    }
+
+  }
+
+  private saveUserSelectionOnLocalStorage(): void {
+    let prefix = environment.localStoragePrefix;
+
+    localStorage[`${prefix}rate`] = this.rate;
+    localStorage[`${prefix}frequency`] = this.rateFrequency.value;
+    localStorage[`${prefix}currency`] = this.currencySymbol;
+    localStorage[`${prefix}start`] = this.startTime;
+    localStorage[`${prefix}end`] = this.endTime;
+  }
+
+  private hasUserSelectionOnURL(): boolean {
+    let queryParams = this.activatedRoute.snapshot.queryParams;
+
+    return (queryParams.rate
+      && queryParams.frequency
+      && queryParams.currency
+      && queryParams.start
+      && queryParams.end)
+  }
+
   private loadUserSelectionFromURL(): void {
 
     let queryParams = this.activatedRoute.snapshot.queryParams;
-    
-    if (queryParams.rate
-      || queryParams.frequency
-      || queryParams.currency
-      || queryParams.start
-      || queryParams.end) {
+
+    if (this.hasUserSelectionOnURL()) {
 
       this.rate = null;
       this.startTime = null;
@@ -221,7 +286,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private saveUserSelectionOnURL(): void {
+  private setUserSelectionOnURL(): void {
 
     let params = {
       rate: this.rate,
@@ -234,4 +299,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['.'], { queryParams: params });
   }
 
+  private clearUpdateCurrentAmountInterval(): void {
+    if (this.updateCurrentAmountIntervalId) {
+      clearInterval(this.updateCurrentAmountIntervalId);
+      this.updateCurrentAmountIntervalId = null;
+    }
+  }
 }

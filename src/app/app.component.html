@@ -6,30 +6,21 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <a class="title" routerLink="">My Earnings Today</a>
+    <a class="title" [routerLink]="['/']">My Earnings Today</a>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #snav fixedTopGap="64" role="navigation">
       <mat-nav-list>
-        <a mat-list-item routerLink="" (click)="snav.toggle()">Home</a>
-        <a mat-list-item routerLink="/about" (click)="snav.toggle()">About</a>
+        <a mat-list-item [routerLink]="['/']" (click)="snav.toggle()">Home</a>
+        <a mat-list-item [routerLink]="['/about']" (click)="snav.toggle()">About</a>
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content role="main" fxLayout="column" fxFlexFill>
+    <mat-sidenav-content>
 
-      <div fxLayout="row" fxFlex fxLayoutAlign="center">
         <router-outlet></router-outlet>
-      </div>
-
-      <footer>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <button mat-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
-          
-        </div>
-      </footer>
-
+      
     </mat-sidenav-content>
 
   </mat-sidenav-container>

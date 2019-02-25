@@ -2,11 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule} from '@angular/material';
+  MatListModule, MatBottomSheetModule
+} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +26,6 @@ import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-she
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    FlexLayoutModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -43,4 +42,5 @@ import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-she
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

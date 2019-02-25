@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material';
-import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-sheet.component';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +8,7 @@ import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-she
 export class AppComponent {
 
 
-  constructor(private bottomSheet: MatBottomSheet) {
+  constructor() {
   }
-
-  openShareBottomSheet(): void {
-    this.bottomSheet.open(ShareBottomSheetComponent);
-  }
+  
 }

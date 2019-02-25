@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  appTitle: "My Earnings Today",
+  appDescription: "Calculate how much you have already earned today",
+  localStoragePrefix: "my-earnings-today_dev_"
 };
 
 /*

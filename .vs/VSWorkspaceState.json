@@ -1,9 +1,17 @@
 {
   "ExpandedNodes": [
     "",
+    "\\node_modules",
+    "\\node_modules\\@angular",
+    "\\node_modules\\@angular\\common",
+    "\\node_modules\\@angular\\common\\src",
+    "\\node_modules\\@angular\\common\\src\\pipes",
+    "\\node_modules\\@angular\\router",
+    "\\node_modules\\@angular\\router\\src",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\home"
   ],
-  "SelectedNode": "\\src\\app\\home",
+  "SelectedNode": "\\node_modules\\yeast",
   "PreviewInSolutionExplorer": false
 }
