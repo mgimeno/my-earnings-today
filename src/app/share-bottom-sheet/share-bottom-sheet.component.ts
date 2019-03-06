@@ -29,7 +29,7 @@ export class ShareBottomSheetComponent implements OnInit {
       spacing: 7,
       url: window.location.href,
       title: "My Earnings Today", //todo get this from environment?
-      //image: "", //TODO favicon?
+      image: "https://www.myearningstoday.com/assets/logo.png",
       description: "Calculate how much you have already earned today", //todo get this from environment?
     });
   }

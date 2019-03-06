@@ -6,9 +6,9 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
   <url>
-    <loc>http://www.myearningstoday.com/</loc>
+    <loc>https://www.myearningstoday.com/</loc>
   </url>
   <url>
-    <loc>http://www.myearningstoday.com/about</loc>
+    <loc>https://www.myearningstoday.com/about</loc>
   </url>
 </urlset>
