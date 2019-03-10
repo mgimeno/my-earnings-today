@@ -1,0 +1,30 @@
+<mat-form-field class="rate-form-field">
+  <input type="number" min="1" matInput placeholder="What is your rate?" [(ngModel)]="userSelection.rate" autofocus>
+</mat-form-field>
+
+<mat-form-field class="currency-form-field">
+  <mat-select [(ngModel)]="userSelection.currencySymbol">
+    <mat-option *ngFor="let symbol of getAllCurrencySymbols()" [value]="symbol">
+      {{symbol}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<br />
+
+<mat-form-field class="rate-frequency-form-field">
+  <mat-select [(ngModel)]="userSelection.frequency">
+    <mat-option *ngFor="let frequency of getAllFrequencies()" [value]="frequency">
+      {{frequency.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<p class="working-hours-text">and your working hours are</p>
+
+<mat-form-field class="time-form-field">
+  <input type="time" matInput placeholder="Start time" [(ngModel)]="userSelection.startTime">
+</mat-form-field>
+<mat-form-field class="time-form-field">
+  <input type="time" matInput placeholder="End time" [(ngModel)]="userSelection.endTime">
+</mat-form-field>

@@ -1,0 +1,28 @@
+.rate-form-field {
+  width: 210px;
+}
+
+.currency-form-field {
+  width: 40px;
+}
+
+.rate-frequency-form-field {
+  width: 250px;
+}
+
+
+.time-form-field {
+  width: 125px;
+}
+
+.working-hours-text {
+  text-align: left;
+  font-size: 12px;
+  margin: 15px auto 30px auto;
+  width: 250px;
+}
+
+//Form fields bottom border;
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: rgba(0,0,0,0.12);
+}

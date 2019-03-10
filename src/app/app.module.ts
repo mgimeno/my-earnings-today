@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-sheet.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserSelectionComponent } from './user-selection/user-selection.component';
+import { CompareToolComponent } from './compare-tool/compare-tool.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HomeComponent,
     AboutComponent,
     ShareBottomSheetComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserSelectionComponent,
+    CompareToolComponent
   ],
   imports: [
     BrowserModule,

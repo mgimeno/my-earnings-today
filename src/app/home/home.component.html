@@ -2,96 +2,67 @@
 
 <div class="home-container">
 
-    <div *ngIf="!showResults" class="text-center">
+  <div *ngIf="userSelection && !showResults" class="text-center">
 
-      <h1>Let's see how much you've already earned today</h1>
+    <h1>Let's see how much you've already earned today</h1>
 
-      <mat-form-field class="rate-form-field">
-        <input type="number" min="1" matInput placeholder="What is your rate?" [(ngModel)]="rate" autofocus>
-      </mat-form-field>
+    <app-user-selection [userSelection]=userSelection></app-user-selection>
 
-      <mat-form-field class="currency-form-field">
-        <mat-select [(ngModel)]="currencySymbol">
-          <mat-option *ngFor="let symbol of currencySymbols" [value]="symbol">
-            {{symbol}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <br /><br />
 
-      <br />
+    <button type="submit" mat-raised-button color="primary" (click)="calculate()" [disabled]="!userSelection.canCalculate()">Calculate</button>
 
-      <mat-form-field class="rate-frequency-form-field">
-        <mat-select [(ngModel)]="rateFrequency">
-          <mat-option *ngFor="let frequency of rateFrequencies" [value]="frequency">
-            {{frequency.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  </div>
 
-      <p class="working-hours-text">and your working hours are</p>
 
-      <mat-form-field class="time-form-field">
-        <input type="time" matInput placeholder="Start time" [(ngModel)]="startTime">
-      </mat-form-field>
-      <mat-form-field class="time-form-field">
-        <input type="time" matInput placeholder="End time" [(ngModel)]="endTime">
-      </mat-form-field>
 
-      <br /><br />
+  <div *ngIf="showResults" class="text-center">
 
-      <button type="submit" mat-raised-button color="primary" (click)="calculate()" [disabled]="!canCalculate()">Calculate</button>
+    <div *ngIf="!userSelection.workHasStarted()">
+
+      <h1>Nothing yet!</h1>
+      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : userSelection.getCurrencyPipeDigitsInfo() }}</div>
+      <p>You start working in around {{userSelection.getRemainingTimeToStartWork()}}</p>
 
     </div>
 
+    <div *ngIf="userSelection.workHasStarted() && !userSelection.workHasFinished()">
 
-
-    <div *ngIf="showResults" class="text-center">
-
-      <div *ngIf="!workHasStarted()">
-
-        <h1>Nothing yet!</h1>
-        <div class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(currentAmount) }}</div>
-        <p>You start working in around {{getRemainingTimeToStartWork()}}</p>
-
-      </div>
-
-      <div *ngIf="workHasStarted() && !workFinished()">
-
-        <h1>You already earned</h1>
-        <div class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(currentAmount) }}</div>
-        <p>
-          This number is going up!
-          <br /><br />
-          around {{getRemainingTimeToFinishWork()}} more to go
-        </p>
-
-      </div>
-
-      <div *ngIf="workFinished()">
-
-        <h1>Today you earned</h1>
-        <div class="amount-earned">{{currentAmount | currency : currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(currentAmount) }}</div>
-        <p>You are done for today!</p>
-
-      </div>
-
-      
-
-    </div>
-
-
-    <div class="home-footer">
-
-      <div *ngIf="!showResults">
-        <button mat-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
-      </div>
-
-      <div *ngIf="showResults">
-        <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
+      <h1>You already earned</h1>
+      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : userSelection.getCurrencyPipeDigitsInfo() }}</div>
+      <p>
+        This number is going up!
         <br /><br />
-        <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
-      </div>
-      
-    </div>
+        around {{userSelection.getRemainingTimeToFinishWork()}} more to go
+      </p>
 
     </div>
+
+    <div *ngIf="userSelection.workHasFinished()">
+
+      <h1>Today you earned</h1>
+      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : userSelection.getCurrencyPipeDigitsInfo() }}</div>
+      <p>You are done for today!</p>
+
+    </div>
+
+
+
+  </div>
+
+
+  <div class="home-footer">
+
+    <div *ngIf="!showResults">
+      <button mat-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
+    </div>
+
+    <div *ngIf="showResults">
+      <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
+      <br /><br />
+      <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
+    </div>
+
+  </div>
+
+</div>
