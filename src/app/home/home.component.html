@@ -2,18 +2,14 @@
 
 <div class="home-container">
 
+
   <div *ngIf="userSelection && !showResults" class="text-center">
 
     <h1>Let's see how much you've already earned today</h1>
 
-    <app-user-selection [userSelection]=userSelection></app-user-selection>
-
-    <br /><br />
-
-    <button type="submit" mat-raised-button color="primary" (click)="calculate()" [disabled]="!userSelection.canCalculate()">Calculate</button>
+    <app-user-selection [userSelection]=userSelection [isComparingTool]=false></app-user-selection>
 
   </div>
-
 
 
   <div *ngIf="showResults" class="text-center">
@@ -21,7 +17,7 @@
     <div *ngIf="!userSelection.workHasStarted()">
 
       <h1>Nothing yet!</h1>
-      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : userSelection.getCurrencyPipeDigitsInfo() }}</div>
+      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
       <p>You start working in around {{userSelection.getRemainingTimeToStartWork()}}</p>
 
     </div>
@@ -29,7 +25,7 @@
     <div *ngIf="userSelection.workHasStarted() && !userSelection.workHasFinished()">
 
       <h1>You already earned</h1>
-      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : userSelection.getCurrencyPipeDigitsInfo() }}</div>
+      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
       <p>
         This number is going up!
         <br /><br />
@@ -41,26 +37,26 @@
     <div *ngIf="userSelection.workHasFinished()">
 
       <h1>Today you earned</h1>
-      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : userSelection.getCurrencyPipeDigitsInfo() }}</div>
+      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
       <p>You are done for today!</p>
 
     </div>
 
-
-
   </div>
 
 
-  <div class="home-footer">
+  <div class="buttons">
 
     <div *ngIf="!showResults">
-      <button mat-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
+      <button type="submit" class="text-center" mat-raised-button color="primary" (click)="calculate()" [disabled]="!userSelection.canCalculate()">Calculate</button>
+      <br /><br />
+      <button mat-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
     </div>
 
     <div *ngIf="showResults">
       <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
       <br /><br />
-      <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon class="share-icon">share</mat-icon>Share this</button>
+      <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
     </div>
 
   </div>

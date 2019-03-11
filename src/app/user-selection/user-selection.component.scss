@@ -1,3 +1,11 @@
+$containerWidth: 250px;
+$smallFontSize: 12px;
+
+.user-selection {
+  width: $containerWidth;
+  margin: 20px auto 0 auto;
+}
+
 .rate-form-field {
   width: 210px;
 }
@@ -6,20 +14,33 @@
   width: 40px;
 }
 
-.rate-frequency-form-field {
-  width: 250px;
+.full-width-form-field {
+  width: $containerWidth;
 }
 
 
 .time-form-field {
-  width: 125px;
+  width: $containerWidth / 2;
 }
 
-.working-hours-text {
+.section-description {
   text-align: left;
-  font-size: 12px;
-  margin: 15px auto 30px auto;
-  width: 250px;
+  font-size: $smallFontSize;
+}
+
+.week-days {
+  text-align: left;
+  font-size: $smallFontSize;
+  display: flex;
+  justify-content: space-between;
+
+  .empty-block {
+    width: 34px;
+  }
+
+  .mat-checkbox-inner-container {
+    margin-right: 5px;
+  }
 }
 
 //Form fields bottom border;

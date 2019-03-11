@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { UserSelection } from '../models/user-selection.model';
 import { AppConstants } from '../constants/app-constants';
 import { ActivatedRoute, Router } from '@angular/router';
+import { WeekDaysEnum } from '../enums/week-days.enum';
 
 
 @Injectable({
@@ -23,7 +24,8 @@ export class StorageService  {
       && localStorage[`${prefix}frequency`]
       && localStorage[`${prefix}currency`]
       && localStorage[`${prefix}start`]
-      && localStorage[`${prefix}end`]);
+      && localStorage[`${prefix}end`]
+      && localStorage[`${prefix}workdays`]);
   }
 
   getUserSelectionFromLocalStorage(): UserSelection {
@@ -41,6 +43,9 @@ export class StorageService  {
       userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
     }
 
+    let workDays = localStorage[`${prefix}workdays`];
+    userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDays);
+
     return userSelection;
 
   }
@@ -53,6 +58,7 @@ export class StorageService  {
     localStorage[`${prefix}currency`] = userSelection.currencySymbol;
     localStorage[`${prefix}start`] = userSelection.startTime;
     localStorage[`${prefix}end`] = userSelection.endTime;
+    localStorage[`${prefix}workdays`] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
   }
 
   hasUserSelectionOnURL(): boolean {
@@ -62,7 +68,8 @@ export class StorageService  {
       && queryParams.frequency
       && queryParams.currency
       && queryParams.start
-      && queryParams.end)
+      && queryParams.end
+      && queryParams.workdays);
   }
 
   getUserSelectionFromURL(): UserSelection {
@@ -72,10 +79,6 @@ export class StorageService  {
     let userSelection: UserSelection = new UserSelection();
 
     if (this.hasUserSelectionOnURL()) {
-
-      userSelection.rate = null;
-      userSelection.startTime = null;
-      userSelection.endTime = null;
 
       if (queryParams.rate && !isNaN(queryParams.rate) && queryParams.rate > 0) {
         userSelection.rate = queryParams.rate;
@@ -102,6 +105,9 @@ export class StorageService  {
           userSelection.endTime = queryParams.end;
         }
       }
+      if (queryParams.workdays) {
+        userSelection.weekWorkingDays = this.getWorkingDaysFromString(queryParams.workdays);
+      }
 
       if (userSelection.canCalculate()) {
         userSelection.calculate();
@@ -120,7 +126,8 @@ export class StorageService  {
       frequency: userSelection.frequency.value,
       currency: userSelection.currencySymbol,
       start: userSelection.startTime,
-      end: userSelection.endTime
+      end: userSelection.endTime,
+      workdays: this.getWorkingDaysFromArray(userSelection.weekWorkingDays)
     };
 
     this.router.navigate(['.'], { queryParams: params });
@@ -143,6 +150,38 @@ export class StorageService  {
     }
 
     return result;
+  }
+
+  private getWorkingDaysFromString(workDaysText: string): Array<boolean> {
+
+    let result: boolean[] = new Array<boolean>();
+    result[WeekDaysEnum.Sunday] = false;
+    result[WeekDaysEnum.Monday] = false;
+    result[WeekDaysEnum.Tuesday] = false;
+    result[WeekDaysEnum.Wednesday] = false;
+    result[WeekDaysEnum.Thursday] = false;
+    result[WeekDaysEnum.Friday] = false;
+    result[WeekDaysEnum.Saturday] = false;
+
+    workDaysText.split(',').forEach((wd) => {
+      let wdNumber: number = Number(wd);
+      if (!isNaN(wdNumber)) {
+        result[wdNumber] = true;
+      }
+    });
+
+    return result;
+  }
+
+  private getWorkingDaysFromArray(workDaysArray: Array<boolean>): string {
+
+    let workDaysIndexes: number[] = new Array<number>();
+    workDaysArray.forEach((wd, index) => {
+      if (wd === true) {
+        workDaysIndexes.push(index);
+      }
+    });
+    return workDaysIndexes.join(',');
   }
 
 }

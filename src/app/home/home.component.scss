@@ -1,37 +1,18 @@
 @import 'variables';
 
 .home-container {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - #{$headerHeight + 2*($matSidenavContentVerticalPadding)}); // We substract the header and the top and bottom padding.
-  .home-footer {
-    margin: auto auto 0 auto;
-
-    button {
-      width: 130px;
-      text-align: left;
-    }
-  }
 
   h1 {
-    margin-bottom: 20px;
-    font-size: 19px;
+    margin-bottom: $h1MarginBottom;
+    font-size: $h1FontSize;
   }
 
   .amount-earned {
-    font-size: 40px;
+    font-size: 45px;
     font-weight: bold;
     margin: 45px 0;
   }
- 
 
-  .mat-select-arrow {
-    color: rgba(0,0,0,0.22);
-  }
-
-  .mat-icon {
-    color: #ccc;
-    margin-right: 5px;
-  }
+  
 }
 

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule
+  MatListModule, MatBottomSheetModule, MatTabsModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,7 +42,8 @@ import { CompareToolComponent } from './compare-tool/compare-tool.component';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatTabsModule
   ],
   entryComponents: [ShareBottomSheetComponent],
   providers: [],

@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
 import { UserSelection } from '../shared/models/user-selection.model';
 import { StorageService } from '../shared/services/storage-service';
+import { CommonHelper } from '../shared/helpers/common-helper';
 
 @Component({
   templateUrl: './home.component.html',
@@ -17,7 +17,8 @@ export class HomeComponent implements OnDestroy  {
 
   userSelection: UserSelection = null;
 
-  constructor(private router: Router,
+  constructor(
+    private activeRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService) {
 
@@ -29,17 +30,15 @@ export class HomeComponent implements OnDestroy  {
     }
     else {
       this.userSelection = new UserSelection();
+      this.userSelection.setDefaultValues();
     }
 
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationStart))
-      .subscribe((event: NavigationStart) => {
-        if (event.url === "/" && event.navigationTrigger === "imperative") {
-          this.userSelection.clearUpdateCurrentAmountInterval();
-          this.showResults = false;
-        }
-      });
-
+    this.activeRoute.queryParams.subscribe(queryParams => {
+      if (CommonHelper.isEmptyObject(queryParams)) {
+        this.userSelection.clearUpdateCurrentAmountInterval();
+        this.showResults = false;
+      }
+    });
   }
 
   calculate(): void {
@@ -51,6 +50,10 @@ export class HomeComponent implements OnDestroy  {
 
     this.showResults = true;
 
+  }
+
+  getCurrencyPipeDigitsInfo(amount: number): string {
+    return CommonHelper.getCurrencyPipeDigitsInfo(amount);
   }
 
   openShareBottomSheet(): void {

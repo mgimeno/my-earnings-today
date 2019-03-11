@@ -2,8 +2,17 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app\\share-bottom-sheet"
+    "\\src\\app",
+    "\\src\\app\\compare-tool",
+    "\\src\\app\\home",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\helpers",
+    "\\src\\app\\shared\\models",
+    "\\src\\app\\shared\\services",
+    "\\src\\app\\user-selection",
+    "\\src\\environments",
+    "\\src\\sass"
   ],
-  "SelectedNode": "\\src\\browserconfig.xml",
+  "SelectedNode": "\\src\\environments\\environment.prod.ts",
   "PreviewInSolutionExplorer": false
 }

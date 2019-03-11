@@ -2,6 +2,7 @@
 
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300');
+@import 'variables';
 
 * {
   font-family: 'Montserrat', sans-serif;
@@ -21,4 +22,35 @@ input[type=number] {
 
 .text-center {
   text-align: center;
+}
+
+.mat-select-arrow {
+  color: rgba(0,0,0,0.22);
+}
+
+.mat-tab-label{
+  height: 35px !important;
+}
+
+.buttons {
+  text-align: center;
+  margin-top: 30px;
+
+  button {
+    width: $buttonWidth;
+    text-align: left;
+
+    &.text-center {
+      text-align: center;
+    }
+
+    .mat-icon {
+      margin-right: 5px;
+      color: #ccc;
+
+      &.add-icon {
+        color: #888;
+      }
+    }
+  }
 }

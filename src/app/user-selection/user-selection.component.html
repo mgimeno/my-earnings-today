@@ -1,30 +1,55 @@
-<mat-form-field class="rate-form-field">
-  <input type="number" min="1" matInput placeholder="What is your rate?" [(ngModel)]="userSelection.rate" autofocus>
-</mat-form-field>
+<div class="user-selection">
 
-<mat-form-field class="currency-form-field">
-  <mat-select [(ngModel)]="userSelection.currencySymbol">
-    <mat-option *ngFor="let symbol of getAllCurrencySymbols()" [value]="symbol">
-      {{symbol}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field *ngIf="showName()" class="full-width-form-field">
+    <input type="text" maxlength="20" matInput placeholder="{{getNamePlaceholder()}}" [(ngModel)]="userSelection.name">
+  </mat-form-field>
 
-<br />
+  <mat-form-field class="rate-form-field">
+    <input type="number" min="1" matInput placeholder="{{getRatePlaceholder()}}" [(ngModel)]="userSelection.rate" autofocus>
+  </mat-form-field>
 
-<mat-form-field class="rate-frequency-form-field">
-  <mat-select [(ngModel)]="userSelection.frequency">
-    <mat-option *ngFor="let frequency of getAllFrequencies()" [value]="frequency">
-      {{frequency.name}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field class="currency-form-field">
+    <mat-select [(ngModel)]="userSelection.currencySymbol">
+      <mat-option *ngFor="let symbol of getAllCurrencySymbols()" [value]="symbol">
+        {{symbol}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<p class="working-hours-text">and your working hours are</p>
+  <br />
 
-<mat-form-field class="time-form-field">
-  <input type="time" matInput placeholder="Start time" [(ngModel)]="userSelection.startTime">
-</mat-form-field>
-<mat-form-field class="time-form-field">
-  <input type="time" matInput placeholder="End time" [(ngModel)]="userSelection.endTime">
-</mat-form-field>
+  <mat-form-field class="full-width-form-field">
+    <mat-select [(ngModel)]="userSelection.frequency">
+      <mat-option *ngFor="let frequency of getAllFrequencies()" [value]="frequency">
+        {{frequency.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <p class="section-description">{{getWorkingWeekText()}}</p>
+
+  <section class="week-days">
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[1]">Mon</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[2]">Tue</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[3]">Wed</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[4]">Thu</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[5]">Fri</mat-checkbox>
+  </section>
+  <section class="week-days">
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[6]">Sat</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[7]">Sun</mat-checkbox>
+    <span class="empty-block"></span>
+    <span class="empty-block"></span>
+    <span class="empty-block"></span>
+  </section>
+
+  <br />
+
+  <mat-form-field class="time-form-field">
+    <input type="time" matInput placeholder="From" [(ngModel)]="userSelection.startTime">
+  </mat-form-field>
+  <mat-form-field class="time-form-field">
+    <input type="time" matInput placeholder="To" [(ngModel)]="userSelection.endTime">
+  </mat-form-field>
+
+</div>

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   appTitle: "My Earnings Today",
   appDescription: "Calculate how much you have already earned today",
-  localStoragePrefix: "my-earnings-today_dev_"
+  localStoragePrefix: "my-earnings-today_dev_",
+  compareToolMaxPersons: 5
 };
 
 /*

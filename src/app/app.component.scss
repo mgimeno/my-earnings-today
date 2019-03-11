@@ -31,13 +31,11 @@ mat-toolbar {
     flex: 1;
 
     mat-sidenav {
-      width: 180px;
+      width: 200px;
     }
 
     mat-sidenav-content {
-      padding: $matSidenavContentVerticalPadding 45px;
-
-      
+      padding: 20px 35px;
     }
   }
 }
