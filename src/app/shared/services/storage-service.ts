@@ -159,7 +159,7 @@ export class StorageService {
     params[`end${personNumber}`] = userSelection.endTime;
     params[`workdays${personNumber}`] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
 
-    this.router.navigate(['.'], { queryParams: params });
+    this.router.navigate(['/'], { queryParams: params });
   }
 
   setUserSelectionsOnURL(userSelections: Array<UserSelection>): void {
@@ -179,7 +179,7 @@ export class StorageService {
 
     });
 
-    this.router.navigate(['.'], { queryParams: params });
+    this.router.navigate(['/compare'], { queryParams: params });
   }
 
   private isValidTime(text: string): boolean {
