@@ -11,7 +11,7 @@ import { CommonHelper } from '../shared/helpers/common-helper';
   styleUrls: ['./home.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent implements OnDestroy  {
+export class HomeComponent implements OnDestroy {
 
   showResults: boolean = false;
 
@@ -22,8 +22,19 @@ export class HomeComponent implements OnDestroy  {
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService) {
 
+    this.loadInitialUserSelection();
+
+    this.setupOnParamsChange();
+
+  }
+
+  private loadInitialUserSelection(): void {
+
     if (this.storageService.hasUserSelectionOnURL()) {
       this.userSelection = this.storageService.getUserSelectionFromURL();
+      if (this.userSelection.canCalculate()) {
+        this.calculate();
+      }
     }
     else if (this.storageService.hasUserSelectionOnLocalStorage()) {
       this.userSelection = this.storageService.getUserSelectionFromLocalStorage();
@@ -33,12 +44,6 @@ export class HomeComponent implements OnDestroy  {
       this.userSelection.setDefaultValues();
     }
 
-    this.activeRoute.queryParams.subscribe(queryParams => {
-      if (CommonHelper.isEmptyObject(queryParams)) {
-        this.userSelection.clearUpdateCurrentAmountInterval();
-        this.showResults = false;
-      }
-    });
   }
 
   calculate(): void {
@@ -52,6 +57,10 @@ export class HomeComponent implements OnDestroy  {
 
   }
 
+  canCalculate(): boolean {
+    return this.userSelection.canCalculate();
+  }
+
   getCurrencyPipeDigitsInfo(amount: number): string {
     return CommonHelper.getCurrencyPipeDigitsInfo(amount);
   }
@@ -60,9 +69,18 @@ export class HomeComponent implements OnDestroy  {
     this.bottomSheet.open(ShareBottomSheetComponent);
   }
 
+  private setupOnParamsChange(): void {
+    this.activeRoute.queryParams.subscribe(queryParams => {
+      if (CommonHelper.isEmptyObject(queryParams)) {
+        this.userSelection.clearUpdateCurrentAmountInterval();
+        this.showResults = false;
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     console.log("Single User selection destroyed");
     this.userSelection.clearUpdateCurrentAmountInterval();
   }
-  
+
 }

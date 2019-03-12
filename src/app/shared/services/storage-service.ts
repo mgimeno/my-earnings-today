@@ -10,40 +10,40 @@ import { WeekDaysEnum } from '../enums/week-days.enum';
   providedIn: 'root'
 })
 
-export class StorageService  {
+export class StorageService {
+
+  private readonly localStoragePrefix = environment.localStoragePrefix;
+
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-    
+
   }
 
-  hasUserSelectionOnLocalStorage(): boolean {
-    
-    let prefix = environment.localStoragePrefix;
+  hasUserSelectionOnLocalStorage(personNumber: number = null): boolean {
 
-    return (localStorage[`${prefix}rate`]
-      && localStorage[`${prefix}frequency`]
-      && localStorage[`${prefix}currency`]
-      && localStorage[`${prefix}start`]
-      && localStorage[`${prefix}end`]
-      && localStorage[`${prefix}workdays`]);
+    return (localStorage[`${this.localStoragePrefix}rate${personNumber}`]
+      && localStorage[`${this.localStoragePrefix}frequency${personNumber}`]
+      && localStorage[`${this.localStoragePrefix}currency${personNumber}`]
+      && localStorage[`${this.localStoragePrefix}start${personNumber}`]
+      && localStorage[`${this.localStoragePrefix}end${personNumber}`]
+      && localStorage[`${this.localStoragePrefix}workdays${personNumber}`]);
   }
 
-  getUserSelectionFromLocalStorage(): UserSelection {
-    let prefix = environment.localStoragePrefix;
+  getUserSelectionFromLocalStorage(personNumber: number = null): UserSelection {
 
-    let userSelection: UserSelection = new UserSelection();
+    let userSelection: UserSelection = new UserSelection(personNumber);
 
-    userSelection.rate = localStorage[`${prefix}rate`];
-    userSelection.currencySymbol = localStorage[`${prefix}currency`];
-    userSelection.startTime = localStorage[`${prefix}start`];
-    userSelection.endTime = localStorage[`${prefix}end`];
+    userSelection.rate = localStorage[`${this.localStoragePrefix}rate${personNumber}`];
+    userSelection.currencySymbol = localStorage[`${this.localStoragePrefix}currency${personNumber}`];
+    userSelection.startTime = localStorage[`${this.localStoragePrefix}start${personNumber}`];
+    userSelection.endTime = localStorage[`${this.localStoragePrefix}end${personNumber}`];
 
-    let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(localStorage[`${prefix}frequency`]);
+    let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(localStorage[`${this.localStoragePrefix}frequency${personNumber}`]);
     if (indexOnArray != -1) {
       userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
     }
 
-    let workDays = localStorage[`${prefix}workdays`];
+    let workDays = localStorage[`${this.localStoragePrefix}workdays${personNumber}`];
     userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDays);
 
     return userSelection;
@@ -51,66 +51,93 @@ export class StorageService  {
   }
 
   saveUserSelectionOnLocalStorage(userSelection: UserSelection): void {
-    let prefix = environment.localStoragePrefix;
 
-    localStorage[`${prefix}rate`] = userSelection.rate;
-    localStorage[`${prefix}frequency`] = userSelection.frequency.value;
-    localStorage[`${prefix}currency`] = userSelection.currencySymbol;
-    localStorage[`${prefix}start`] = userSelection.startTime;
-    localStorage[`${prefix}end`] = userSelection.endTime;
-    localStorage[`${prefix}workdays`] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
+    let personNumber = userSelection.personNumber;
+
+    localStorage[`${this.localStoragePrefix}rate${personNumber}`] = userSelection.rate;
+    localStorage[`${this.localStoragePrefix}frequency${personNumber}`] = userSelection.frequency.value;
+    localStorage[`${this.localStoragePrefix}currency${personNumber}`] = userSelection.currencySymbol;
+    localStorage[`${this.localStoragePrefix}start${personNumber}`] = userSelection.startTime;
+    localStorage[`${this.localStoragePrefix}end${personNumber}`] = userSelection.endTime;
+    localStorage[`${this.localStoragePrefix}workdays${personNumber}`] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
   }
 
-  hasUserSelectionOnURL(): boolean {
-    let queryParams = this.activatedRoute.snapshot.queryParams;
+  saveUserSelectionsOnLocalStorage(userSelections: Array<UserSelection>): void {
 
-    return (queryParams.rate
-      && queryParams.frequency
-      && queryParams.currency
-      && queryParams.start
-      && queryParams.end
-      && queryParams.workdays);
+    this.cleanUserSelectionsOnLocalStorage();
+
+    userSelections.forEach((us: UserSelection) => {
+      this.saveUserSelectionOnLocalStorage(us);
+    });
   }
 
-  getUserSelectionFromURL(): UserSelection {
+  private cleanUserSelectionsOnLocalStorage(): void {
+
+    for (let personNumber = 1; personNumber <= environment.compareToolMaxPersons; personNumber++) {
+
+      localStorage.removeItem(`${this.localStoragePrefix}rate${personNumber}`);
+      localStorage.removeItem(`${this.localStoragePrefix}frequency${personNumber}`);
+      localStorage.removeItem(`${this.localStoragePrefix}currency${personNumber}`);
+      localStorage.removeItem(`${this.localStoragePrefix}start${personNumber}`);
+      localStorage.removeItem(`${this.localStoragePrefix}end${personNumber}`);
+      localStorage.removeItem(`${this.localStoragePrefix}workdays${personNumber}`);
+
+    }
+  }
+
+  hasUserSelectionOnURL(personNumber: number = null): boolean {
+    let queryParams = this.activatedRoute.snapshot.queryParams;
+
+    return (queryParams[`rate${personNumber}`]
+      && queryParams[`frequency${personNumber}`]
+      && queryParams[`currency${personNumber}`]
+      && queryParams[`start${personNumber}`]
+      && queryParams[`end${personNumber}`]
+      && queryParams[`workdays${personNumber}`]);
+  }
+
+  getUserSelectionFromURL(personNumber: number = null): UserSelection {
 
     let queryParams = this.activatedRoute.snapshot.queryParams;
 
-    let userSelection: UserSelection = new UserSelection();
+    let userSelection: UserSelection = new UserSelection(personNumber);
 
     if (this.hasUserSelectionOnURL()) {
 
-      if (queryParams.rate && !isNaN(queryParams.rate) && queryParams.rate > 0) {
-        userSelection.rate = queryParams.rate;
+      let rateQP = queryParams[`rate${personNumber}`];
+      let frequencyQP = queryParams[`frequency${personNumber}`];
+      let currencyQP = queryParams[`currency${personNumber}`];
+      let startQP = queryParams[`start${personNumber}`];
+      let endQP = queryParams[`end${personNumber}`];
+      let workDaysQP = queryParams[`workDays${personNumber}`];
+
+      if (rateQP && !isNaN(rateQP) && rateQP > 0) {
+        userSelection.rate = rateQP;
       }
-      if (queryParams.frequency) {
-        let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(queryParams.frequency);
+      if (frequencyQP) {
+        let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(frequencyQP);
         if (indexOnArray != -1) {
           userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
         }
       }
-      if (queryParams.currency) {
-        let indexOnArray = AppConstants.Common.CURRENCY_SYMBOLS.map(cs => cs).indexOf(queryParams.currency);
+      if (currencyQP) {
+        let indexOnArray = AppConstants.Common.CURRENCY_SYMBOLS.map(cs => cs).indexOf(currencyQP);
         if (indexOnArray != -1) {
-          userSelection.currencySymbol = queryParams.currency;
+          userSelection.currencySymbol = currencyQP;
         }
       }
-      if (queryParams.start) {
-        if (this.isValidTime(queryParams.start)) {
-          userSelection.startTime = queryParams.start;
+      if (startQP) {
+        if (this.isValidTime(startQP)) {
+          userSelection.startTime = startQP;
         }
       }
-      if (queryParams.end) {
-        if (this.isValidTime(queryParams.end)) {
-          userSelection.endTime = queryParams.end;
+      if (endQP) {
+        if (this.isValidTime(endQP)) {
+          userSelection.endTime = endQP;
         }
       }
-      if (queryParams.workdays) {
-        userSelection.weekWorkingDays = this.getWorkingDaysFromString(queryParams.workdays);
-      }
-
-      if (userSelection.canCalculate()) {
-        userSelection.calculate();
+      if (workDaysQP) {
+        userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDaysQP);
       }
 
     }
@@ -121,14 +148,36 @@ export class StorageService  {
 
   setUserSelectionOnURL(userSelection: UserSelection): void {
 
-    let params = {
-      rate: userSelection.rate,
-      frequency: userSelection.frequency.value,
-      currency: userSelection.currencySymbol,
-      start: userSelection.startTime,
-      end: userSelection.endTime,
-      workdays: this.getWorkingDaysFromArray(userSelection.weekWorkingDays)
-    };
+    let personNumber = userSelection.personNumber;
+
+    let params: any = <any>{};
+
+    params[`rate${personNumber}`] = userSelection.rate;
+    params[`frequency${personNumber}`] = userSelection.frequency.value;
+    params[`currency${personNumber}`] = userSelection.currencySymbol;
+    params[`start${personNumber}`] = userSelection.startTime;
+    params[`end${personNumber}`] = userSelection.endTime;
+    params[`workdays${personNumber}`] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
+
+    this.router.navigate(['.'], { queryParams: params });
+  }
+
+  setUserSelectionsOnURL(userSelections: Array<UserSelection>): void {
+
+    let params: any = <any>{};
+
+    userSelections.forEach((us: UserSelection) => {
+
+      let personNumber = us.personNumber;
+
+      params[`rate${personNumber}`] = us.rate;
+      params[`frequency${personNumber}`] = us.frequency.value;
+      params[`currency${personNumber}`] = us.currencySymbol;
+      params[`start${personNumber}`] = us.startTime;
+      params[`end${personNumber}`] = us.endTime;
+      params[`workdays${personNumber}`] = this.getWorkingDaysFromArray(us.weekWorkingDays);
+
+    });
 
     this.router.navigate(['.'], { queryParams: params });
   }
@@ -165,7 +214,7 @@ export class StorageService  {
 
     workDaysText.split(',').forEach((wd) => {
       let wdNumber: number = Number(wd);
-      if (!isNaN(wdNumber)) {
+      if (!isNaN(wdNumber) && wdNumber >= 0 && wdNumber <= 6) {
         result[wdNumber] = true;
       }
     });

@@ -6,7 +6,7 @@ import { WeekDaysEnum } from '../enums/week-days.enum';
 import { DateHelper } from '../helpers/date-helper';
 
 export class UserSelection  {
-  personIndex: number = null;
+  personNumber: number = null;
   name: string = null;
   rate: number = null;
   startTime: string = null;
@@ -25,9 +25,9 @@ export class UserSelection  {
 
   updateCurrentAmountIntervalId: number = null;
 
-  constructor(personIndex: number = 0) {
-    this.personIndex = personIndex;
-    this.name = `Person ${(personIndex + 1)}`;
+  constructor(personNumber: number = null) {
+    this.personNumber = personNumber;
+    this.name = `Person ${personNumber}`;
 
     this.weekWorkingDays = new Array<boolean>();
     this.weekWorkingDays[WeekDaysEnum.Sunday] = false;

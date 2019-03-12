@@ -28,15 +28,15 @@ export class UserSelectionComponent implements OnInit {
   }
 
   getNamePlaceholder(): string {
-    return this.isComparingTool && this.userSelection.personIndex > 0 ? "What is their name?" : "What is your name?";
+    return this.isComparingTool && this.userSelection.personNumber > 1 ? "What is their name?" : "What is your name?";
   }
 
   getRatePlaceholder(): string {
-    return this.isComparingTool && this.userSelection.personIndex > 0 ? "What is their rate?" : "What is your rate?";
+    return this.isComparingTool && this.userSelection.personNumber > 1 ? "How much they earn?" : "How much you earn?";
   }
 
   getWorkingWeekText(): string {
-    return this.isComparingTool && this.userSelection.personIndex > 0 ? "Their working week is" : "Your working week is";
+    return this.isComparingTool && this.userSelection.personNumber > 1 ? "Their working week is" : "Your working week is";
   }
 
   showName(): boolean {

@@ -48,7 +48,7 @@
   <div class="buttons">
 
     <div *ngIf="!showResults">
-      <button type="submit" class="text-center" mat-raised-button color="primary" (click)="calculate()" [disabled]="!userSelection.canCalculate()">Calculate</button>
+      <button type="submit" class="text-center" mat-raised-button color="primary" (click)="calculate()" [disabled]="!canCalculate()">Calculate</button>
       <br /><br />
       <button mat-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
     </div>
