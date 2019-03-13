@@ -1,0 +1,68 @@
+
+
+<div *ngIf="!userSelection.workHasStarted()">
+
+  <h1>Nothing yet!</h1>
+  <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
+  <p>You start working in around {{userSelection.getRemainingTimeToStartWork()}}</p>
+
+</div>
+
+<div *ngIf="userSelection.workHasStarted() && !userSelection.workHasFinished()">
+
+  <h1>Today you have already earned</h1>
+  <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
+  <p>
+    around {{userSelection.getRemainingTimeToFinishWork()}} more to go
+  </p>
+
+</div>
+
+<div *ngIf="userSelection.workHasFinished()">
+
+  <h1>Today you earned</h1>
+  <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
+  <p>You are done for today!</p>
+
+</div>
+
+<br />
+
+<mat-grid-list cols="2" rowHeight="100px">
+  <mat-grid-tile *ngFor="let tile of tiles" [colspan]="1" [rowspan]="1" [style.background]="tile.color">
+
+    <mat-grid-tile-header>
+      {{tile.title}}
+    </mat-grid-tile-header>
+
+    <div *ngIf="tile.codeName === 'today'">
+      <div class="current-amount">
+        {{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}
+      </div>
+      <div class="total-amount">
+        out of
+        {{userSelection.todayTotalAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.todayTotalAmount) }}
+      </div>
+    </div>
+    <div *ngIf="tile.codeName === 'week'">
+      <div class="current-amount">
+        {{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}
+      </div>
+      <div class="total-amount">out of 3000</div>
+    </div>
+    <div *ngIf="tile.codeName === 'month'">
+      <div class="current-amount">
+        {{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}
+      </div>
+      <div class="total-amount">out of  3000</div>
+    </div>
+    <div *ngIf="tile.codeName === 'year'">
+      <div class="current-amount">
+        {{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}
+      </div>
+      <div class="total-amount">out of  3000</div>
+    </div>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

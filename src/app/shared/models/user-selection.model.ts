@@ -19,6 +19,7 @@ export class UserSelection  {
   endFullDate: Date;
 
   currentAmount: number = null;
+  todayTotalAmount: number = null;
 
   fullPeriodRateInPennies: number = null;
   amountEarnedPerMilisecond: number = null;
@@ -48,10 +49,12 @@ export class UserSelection  {
     switch (this.frequency.value) {
       case "day":
         this.fullPeriodRateInPennies = rateInPennies;
+        this.todayTotalAmount = this.rate;
         break
       case "hour":
         let hoursOfWork: number = DateHelper.hoursBetweenDates(this.startFullDate, this.endFullDate);
         this.fullPeriodRateInPennies = (rateInPennies * hoursOfWork);
+        this.todayTotalAmount = (this.fullPeriodRateInPennies * 100);
         break;
     }
 
@@ -145,6 +148,7 @@ export class UserSelection  {
     this.endFullDate = null;
 
     this.currentAmount = null;
+    this.todayTotalAmount = null;
 
     this.fullPeriodRateInPennies = null;
     this.amountEarnedPerMilisecond = null;

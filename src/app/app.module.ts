@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule, MatTabsModule
+  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,7 @@ import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-she
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserSelectionComponent } from './user-selection/user-selection.component';
 import { CompareToolComponent } from './compare-tool/compare-tool.component';
+import { MyEarningsDetailsComponent } from './my-earnings-details/my-earnings-details.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CompareToolComponent } from './compare-tool/compare-tool.component';
     ShareBottomSheetComponent,
     PageNotFoundComponent,
     UserSelectionComponent,
-    CompareToolComponent
+    CompareToolComponent,
+    MyEarningsDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { CompareToolComponent } from './compare-tool/compare-tool.component';
     MatSidenavModule,
     MatListModule,
     MatBottomSheetModule,
-    MatTabsModule
+    MatTabsModule,
+    MatGridListModule
   ],
   entryComponents: [ShareBottomSheetComponent],
   providers: [],

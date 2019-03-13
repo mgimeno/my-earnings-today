@@ -6,6 +6,7 @@ import { UserSelection } from '../shared/models/user-selection.model';
 import { StorageService } from '../shared/services/storage-service';
 import { CommonHelper } from '../shared/helpers/common-helper';
 
+
 @Component({
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
@@ -32,9 +33,6 @@ export class HomeComponent implements OnDestroy {
 
     if (this.storageService.hasUserSelectionOnURL()) {
       this.userSelection = this.storageService.getUserSelectionFromURL();
-      if (this.userSelection.canCalculate()) {
-        this.calculate();
-      }
     }
     else if (this.storageService.hasUserSelectionOnLocalStorage()) {
       this.userSelection = this.storageService.getUserSelectionFromLocalStorage();
@@ -42,6 +40,10 @@ export class HomeComponent implements OnDestroy {
     else {
       this.userSelection = new UserSelection();
       this.userSelection.setDefaultValues();
+    }
+
+    if (this.userSelection.canCalculate()) {
+      this.calculate();
     }
 
   }
@@ -59,6 +61,15 @@ export class HomeComponent implements OnDestroy {
 
   canCalculate(): boolean {
     return this.userSelection.canCalculate();
+  }
+
+  goToCompare(): void {
+
+    this.userSelection.personNumber = 1;
+    this.userSelection.name = "Person 1";
+
+    this.storageService.cleanUserSelectionsOnLocalStorage();
+    this.storageService.setUserSelectionsOnURL([this.userSelection]);
   }
 
   getCurrencyPipeDigitsInfo(amount: number): string {

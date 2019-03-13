@@ -1,8 +1,5 @@
 
 
-<div class="home-container">
-
-
   <div *ngIf="userSelection && !showResults" class="text-center">
 
     <h1>Let's see how much you've already earned today</h1>
@@ -14,33 +11,7 @@
 
   <div *ngIf="showResults" class="text-center">
 
-    <div *ngIf="!userSelection.workHasStarted()">
-
-      <h1>Nothing yet!</h1>
-      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
-      <p>You start working in around {{userSelection.getRemainingTimeToStartWork()}}</p>
-
-    </div>
-
-    <div *ngIf="userSelection.workHasStarted() && !userSelection.workHasFinished()">
-
-      <h1>You already earned</h1>
-      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
-      <p>
-        This number is going up!
-        <br /><br />
-        around {{userSelection.getRemainingTimeToFinishWork()}} more to go
-      </p>
-
-    </div>
-
-    <div *ngIf="userSelection.workHasFinished()">
-
-      <h1>Today you earned</h1>
-      <div class="amount-earned">{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</div>
-      <p>You are done for today!</p>
-
-    </div>
+    <app-my-earnings-details [userSelection]=userSelection></app-my-earnings-details>
 
   </div>
 
@@ -56,9 +27,10 @@
     <div *ngIf="showResults">
       <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
       <br /><br />
-      <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
+      <button mat-raised-button color="primary" (click)="goToCompare()"><mat-icon>compare_arrows</mat-icon> Compare</button>
+      <br /><br />
+      <button mat-raised-button color="primary" (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
     </div>
 
   </div>
 
-</div>

@@ -1,0 +1,22 @@
+
+
+.mat-grid-tile {
+
+  figure {
+    flex-direction: column;
+    justify-content: unset !important;
+  }
+
+  .mat-grid-tile-header {
+    height: 32px !important;
+    justify-content: center;
+  }
+
+  .current-amount {
+    margin: 47px auto 6px auto;
+  }
+
+  .total-amount {
+    font-size: small;
+  }
+}

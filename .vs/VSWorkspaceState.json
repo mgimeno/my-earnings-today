@@ -5,14 +5,12 @@
     "\\src\\app",
     "\\src\\app\\compare-tool",
     "\\src\\app\\home",
-    "\\src\\app\\shared",
     "\\src\\app\\shared\\helpers",
     "\\src\\app\\shared\\models",
     "\\src\\app\\shared\\services",
-    "\\src\\app\\user-selection",
     "\\src\\environments",
     "\\src\\sass"
   ],
-  "SelectedNode": "\\src\\environments\\environment.prod.ts",
+  "SelectedNode": "\\src\\sass\\variables.scss",
   "PreviewInSolutionExplorer": false
 }

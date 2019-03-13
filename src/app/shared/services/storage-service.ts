@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UserSelection } from '../models/user-selection.model';
 import { AppConstants } from '../constants/app-constants';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { WeekDaysEnum } from '../enums/week-days.enum';
+import { StorageKeyEnum } from '../enums/storage-keys';
 
 
 @Injectable({
@@ -21,29 +22,35 @@ export class StorageService {
 
   hasUserSelectionOnLocalStorage(personNumber: number = null): boolean {
 
-    return (localStorage[`${this.localStoragePrefix}rate${personNumber}`]
-      && localStorage[`${this.localStoragePrefix}frequency${personNumber}`]
-      && localStorage[`${this.localStoragePrefix}currency${personNumber}`]
-      && localStorage[`${this.localStoragePrefix}start${personNumber}`]
-      && localStorage[`${this.localStoragePrefix}end${personNumber}`]
-      && localStorage[`${this.localStoragePrefix}workdays${personNumber}`]);
+    return (
+      (!personNumber || localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)])
+      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)]
+      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)]
+      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)]
+      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)]
+      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)]
+      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)]);
   }
 
   getUserSelectionFromLocalStorage(personNumber: number = null): UserSelection {
 
     let userSelection: UserSelection = new UserSelection(personNumber);
 
-    userSelection.rate = localStorage[`${this.localStoragePrefix}rate${personNumber}`];
-    userSelection.currencySymbol = localStorage[`${this.localStoragePrefix}currency${personNumber}`];
-    userSelection.startTime = localStorage[`${this.localStoragePrefix}start${personNumber}`];
-    userSelection.endTime = localStorage[`${this.localStoragePrefix}end${personNumber}`];
+    if (personNumber) {
+      userSelection.name = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)];
+    }
 
-    let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(localStorage[`${this.localStoragePrefix}frequency${personNumber}`]);
+    userSelection.rate = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)];
+    userSelection.currencySymbol = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)];
+    userSelection.startTime = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)];
+    userSelection.endTime = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)];
+
+    let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)]);
     if (indexOnArray != -1) {
       userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
     }
 
-    let workDays = localStorage[`${this.localStoragePrefix}workdays${personNumber}`];
+    let workDays = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)];
     userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDays);
 
     return userSelection;
@@ -54,12 +61,16 @@ export class StorageService {
 
     let personNumber = userSelection.personNumber;
 
-    localStorage[`${this.localStoragePrefix}rate${personNumber}`] = userSelection.rate;
-    localStorage[`${this.localStoragePrefix}frequency${personNumber}`] = userSelection.frequency.value;
-    localStorage[`${this.localStoragePrefix}currency${personNumber}`] = userSelection.currencySymbol;
-    localStorage[`${this.localStoragePrefix}start${personNumber}`] = userSelection.startTime;
-    localStorage[`${this.localStoragePrefix}end${personNumber}`] = userSelection.endTime;
-    localStorage[`${this.localStoragePrefix}workdays${personNumber}`] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
+    if (personNumber) {
+      localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)] = userSelection.name;
+    }
+
+    localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)] = userSelection.rate;
+    localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)] = userSelection.frequency.value;
+    localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)] = userSelection.currencySymbol;
+    localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)] = userSelection.startTime;
+    localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)] = userSelection.endTime;
+    localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
   }
 
   saveUserSelectionsOnLocalStorage(userSelections: Array<UserSelection>): void {
@@ -71,29 +82,42 @@ export class StorageService {
     });
   }
 
-  private cleanUserSelectionsOnLocalStorage(): void {
+
+  private getLocalStorageFullKey(key: string, personNumber: number = null): string {
+    return `${this.localStoragePrefix}${key}${personNumber || ""}`;
+  }
+
+  private getURLFullParamKey(key: string, personNumber: number = null): string {
+    return `${key}${personNumber || ""}`;
+  }
+
+  cleanUserSelectionsOnLocalStorage(): void {
 
     for (let personNumber = 1; personNumber <= environment.compareToolMaxPersons; personNumber++) {
 
-      localStorage.removeItem(`${this.localStoragePrefix}rate${personNumber}`);
-      localStorage.removeItem(`${this.localStoragePrefix}frequency${personNumber}`);
-      localStorage.removeItem(`${this.localStoragePrefix}currency${personNumber}`);
-      localStorage.removeItem(`${this.localStoragePrefix}start${personNumber}`);
-      localStorage.removeItem(`${this.localStoragePrefix}end${personNumber}`);
-      localStorage.removeItem(`${this.localStoragePrefix}workdays${personNumber}`);
+      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber));
+      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber));
+      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber));
+      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber));
+      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber));
+      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber));
+      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber));
 
     }
   }
 
   hasUserSelectionOnURL(personNumber: number = null): boolean {
-    let queryParams = this.activatedRoute.snapshot.queryParams;
+    let queryParams: Params = this.activatedRoute.snapshot.queryParams;
 
-    return (queryParams[`rate${personNumber}`]
-      && queryParams[`frequency${personNumber}`]
-      && queryParams[`currency${personNumber}`]
-      && queryParams[`start${personNumber}`]
-      && queryParams[`end${personNumber}`]
-      && queryParams[`workdays${personNumber}`]);
+    return (
+      (!personNumber || queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)])
+      && queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)]
+      && queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)]
+      && queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)]
+      && queryParams[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)]
+      && queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)]
+      && queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)]
+      );
   }
 
   getUserSelectionFromURL(personNumber: number = null): UserSelection {
@@ -102,45 +126,46 @@ export class StorageService {
 
     let userSelection: UserSelection = new UserSelection(personNumber);
 
-    if (this.hasUserSelectionOnURL()) {
+    let nameQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)];
+    let rateQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)];
+    let frequencyQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)];
+    let currencyQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)];
+    let startQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)];
+    let endQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)];
+    let workDaysQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)];
 
-      let rateQP = queryParams[`rate${personNumber}`];
-      let frequencyQP = queryParams[`frequency${personNumber}`];
-      let currencyQP = queryParams[`currency${personNumber}`];
-      let startQP = queryParams[`start${personNumber}`];
-      let endQP = queryParams[`end${personNumber}`];
-      let workDaysQP = queryParams[`workDays${personNumber}`];
-
-      if (rateQP && !isNaN(rateQP) && rateQP > 0) {
-        userSelection.rate = rateQP;
-      }
-      if (frequencyQP) {
-        let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(frequencyQP);
-        if (indexOnArray != -1) {
-          userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
-        }
-      }
-      if (currencyQP) {
-        let indexOnArray = AppConstants.Common.CURRENCY_SYMBOLS.map(cs => cs).indexOf(currencyQP);
-        if (indexOnArray != -1) {
-          userSelection.currencySymbol = currencyQP;
-        }
-      }
-      if (startQP) {
-        if (this.isValidTime(startQP)) {
-          userSelection.startTime = startQP;
-        }
-      }
-      if (endQP) {
-        if (this.isValidTime(endQP)) {
-          userSelection.endTime = endQP;
-        }
-      }
-      if (workDaysQP) {
-        userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDaysQP);
-      }
-
+    if (personNumber && nameQP) {
+      userSelection.name = nameQP;
     }
+    if (rateQP && !isNaN(rateQP) && rateQP > 0) {
+      userSelection.rate = rateQP;
+    }
+    if (frequencyQP) {
+      let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(frequencyQP);
+      if (indexOnArray != -1) {
+        userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
+      }
+    }
+    if (currencyQP) {
+      let indexOnArray = AppConstants.Common.CURRENCY_SYMBOLS.map(cs => cs).indexOf(currencyQP);
+      if (indexOnArray != -1) {
+        userSelection.currencySymbol = currencyQP;
+      }
+    }
+    if (startQP) {
+      if (this.isValidTime(startQP)) {
+        userSelection.startTime = startQP;
+      }
+    }
+    if (endQP) {
+      if (this.isValidTime(endQP)) {
+        userSelection.endTime = endQP;
+      }
+    }
+    if (workDaysQP) {
+      userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDaysQP);
+    }
+
 
     return userSelection;
 
@@ -152,12 +177,16 @@ export class StorageService {
 
     let params: any = <any>{};
 
-    params[`rate${personNumber}`] = userSelection.rate;
-    params[`frequency${personNumber}`] = userSelection.frequency.value;
-    params[`currency${personNumber}`] = userSelection.currencySymbol;
-    params[`start${personNumber}`] = userSelection.startTime;
-    params[`end${personNumber}`] = userSelection.endTime;
-    params[`workdays${personNumber}`] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
+    if (personNumber){
+      params[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)] = userSelection.name;
+    }
+
+    params[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)] = userSelection.rate;
+    params[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)] = userSelection.frequency.value;
+    params[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)] = userSelection.currencySymbol;
+    params[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)] = userSelection.startTime;
+    params[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)] = userSelection.endTime;
+    params[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)] = this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
 
     this.router.navigate(['/'], { queryParams: params });
   }
@@ -170,12 +199,16 @@ export class StorageService {
 
       let personNumber = us.personNumber;
 
-      params[`rate${personNumber}`] = us.rate;
-      params[`frequency${personNumber}`] = us.frequency.value;
-      params[`currency${personNumber}`] = us.currencySymbol;
-      params[`start${personNumber}`] = us.startTime;
-      params[`end${personNumber}`] = us.endTime;
-      params[`workdays${personNumber}`] = this.getWorkingDaysFromArray(us.weekWorkingDays);
+      if (personNumber) {
+        params[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)] = us.name;
+      }
+
+      params[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)] = us.rate;
+      params[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)] = us.frequency.value;
+      params[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)] = us.currencySymbol;
+      params[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)] = us.startTime;
+      params[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)] = us.endTime;
+      params[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)] = this.getWorkingDaysFromArray(us.weekWorkingDays);
 
     });
 
