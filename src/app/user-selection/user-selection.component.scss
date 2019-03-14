@@ -2,12 +2,14 @@ $containerWidth: 250px;
 $smallFontSize: 12px;
 
 .user-selection {
-  width: $containerWidth;
+  /*width: $containerWidth;*/
+  width:100%;
   margin: 20px auto 0 auto;
 }
 
 .rate-form-field {
-  width: 210px;
+  /*width: 210px;*/
+  width: calc(100% - 40px);
 }
 
 .currency-form-field {
@@ -15,12 +17,14 @@ $smallFontSize: 12px;
 }
 
 .full-width-form-field {
-  width: $containerWidth;
+  /*width: $containerWidth;*/
+  width: 100%;
 }
 
 
 .time-form-field {
-  width: $containerWidth / 2;
+  /*width: $containerWidth / 2;*/
+  width: 50%;
 }
 
 .section-description {

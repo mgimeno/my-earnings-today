@@ -18,19 +18,16 @@
 
   <div class="buttons">
 
-    <div *ngIf="!showResults">
+    <ng-container *ngIf="!showResults">
       <button type="submit" class="text-center" mat-raised-button color="primary" (click)="calculate()" [disabled]="!canCalculate()">Calculate</button>
-      <br /><br />
       <button mat-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
-    </div>
+    </ng-container>
 
-    <div *ngIf="showResults">
+    <ng-container *ngIf="showResults">
       <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
-      <br /><br />
       <button mat-raised-button color="primary" (click)="goToCompare()"><mat-icon>compare_arrows</mat-icon> Compare</button>
-      <br /><br />
-      <button mat-raised-button color="primary" (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
-    </div>
+      <button mat-raised-button  (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
+    </ng-container>
 
   </div>
 

@@ -35,13 +35,11 @@
 
     <div *ngIf="!showResults">
       <button mat-raised-button color="accent" [disabled]="!canAddMorePersons()" (click)="addPerson()"><mat-icon class="add-icon">person_add</mat-icon> Add Person</button>
-      <br /><br />
       <button class="text-center" mat-raised-button color="primary" [disabled]="!canCalculate()" (click)="calculate()">Calculate</button>
     </div>
 
     <div *ngIf="showResults">
       <button  mat-raised-button [routerLink]="['/compare']"><mat-icon>reply</mat-icon> back</button>
-      <br /><br />
       <button  mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
     </div>
 

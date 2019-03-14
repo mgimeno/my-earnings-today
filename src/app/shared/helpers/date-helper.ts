@@ -19,4 +19,24 @@ export class DateHelper {
     return result;
   }
 
+  public static getDaysWorkedInPeriod(workingDaysOfTheWeek: Array<number>, startDate: Date, endDate: Date) {
+    let ndays = 1 + Math.round((endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000));
+    let sum = (a, b) => {
+      return a + Math.floor((ndays + (startDate.getDay() + 6 - b) % 7) / 7);
+    };
+    return workingDaysOfTheWeek.reduce(sum, 0);
+  }
+
+  public static addDays(date: Date, days) {
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + days,
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds(),
+    date.getMilliseconds()
+  );
+}
+
 };
