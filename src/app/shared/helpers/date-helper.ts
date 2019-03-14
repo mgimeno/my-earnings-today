@@ -27,16 +27,60 @@ export class DateHelper {
     return workingDaysOfTheWeek.reduce(sum, 0);
   }
 
-  public static addDays(date: Date, days) {
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() + days,
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
-    date.getMilliseconds()
-  );
+  public static addDays(date: Date, days: number) {
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate() + days,
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+    );
+  }
+
+  public static getMondayOfCurrentWeek(now: Date): Date {
+    let date = new Date(now);
+    let lastMondayTime = date.setDate(now.getDate() - (now.getDay() + 6) % 7);
+    return new Date(lastMondayTime);
+
+  }
+
+  public static getFirstDayOfCurrentMonth(now: Date): Date {
+    return new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+  }
+
+  public static getLastDayOfCurrentMonth(now: Date): Date {
+    return new Date(now.getFullYear(), (now.getMonth() + 1), 0, 0, 0, 0, 0);
+  }
+
+  public static getFirstDayOfCurrentYear(now: Date): Date {
+    return new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
+  }
+
+  public static getLastDayOfCurrentYear(now: Date): Date {
+    return new Date(now.getFullYear(), 11, 31, 0, 0, 0, 0);
+  }
+
+  public static isMonday(date: Date): boolean {
+    return date.getDay() === 1;
+  }
+
+  public static isFirstDayOfTheMonth(date: Date): boolean {
+    return date.getDate() === 1;
+  }
+
+  public static isFirstDayOfTheYear(date: Date): boolean {
+    return (date.getMonth() === 0 && date.getDate() === 1);
+  }
+
+  public static minDate(date1: Date, date2: Date): Date {
+    if (date1 < date2) {
+      return date1;
+    }
+    return date2;
+  }
+  
+  
 }
 
-};

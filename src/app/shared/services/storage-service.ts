@@ -4,7 +4,7 @@ import { UserSelection } from '../models/user-selection.model';
 import { AppConstants } from '../constants/app-constants';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { WeekDaysEnum } from '../enums/week-days.enum';
-import { StorageKeyEnum } from '../enums/storage-keys';
+import { StorageKeyEnum } from '../enums/storage-keys.enum';
 
 
 @Injectable({
