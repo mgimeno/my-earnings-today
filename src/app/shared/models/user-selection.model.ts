@@ -29,12 +29,14 @@ export class UserSelection {
 
   amountEarnedPerHour: number = null;
 
+  sinceClickedAmount: number = null;
+  currentHourAmount: number = null;
   currentDayAmount: number = null;
   currentWeekAmount: number = null;
   currentMonthAmount: number = null;
   currentYearAmount: number = null;
 
-
+  totalHourAmount: number = null;
   totalDayAmount: number = null;
   totalWeekAmount: number = null;
   totalMonthAmount: number = null;
@@ -70,9 +72,7 @@ export class UserSelection {
       this.hoursWorkedPerDay = DateHelper.hoursBetweenDates(this.dayStartTime, this.dayEndTime);
 
       let workingDaysThisWeek = workingDaysArray.length;
-      //TODO This is probably wrong. check
       let workingDaysThisMonth = DateHelper.getDaysWorkedInPeriod(workingDaysArray, DateHelper.getFirstDayOfCurrentMonth(now), DateHelper.getLastDayOfCurrentMonth(now));
-      //TODO This is probably wrong. check
       let workingDaysThisYear = DateHelper.getDaysWorkedInPeriod(workingDaysArray, DateHelper.getFirstDayOfCurrentYear(now), DateHelper.getLastDayOfCurrentYear(now));
 
       this.workingHoursThisWeek = (workingDaysThisWeek * this.hoursWorkedPerDay);
@@ -110,6 +110,7 @@ export class UserSelection {
   }
 
   private updateTotalAmounts(): void {
+    this.totalHourAmount = 0; //TODO
     this.totalDayAmount = (this.amountEarnedPerHour * this.hoursWorkedPerDay);
     this.totalWeekAmount = (this.amountEarnedPerHour * this.workingHoursThisWeek);
     this.totalMonthAmount = (this.amountEarnedPerHour * this.workingHoursThisMonth);
@@ -213,7 +214,10 @@ export class UserSelection {
     return periodAmount;
   }
 
-  private isOff(date: Date): boolean {
+  private isOff(date: Date = null): boolean {
+    if (!date) {
+      date = new Date();
+    }
     return !includes(this.getWeekWorkingDaysArray(), date.getDay());
   }
 

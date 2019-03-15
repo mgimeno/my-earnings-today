@@ -17,6 +17,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { UserSelectionComponent } from './user-selection/user-selection.component';
 import { CompareToolComponent } from './compare-tool/compare-tool.component';
 import { MyEarningsDetailsComponent } from './my-earnings-details/my-earnings-details.component';
+import { CurrencyDisplayComponent } from './currency-display/currency-display.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MyEarningsDetailsComponent } from './my-earnings-details/my-earnings-de
     PageNotFoundComponent,
     UserSelectionComponent,
     CompareToolComponent,
-    MyEarningsDetailsComponent
+    MyEarningsDetailsComponent,
+    CurrencyDisplayComponent
   ],
   imports: [
     BrowserModule,

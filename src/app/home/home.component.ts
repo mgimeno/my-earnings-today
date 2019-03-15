@@ -72,10 +72,6 @@ export class HomeComponent implements OnDestroy {
     this.storageService.setUserSelectionsOnURL([this.userSelection]);
   }
 
-  getCurrencyPipeDigitsInfo(amount: number): string {
-    return CommonHelper.getCurrencyPipeDigitsInfo(amount);
-  }
-
   openShareBottomSheet(): void {
     this.bottomSheet.open(ShareBottomSheetComponent);
   }

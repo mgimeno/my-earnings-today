@@ -24,24 +24,25 @@
     <div *ngFor="let userSelection of userSelections;">
 
       <span>{{userSelection.name}}</span>
-      <span>{{userSelection.currentAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentAmount) }}</span>
+
+      <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
 
     </div>
 
   </div>
 
 
-  <div class="buttons">
+  <div class="buttons" [ngClass]="showResults ? 'm-t-30' : 'm-t-15'">
 
-    <div *ngIf="!showResults">
+    <ng-container *ngIf="!showResults">
       <button mat-raised-button color="accent" [disabled]="!canAddMorePersons()" (click)="addPerson()"><mat-icon class="add-icon">person_add</mat-icon> Add Person</button>
       <button class="text-center" mat-raised-button color="primary" [disabled]="!canCalculate()" (click)="calculate()">Calculate</button>
-    </div>
+    </ng-container>
 
-    <div *ngIf="showResults">
+    <ng-container *ngIf="showResults">
       <button  mat-raised-button [routerLink]="['/compare']"><mat-icon>reply</mat-icon> back</button>
       <button  mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
-    </div>
+    </ng-container>
 
   </div>
 

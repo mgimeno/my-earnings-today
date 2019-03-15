@@ -1,28 +1,40 @@
 
 
-<ng-container *ngIf="!userSelection.workHasStarted()">
+<ng-container *ngIf="userSelection.isOff()">
+  <h1>You are off today!</h1>
+  <div class="amount-earned">
+    <app-currency-display [amount]="0" [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">You start working in around {{userSelection.getRemainingTimeToStartWork()}}</p>
+</ng-container>
+
+<ng-container *ngIf="!userSelection.isOff() && !userSelection.workHasStarted()">
 
   <h1>Nothing yet!</h1>
-  <div class="amount-earned">{{userSelection.currentDayAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentDayAmount) }}</div>
-  <p>You start working in around {{userSelection.getRemainingTimeToStartWork()}}</p>
+  <div class="amount-earned">
+    <app-currency-display [amount]="0" [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">You start working in around {{userSelection.getRemainingTimeToStartWork()}}</p>
 
 </ng-container>
 
 <ng-container *ngIf="userSelection.isCurrentlyWorking()">
 
   <h1>Today you have already earned</h1>
-  <div class="amount-earned">{{userSelection.currentDayAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentDayAmount) }}</div>
-  <p>
-    around {{userSelection.getRemainingTimeToFinishWork()}} more to go
-  </p>
+  <div class="amount-earned">
+    <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">around {{userSelection.getRemainingTimeToFinishWork()}} more to go</p>
 
 </ng-container>
 
 <ng-container *ngIf="userSelection.workHasFinished()">
 
   <h1>Today you earned</h1>
-  <div class="amount-earned">{{userSelection.currentDayAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentDayAmount) }}</div>
-  <p>You are done for today!</p>
+  <div class="amount-earned">
+    <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">You are done for today!</p>
 
 </ng-container>
 
@@ -33,40 +45,54 @@
       {{tile.title}}
     </mat-grid-tile-header>
 
-    <div *ngIf="tile.codeName === 'today'">
+    <div *ngIf="tile.codeName === 'sinceclicked'">
       <div class="current-amount">
-        {{userSelection.currentDayAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentDayAmount) }}
+        <app-currency-display [amount]=userSelection.sinceClickedAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+      </div>
+    </div>
+    <div *ngIf="tile.codeName === 'hour'">
+      <div class="current-amount">
+        <app-currency-display [amount]=userSelection.currentHourAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
       <div class="total-amount">
         out of
-        {{userSelection.totalDayAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.totalDayAmount) }}
+        <app-currency-display [amount]=userSelection.totalHourAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+      </div>
+    </div>
+    <div *ngIf="tile.codeName === 'today'">
+      <div class="current-amount">
+        <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+      </div>
+      <div class="total-amount">
+        out of
+        <app-currency-display [amount]=userSelection.totalDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
     </div>
     <div *ngIf="tile.codeName === 'week'">
       <div class="current-amount">
-        {{userSelection.currentWeekAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentWeekAmount) }}
+        <app-currency-display [amount]=userSelection.currentWeekAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
       <div class="total-amount">
         out of
-        {{userSelection.totalWeekAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.totalWeekAmount) }}
+        <app-currency-display [amount]=userSelection.totalWeekAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
     </div>
     <div *ngIf="tile.codeName === 'month'">
       <div class="current-amount">
-        {{userSelection.currentMonthAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentMonthAmount) }}
+        <app-currency-display [amount]=userSelection.currentMonthAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
       <div class="total-amount">
         out of
-        {{userSelection.totalMonthAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.totalMonthAmount) }}
+        <app-currency-display [amount]=userSelection.totalMonthAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
     </div>
     <div *ngIf="tile.codeName === 'year'">
       <div class="current-amount">
-        {{userSelection.currentYearAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.currentYearAmount) }}
+        <app-currency-display [amount]=userSelection.currentYearAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
       <div class="total-amount">
         out of
-        {{userSelection.totalYearAmount | currency : userSelection.currencySymbol : 'symbol' : getCurrencyPipeDigitsInfo(userSelection.totalYearAmount) }}
+        <app-currency-display [amount]=userSelection.totalYearAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
     </div>
 

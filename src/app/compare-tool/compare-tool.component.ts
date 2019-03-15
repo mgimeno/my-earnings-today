@@ -82,9 +82,7 @@ export class CompareToolComponent {
     return this.userSelections.length < environment.compareToolMaxPersons;
   }
 
-  getCurrencyPipeDigitsInfo(amount: number): string {
-    return CommonHelper.getCurrencyPipeDigitsInfo(amount);
-  }
+  
 
   private clearAllIntervals(): void {
     console.log("Compare tool selections destroyed");
