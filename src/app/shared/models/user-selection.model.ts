@@ -7,8 +7,6 @@ import { WeekDaysEnum } from '../enums/week-days.enum';
 import { DateHelper } from '../helpers/date-helper';
 import { PeriodEnum } from '../enums/period.enum';
 
-
-
 export class UserSelection {
   personNumber: number = null;
   name: string = null;
@@ -19,8 +17,11 @@ export class UserSelection {
   frequency: INameValue = null;
   weekWorkingDays: boolean[];
 
-  dayStartTime: Date;
-  dayEndTime: Date;
+  dayStartTime: Date = null;
+  dayEndTime: Date = null;
+
+  dateTimeWhenClickedCalculate: Date = null;
+  timeElapsedSinceCalculated: string = "00:00";
 
   hoursWorkedPerDay: number = null;
   workingHoursThisWeek: number = null;
@@ -29,7 +30,7 @@ export class UserSelection {
 
   amountEarnedPerHour: number = null;
 
-  sinceClickedAmount: number = null;
+  stopwatchAmount: number = null;
   currentHourAmount: number = null;
   currentDayAmount: number = null;
   currentWeekAmount: number = null;
@@ -43,10 +44,17 @@ export class UserSelection {
   totalYearAmount: number = null;
 
   updateAmountsIntervalId: number = null;
+  stopWatchIntervalId: number = null;
 
   constructor(personNumber: number = null) {
     this.personNumber = personNumber;
-    this.name = `Person ${personNumber}`;
+
+    if (!personNumber || personNumber === 1) {
+      this.name = "You";
+    }
+    else if (personNumber > 1) {
+      this.name = `Person ${personNumber}`;
+    }
 
     this.weekWorkingDays = new Array<boolean>();
     this.weekWorkingDays[WeekDaysEnum.Sunday] = false;
@@ -58,16 +66,34 @@ export class UserSelection {
     this.weekWorkingDays[WeekDaysEnum.Saturday] = false;
   }
 
+  private buildStartAndEndTimeDates(now: Date): void {
+    this.dayStartTime = DateHelper.buildDate(now, this.startTime);
+    this.dayEndTime = DateHelper.buildDate(now, this.endTime);
+    if (this.endTime < this.startTime && this.endTime === "00:00") {
+      this.dayStartTime = DateHelper.addMiliseconds(this.dayStartTime, -1);
+      this.dayEndTime = DateHelper.getDateAtOneMilisecondBeforeEndOfDay(now);
+    }
+  }
+
+  private updateTimeElapsedSinceCalculated(): void {
+    this.timeElapsedSinceCalculated = DateHelper.getTimeElapsedFromDate(this.dateTimeWhenClickedCalculate);
+  }
+
   calculate(): void {
 
+    this.dateTimeWhenClickedCalculate = new Date();
     let workingDaysArray = this.getWeekWorkingDaysArray();
+
+
+    this.stopWatchIntervalId = window.setInterval(() => {
+      this.updateTimeElapsedSinceCalculated();
+    }, 1000);
 
     this.updateAmountsIntervalId = window.setInterval(() => {
 
       //This logic of now and dayStartTime, dayEndTime needs to be on the interval so if we pass to next day it still works
       let now: Date = new Date();
-      this.dayStartTime = DateHelper.buildDate(now, this.startTime);
-      this.dayEndTime = DateHelper.buildDate(now, this.endTime);
+      this.buildStartAndEndTimeDates(now);
 
       this.hoursWorkedPerDay = DateHelper.hoursBetweenDates(this.dayStartTime, this.dayEndTime);
 
@@ -99,6 +125,8 @@ export class UserSelection {
       console.log("totalMonthAmount", this.totalMonthAmount);
       console.log("totalYearAmount", this.totalYearAmount );
 
+      this.updateStopwatchAmount(now);
+      this.updateCurrentHourAmount(now);
       this.updateCurrentDayAmount(now);
       this.updateCurrentWeekAmount(now);
       this.updateCurrentMonthAmount(now);
@@ -137,6 +165,15 @@ export class UserSelection {
         this.amountEarnedPerHour = (this.rate / this.workingHoursThisYear);
         break;
     }
+  }
+
+  private updateStopwatchAmount(now) {
+    //TODO
+    this.stopwatchAmount = 1;
+  }
+  private updateCurrentHourAmount(now) {
+    //TODO
+    this.currentHourAmount = 2;
   }
 
   private updateCurrentDayAmount(now: Date): void {
@@ -179,6 +216,8 @@ export class UserSelection {
 
     switch (periodType) {
       case PeriodEnum.CurrentDay:
+      case PeriodEnum.CurrentHour:
+      case PeriodEnum.CurrentDay:
         break;
       case PeriodEnum.CurrentWeek:
         if (!DateHelper.isMonday(now)) {
@@ -201,7 +240,7 @@ export class UserSelection {
     let hoursWorkedFromStartOfPeriodExcludingToday = (daysWorkedFromStartOfPeriodExcludingToday * this.hoursWorkedPerDay);
     let hoursWorkedToday: number = 0;
 
-    if (!this.isOff(now) && this.workHasStarted()) {
+    if (!this.hasDayOff(now) && this.workTodayHasStarted()) {
       //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
       console.log("DATEEEEEE", DateHelper.minDate(now, this.dayEndTime));
       hoursWorkedToday = DateHelper.hoursBetweenDates(this.dayStartTime, DateHelper.minDate(now, this.dayEndTime)); 
@@ -214,7 +253,7 @@ export class UserSelection {
     return periodAmount;
   }
 
-  private isOff(date: Date = null): boolean {
+  hasDayOff(date: Date = null): boolean {
     if (!date) {
       date = new Date();
     }
@@ -238,14 +277,55 @@ export class UserSelection {
       && this.rate && this.rate > 0
       && this.currencySymbol
       && this.frequency
-      && this.startTime && this.endTime
-      && (this.endTime > this.startTime));
+      && this.areStartAndEndTimesValid());
+  }
+
+  private areStartAndEndTimesValid(): boolean {
+    return this.startTime && this.endTime &&
+      ((this.endTime > this.startTime) || (this.endTime < this.startTime && this.endTime === "00:00"));
   }
 
   getRemainingTimeToStartWork(): string {
-    let now = moment(new Date());
-    let startWork = moment(this.dayStartTime);
-    return now.to(startWork, true);
+    //TODO this method is called many times, naybe do some calculations onCalculate event and store it as property instead
+    //of calculating each single time.
+    let now = new Date();
+    let nowMoment = moment(now);
+    
+    if (!this.hasDayOff() && !this.workTodayHasStarted()) {
+      let startTimeMoment = moment(this.dayStartTime);
+      return `You start working in around ${nowMoment.to(startTimeMoment, true)}`;
+    }
+    else if (this.workTodayHasFinished() || this.hasDayOff()) {
+
+      let tomorrow = DateHelper.addDays(now, 1);
+      let nextWorkingDayStartTime = this.getNextWorkingDay(now);
+      let nextWorkingDayName = WeekDaysEnum[nextWorkingDayStartTime.getDay()];
+
+      if (this.hasDayOff(tomorrow)) {
+        return `You are off until next ${nextWorkingDayName} at ${this.startTime}`;
+      }
+      else {
+        let nextWorkingDayStartTimeMoment = moment(nextWorkingDayStartTime);
+        return `You start working in around ${nowMoment.to(nextWorkingDayStartTimeMoment, true)}`;
+      }
+      
+    }
+    else {
+      //Should not ever reach this point
+      return ""; 
+    }
+    
+  }
+
+  private getNextWorkingDay(date: Date): Date {
+    let dayOfTheWeek = this.weekWorkingDays.indexOf(true, (date.getDay() + 1));
+    if (dayOfTheWeek === -1) {
+      dayOfTheWeek = this.weekWorkingDays.indexOf(true, 0);
+    }
+
+    let resultDate = DateHelper.getNextDayOfWeek(date, dayOfTheWeek);
+
+    return DateHelper.buildDate(resultDate, this.startTime);
   }
 
   getRemainingTimeToFinishWork(): string {
@@ -254,19 +334,19 @@ export class UserSelection {
     return now.to(endWork, true);
   }
 
-  workHasStarted(): boolean {
+  workTodayHasStarted(): boolean {
     let now = new Date();
-    return (!this.isOff(now) && now > this.dayStartTime);
+    return (!this.hasDayOff(now) && now > this.dayStartTime);
   }
 
-  workHasFinished(): boolean {
+  workTodayHasFinished(): boolean {
     let now = new Date();
-    return (!this.isOff(now) && now > this.dayEndTime);
+    return (!this.hasDayOff(now) && now > this.dayEndTime);
   }
 
   isCurrentlyWorking(): boolean {
     let now = new Date();
-    return !this.isOff(now) && this.workHasStarted() && !this.workHasFinished();
+    return !this.hasDayOff(now) && this.workTodayHasStarted() && !this.workTodayHasFinished();
   }
 
   setDefaultValues(): void {
@@ -286,11 +366,36 @@ export class UserSelection {
     this.weekWorkingDays[WeekDaysEnum.Saturday] = false;
   }
 
-  clearUpdateCurrentAmountInterval(): void {
+  clearResults(): void {
+    this.clearIntervals();
+
+    this.timeElapsedSinceCalculated = "00:00";
+    
+    this.stopwatchAmount = null;
+    this.currentHourAmount = null;
+    this.currentDayAmount = null;
+    this.currentWeekAmount = null;
+    this.currentMonthAmount = null;
+    this.currentYearAmount = null;
+    
+    this.totalHourAmount = null;
+    this.totalDayAmount = null;
+    this.totalWeekAmount = null;
+    this.totalMonthAmount = null;
+    this.totalYearAmount = null;
+  }
+
+  private clearIntervals(): void {
     if (this.updateAmountsIntervalId) {
       console.log("INTERVAL CLEARED: " + this.name);
       clearInterval(this.updateAmountsIntervalId);
       this.updateAmountsIntervalId = null;
+    }
+
+    if (this.stopWatchIntervalId) {
+      console.log("STOPWATCH CLEARED: " + this.name)
+      clearInterval(this.stopWatchIntervalId);
+      this.stopWatchIntervalId = null;
     }
   }
 }

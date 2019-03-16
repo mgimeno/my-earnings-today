@@ -1,9 +1,14 @@
+
 export class DateHelper {
 
   public static milisecondsBetweenDates(date1: Date, date2: Date): number {
     let diff = date1.getTime() - date2.getTime();
 
     return Math.abs(diff);
+  }
+
+  public static secondsBetweenDates(date1: Date, date2: Date): number {
+    return (this.milisecondsBetweenDates(date1, date2) / 1000);
   }
 
   public static hoursBetweenDates(date1: Date, date2: Date): number {
@@ -27,7 +32,7 @@ export class DateHelper {
     return workingDaysOfTheWeek.reduce(sum, 0);
   }
 
-  public static addDays(date: Date, days: number) {
+  public static addDays(date: Date, days: number): Date {
     return new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -38,6 +43,45 @@ export class DateHelper {
       date.getMilliseconds()
     );
   }
+
+  public static addMiliseconds(date: Date, miliseconds: number): Date {
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds() + miliseconds
+    );
+  }
+
+  public static getDateAtOneMilisecondBeforeEndOfDay(date: Date): Date {
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      23,
+      59,
+      59,
+      999
+    );
+  }
+
+ public static getNextDayOfWeek(date:Date, dayOfTheWeek: number): Date {
+
+   let resultDate = date;
+
+   if (resultDate.getDay() === dayOfTheWeek) {
+     resultDate = DateHelper.addDays(resultDate, 1);
+   }
+
+   resultDate = new Date(resultDate.getTime());
+
+   resultDate.setDate(resultDate.getDate() + (7 + dayOfTheWeek - resultDate.getDay()) % 7);
+
+  return resultDate;
+}
 
   public static getMondayOfCurrentWeek(now: Date): Date {
     let date = new Date(now);
@@ -80,7 +124,30 @@ export class DateHelper {
     }
     return date2;
   }
-  
-  
+
+  public static getTimeElapsedFromDate(fromDate: Date): string {
+
+    let now: Date = new Date();
+    let secondsElapsed = this.secondsBetweenDates(fromDate, now);
+
+    let sec_num = parseInt(secondsElapsed.toString(), 10);
+    let hours = Math.floor(sec_num / 3600);
+    let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    let seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    let hourSeparator = ':';
+    let minuteSeparator = ':';
+
+    let hoursText = hours.toString();
+    let minutesText = minutes.toString();
+    let secondsText = seconds.toString();
+
+    if (hours == 0) { hoursText = ''; hourSeparator = ''; }
+    if (minutes < 10 && hours != 0) { minutesText = "0" + minutes; }
+    if (seconds < 10) { secondsText = "0" + seconds; }
+    return hoursText + hourSeparator + minutesText + minuteSeparator + secondsText;
+  }
+
+
 }
 

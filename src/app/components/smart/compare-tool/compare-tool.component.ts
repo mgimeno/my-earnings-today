@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { UserSelection } from '../shared/models/user-selection.model';
 import { environment } from 'src/environments/environment';
-import { CommonHelper } from '../shared/helpers/common-helper';
 import { ActivatedRoute } from '@angular/router';
-import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material';
-import { StorageService } from '../shared/services/storage-service';
+import { StorageService } from 'src/app/shared/services/storage-service';
+import { UserSelection } from 'src/app/shared/models/user-selection.model';
+import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
+import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 
 @Component({
   templateUrl: './compare-tool.component.html',
@@ -86,7 +86,7 @@ export class CompareToolComponent {
 
   private clearAllIntervals(): void {
     console.log("Compare tool selections destroyed");
-    this.userSelections.forEach(us => { us.clearUpdateCurrentAmountInterval(); });
+    this.userSelections.forEach(us => { us.clearResults(); });
   }
 
   openShareBottomSheet(): void {

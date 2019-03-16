@@ -27,10 +27,11 @@ mat-grid-list {
   }
 
   .current-amount {
-    margin: 47px auto 6px auto;
+    margin: 42px auto 6px auto;
+    font-size: 19px;
   }
 
-  .total-amount {
+  .details {
     font-size: small;
   }
 }

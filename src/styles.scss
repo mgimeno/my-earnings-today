@@ -5,8 +5,18 @@
 @import 'variables';
 @import 'space-helpers';
 
+html, body {
+  margin: 0;
+  background-color: #fafafa;
+}
+
 * {
   font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+  margin-bottom: $h1MarginBottom;
+  font-size: $h1FontSize;
 }
 
 //This is for the arrows not to appear on inputs of type number

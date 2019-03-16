@@ -1,0 +1,68 @@
+
+
+<ng-container *ngIf="userSelection.hasDayOff()">
+  <h1>You are off today!</h1>
+  <div class="amount-earned">
+    <app-currency-display [amount]="0" [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">{{userSelection.getRemainingTimeToStartWork()}}</p>
+</ng-container>
+
+<ng-container *ngIf="!userSelection.hasDayOff() && !userSelection.workTodayHasStarted()">
+
+  <h1>Nothing yet!</h1>
+  <div class="amount-earned">
+    <app-currency-display [amount]="0" [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">{{userSelection.getRemainingTimeToStartWork()}}</p>
+
+</ng-container>
+
+<ng-container *ngIf="userSelection.isCurrentlyWorking()">
+
+  <h1>Today you have already earned</h1>
+  <div class="amount-earned">
+    <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">around {{userSelection.getRemainingTimeToFinishWork()}} more to go</p>
+
+</ng-container>
+
+<ng-container *ngIf="userSelection.workTodayHasFinished()">
+
+  <h1>Today you earned</h1>
+  <div class="amount-earned">
+    <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+  </div>
+  <p class="note">You are done for today!</p>
+
+</ng-container>
+
+<mat-grid-list cols="2" rowHeight="100px" gutterSize="0">
+  <mat-grid-tile *ngFor="let tile of tiles" [colspan]="1" [rowspan]="1" [style.background]="tile.color">
+
+    <mat-grid-tile-header>
+      {{tile.title}}
+    </mat-grid-tile-header>
+
+    <ng-container *ngIf="tile.codeName === 'stopwatch'">
+      <div class="current-amount">
+        <app-currency-display [amount]=userSelection.stopwatchAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+      </div>
+      <div class="details">
+        {{userSelection.timeElapsedSinceCalculated}} elapsed
+      </div>
+    </ng-container>
+    <ng-container *ngIf="tile.codeName !== 'stopwatch'">
+      <div class="current-amount">
+        <app-currency-display [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></app-currency-display>
+      </div>
+      <div class="details">
+        out of
+        <app-currency-display [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></app-currency-display>
+      </div>
+    </ng-container>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

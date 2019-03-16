@@ -10,7 +10,7 @@ Third letter is the number of spacing in pixels.
 
 */
 
-$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40);
+$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 50);
 $sides: (top, bottom, left, right);
 
 @each $space in $spaceamounts {

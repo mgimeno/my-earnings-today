@@ -1,18 +1,18 @@
 import { Component, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
-import { UserSelection } from '../shared/models/user-selection.model';
-import { StorageService } from '../shared/services/storage-service';
-import { CommonHelper } from '../shared/helpers/common-helper';
+import { CommonHelper } from 'src/app/shared/helpers/common-helper';
+import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
+import { UserSelection } from 'src/app/shared/models/user-selection.model';
+import { StorageService } from 'src/app/shared/services/storage-service';
 
 
 @Component({
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './my-earnings.component.html',
+  styleUrls: ['./my-earnings.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent implements OnDestroy {
+export class MyEarningsComponent implements OnDestroy {
 
   showResults: boolean = false;
 
@@ -79,7 +79,7 @@ export class HomeComponent implements OnDestroy {
   private setupOnParamsChange(): void {
     this.activeRoute.queryParams.subscribe(queryParams => {
       if (CommonHelper.isEmptyObject(queryParams)) {
-        this.userSelection.clearUpdateCurrentAmountInterval();
+        this.userSelection.clearResults();
         this.showResults = false;
       }
     });
@@ -87,7 +87,7 @@ export class HomeComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log("Single User selection destroyed");
-    this.userSelection.clearUpdateCurrentAmountInterval();
+    this.userSelection.clearResults();
   }
 
 }

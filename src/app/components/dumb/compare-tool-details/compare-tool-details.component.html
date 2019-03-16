@@ -1,0 +1,60 @@
+<h1>Compare Results</h1>
+
+<div class="table-container">
+
+  <table mat-table [dataSource]="userSelections">
+
+    <ng-container matColumnDef="name" sticky>
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="stopwatchAmount">
+      <mat-header-cell *matHeaderCellDef>Stopwatch</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <app-currency-display [amount]=element.stopwatchAmount [symbol]=element.currencySymbol></app-currency-display>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="currentHourAmount">
+      <mat-header-cell *matHeaderCellDef>This Hour</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <app-currency-display [amount]=element.currentHourAmount [symbol]=element.currencySymbol></app-currency-display>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="currentDayAmount">
+      <mat-header-cell *matHeaderCellDef>Today</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <app-currency-display [amount]=element.currentDayAmount [symbol]=element.currencySymbol></app-currency-display>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="currentWeekAmount">
+      <mat-header-cell *matHeaderCellDef>This Week</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <app-currency-display [amount]=element.currentWeekAmount [symbol]=element.currencySymbol></app-currency-display>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="currentMonthAmount">
+      <mat-header-cell *matHeaderCellDef>This Month</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <app-currency-display [amount]=element.currentMonthAmount [symbol]=element.currencySymbol></app-currency-display>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="currentYearAmount">
+      <mat-header-cell *matHeaderCellDef>This Year</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <app-currency-display [amount]=element.currentYearAmount [symbol]=element.currencySymbol></app-currency-display>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+
+</div>
+
+

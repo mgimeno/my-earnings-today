@@ -1,17 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\node_modules\\@angular",
-    "\\node_modules\\@angular\\router\\src",
     "\\src",
     "\\src\\app",
     "\\src\\app\\compare-tool",
+    "\\src\\app\\home",
     "\\src\\app\\shared",
-    "\\src\\app\\shared\\constants",
-    "\\src\\app\\shared\\enums",
     "\\src\\app\\shared\\helpers",
     "\\src\\app\\shared\\models",
-    "\\src\\app\\user-selection"
+    "\\src\\app\\user-selection",
+    "\\src\\sass"
   ],
   "SelectedNode": "\\src\\app\\shared\\models\\user-selection.model.ts",
   "PreviewInSolutionExplorer": false

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonHelper } from '../shared/helpers/common-helper';
+import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 
 @Component({
   selector: 'app-currency-display',

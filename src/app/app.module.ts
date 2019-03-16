@@ -5,31 +5,34 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule
+  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { ShareBottomSheetComponent } from './share-bottom-sheet/share-bottom-sheet.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { UserSelectionComponent } from './user-selection/user-selection.component';
-import { CompareToolComponent } from './compare-tool/compare-tool.component';
-import { MyEarningsDetailsComponent } from './my-earnings-details/my-earnings-details.component';
-import { CurrencyDisplayComponent } from './currency-display/currency-display.component';
+import { MyEarningsComponent } from './components/smart/my-earnings/my-earnings.component';
+import { AboutComponent } from './components/smart/about/about.component';
+import { ShareBottomSheetComponent } from './components/dumb/share-bottom-sheet/share-bottom-sheet.component';
+import { PageNotFoundComponent } from './components/smart/page-not-found/page-not-found.component';
+import { UserSelectionComponent } from './components/dumb/user-selection/user-selection.component';
+import { CompareToolComponent } from './components/smart/compare-tool/compare-tool.component';
+import { MyEarningsDetailsComponent } from './components/dumb/my-earnings-details/my-earnings-details.component';
+import { CurrencyDisplayComponent } from './components/dumb/currency-display/currency-display.component';
+import { CompareToolDetailsComponent } from './components/dumb/compare-tool-details/compare-tool-details.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    MyEarningsComponent,
     AboutComponent,
     ShareBottomSheetComponent,
     PageNotFoundComponent,
     UserSelectionComponent,
     CompareToolComponent,
     MyEarningsDetailsComponent,
-    CurrencyDisplayComponent
+    CurrencyDisplayComponent,
+    CompareToolDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { CurrencyDisplayComponent } from './currency-display/currency-display.co
     MatListModule,
     MatBottomSheetModule,
     MatTabsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTableModule
   ],
   entryComponents: [ShareBottomSheetComponent],
   providers: [],

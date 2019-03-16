@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { CompareToolComponent } from './compare-tool/compare-tool.component';
+import { MyEarningsComponent } from './components/smart/my-earnings/my-earnings.component';
+import { CompareToolComponent } from './components/smart/compare-tool/compare-tool.component';
+import { AboutComponent } from './components/smart/about/about.component';
+import { PageNotFoundComponent } from './components/smart/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: MyEarningsComponent, pathMatch: 'full' },
   { path: 'home', redirectTo: '', pathMatch: 'full' },
   { path: 'compare', component: CompareToolComponent },
   { path: 'about', component: AboutComponent },

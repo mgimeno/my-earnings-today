@@ -9,7 +9,7 @@
 
       <mat-tab *ngFor="let userSelection of userSelections;" [label]="userSelection.name">
 
-        <app-user-selection [userSelection]=userSelection [isComparingTool]=true></app-user-selection>
+        <app-user-selection [userSelection]=userSelection></app-user-selection>
 
       </mat-tab>
     </mat-tab-group>
@@ -19,15 +19,7 @@
 
   <div *ngIf="showResults" class="text-center">
 
-    <h1>Compare Results</h1>
-
-    <div *ngFor="let userSelection of userSelections;">
-
-      <span>{{userSelection.name}}</span>
-
-      <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
-
-    </div>
+    <app-compare-tool-details [userSelections]=userSelections></app-compare-tool-details>
 
   </div>
 

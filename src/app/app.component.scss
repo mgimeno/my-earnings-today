@@ -16,6 +16,8 @@ mat-toolbar {
 
   .mat-toolbar {
     padding: 0 10px;
+    position: fixed;
+    z-index: 2;
   }
 
   a.title {
@@ -28,14 +30,14 @@ mat-toolbar {
   }
 
   .sidenav-container {
-    flex: 1;
-
+    margin-top: 56px;
+    flex: 1 0 auto;
     mat-sidenav {
       width: 200px;
     }
 
     mat-sidenav-content {
-      padding: 20px 34px;
+      padding: 20px 34px 30px 34px;
     }
   }
 }
