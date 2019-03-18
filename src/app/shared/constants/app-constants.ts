@@ -16,5 +16,8 @@ export namespace AppConstants {
 
     public static readonly UPDATE_AMOUNTS_FREQUENCY_IN_MS: number = 100;
 
+    public static readonly UPDATE_STOPWATCH_FREQUENCY_IN_MS: number = 100;
+
+    public static readonly FIRST_USER_DEFAULT_NAME = "You";
   };
 }

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet, MatDialog } from '@angular/material';
 import { StorageService } from 'src/app/shared/services/storage-service';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
+import { UserSelectionValidationDialogComponent } from '../../dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
 
 @Component({
   templateUrl: './compare-tool.component.html',
@@ -19,7 +20,8 @@ export class CompareToolComponent {
 
   constructor(private activeRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
-    private storageService: StorageService) {
+    private storageService: StorageService,
+    private validationDialog: MatDialog) {
     
     this.loadInitialUserSelections();
     this.setupOnParamsChange();
@@ -53,18 +55,28 @@ export class CompareToolComponent {
 
   }
 
-  canCalculate(): boolean {
+  private canCalculate(): boolean {
     return this.userSelections.length >= 2
       && (this.userSelections.length === this.userSelections.filter(us => { return us.canCalculate(); }).length);
   }
 
-  calculate(): void {
+  private calculate(): void {
 
     this.storageService.saveUserSelectionsOnLocalStorage(this.userSelections);
     this.storageService.setUserSelectionsOnURL(this.userSelections);
 
     this.userSelections.forEach(us => { us.calculate(); });
     this.showResults = true;
+  }
+
+  tryCalculate(): void {
+    
+    if (this.canCalculate()) {
+      this.calculate();
+    }
+    else {
+      this.validationDialog.open(UserSelectionValidationDialogComponent, { data: this.userSelections });
+    }
   }
 
   addPerson(): void {

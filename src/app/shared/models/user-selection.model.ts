@@ -21,7 +21,6 @@ export class UserSelection {
   dayEndTime: Date = null;
 
   dateTimeWhenClickedCalculate: Date = null;
-  timeElapsedSinceCalculated: string = "00:00";
 
   hoursWorkedPerDay: number = null;
   workingHoursThisWeek: number = null;
@@ -44,13 +43,12 @@ export class UserSelection {
   totalYearAmount: number = null;
 
   updateAmountsIntervalId: number = null;
-  stopWatchIntervalId: number = null;
 
   constructor(personNumber: number = null) {
     this.personNumber = personNumber;
 
     if (!personNumber || personNumber === 1) {
-      this.name = "You";
+      this.name = AppConstants.Common.FIRST_USER_DEFAULT_NAME;
     }
     else if (personNumber > 1) {
       this.name = `Person ${personNumber}`;
@@ -75,19 +73,11 @@ export class UserSelection {
     }
   }
 
-  private updateTimeElapsedSinceCalculated(): void {
-    this.timeElapsedSinceCalculated = DateHelper.getTimeElapsedFromDate(this.dateTimeWhenClickedCalculate);
-  }
-
   calculate(): void {
 
     this.dateTimeWhenClickedCalculate = new Date();
     let workingDaysArray = this.getWeekWorkingDaysArray();
 
-
-    this.stopWatchIntervalId = window.setInterval(() => {
-      this.updateTimeElapsedSinceCalculated();
-    }, 1000);
 
     this.updateAmountsIntervalId = window.setInterval(() => {
 
@@ -123,7 +113,7 @@ export class UserSelection {
       console.log("totalDayAmount", this.totalDayAmount);
       console.log("totalWeekAmount", this.totalWeekAmount);
       console.log("totalMonthAmount", this.totalMonthAmount);
-      console.log("totalYearAmount", this.totalYearAmount );
+      console.log("totalYearAmount", this.totalYearAmount);
 
       this.updateStopwatchAmount(now);
       this.updateCurrentHourAmount(now);
@@ -243,7 +233,7 @@ export class UserSelection {
     if (!this.hasDayOff(now) && this.workTodayHasStarted()) {
       //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
       console.log("DATEEEEEE", DateHelper.minDate(now, this.dayEndTime));
-      hoursWorkedToday = DateHelper.hoursBetweenDates(this.dayStartTime, DateHelper.minDate(now, this.dayEndTime)); 
+      hoursWorkedToday = DateHelper.hoursBetweenDates(this.dayStartTime, DateHelper.minDate(now, this.dayEndTime));
     }
 
     let totalHoursWorked = (hoursWorkedFromStartOfPeriodExcludingToday + hoursWorkedToday);
@@ -273,14 +263,28 @@ export class UserSelection {
   }
 
   canCalculate(): boolean {
-    return (this.name
-      && this.rate && this.rate > 0
+    return (this.hasName()
+      && this.hasRate()
       && this.currencySymbol
       && this.frequency
+      && this.isAtLeastOneDayOfTheWeekSelected()
       && this.areStartAndEndTimesValid());
   }
 
-  private areStartAndEndTimesValid(): boolean {
+  hasName(): boolean {
+    //todo maybe use lodash _.isEmpty()
+    return this.name && this.name.trim() !== "";
+  }
+
+  hasRate(): boolean {
+    return this.rate && this.rate > 0;
+  }
+
+  isAtLeastOneDayOfTheWeekSelected(): boolean {
+    return this.weekWorkingDays.some(wwd => { return wwd === true; });
+  }
+
+  areStartAndEndTimesValid(): boolean {
     return this.startTime && this.endTime &&
       ((this.endTime > this.startTime) || (this.endTime < this.startTime && this.endTime === "00:00"));
   }
@@ -290,7 +294,7 @@ export class UserSelection {
     //of calculating each single time.
     let now = new Date();
     let nowMoment = moment(now);
-    
+
     if (!this.hasDayOff() && !this.workTodayHasStarted()) {
       let startTimeMoment = moment(this.dayStartTime);
       return `You start working in around ${nowMoment.to(startTimeMoment, true)}`;
@@ -308,13 +312,13 @@ export class UserSelection {
         let nextWorkingDayStartTimeMoment = moment(nextWorkingDayStartTime);
         return `You start working in around ${nowMoment.to(nextWorkingDayStartTimeMoment, true)}`;
       }
-      
+
     }
     else {
       //Should not ever reach this point
-      return ""; 
+      return "";
     }
-    
+
   }
 
   private getNextWorkingDay(date: Date): Date {
@@ -367,17 +371,15 @@ export class UserSelection {
   }
 
   clearResults(): void {
-    this.clearIntervals();
+    this.clearInterval();
 
-    this.timeElapsedSinceCalculated = "00:00";
-    
     this.stopwatchAmount = null;
     this.currentHourAmount = null;
     this.currentDayAmount = null;
     this.currentWeekAmount = null;
     this.currentMonthAmount = null;
     this.currentYearAmount = null;
-    
+
     this.totalHourAmount = null;
     this.totalDayAmount = null;
     this.totalWeekAmount = null;
@@ -385,17 +387,11 @@ export class UserSelection {
     this.totalYearAmount = null;
   }
 
-  private clearIntervals(): void {
+  private clearInterval(): void {
     if (this.updateAmountsIntervalId) {
       console.log("INTERVAL CLEARED: " + this.name);
       clearInterval(this.updateAmountsIntervalId);
       this.updateAmountsIntervalId = null;
-    }
-
-    if (this.stopWatchIntervalId) {
-      console.log("STOPWATCH CLEARED: " + this.name)
-      clearInterval(this.stopWatchIntervalId);
-      this.stopWatchIntervalId = null;
     }
   }
 }

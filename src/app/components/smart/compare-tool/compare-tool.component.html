@@ -9,7 +9,7 @@
 
       <mat-tab *ngFor="let userSelection of userSelections;" [label]="userSelection.name">
 
-        <app-user-selection [userSelection]=userSelection></app-user-selection>
+        <app-user-selection [userSelection]=userSelection [isCompareTool]=true></app-user-selection>
 
       </mat-tab>
     </mat-tab-group>
@@ -28,7 +28,7 @@
 
     <ng-container *ngIf="!showResults">
       <button mat-raised-button color="accent" [disabled]="!canAddMorePersons()" (click)="addPerson()"><mat-icon class="add-icon">person_add</mat-icon> Add Person</button>
-      <button class="text-center" mat-raised-button color="primary" [disabled]="!canCalculate()" (click)="calculate()">Calculate</button>
+      <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()">Calculate</button>
     </ng-container>
 
     <ng-container *ngIf="showResults">

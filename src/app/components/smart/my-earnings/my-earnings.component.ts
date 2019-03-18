@@ -1,10 +1,12 @@
 import { Component, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet, MatDialog } from '@angular/material';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { StorageService } from 'src/app/shared/services/storage-service';
+import { AppConstants } from 'src/app/shared/constants/app-constants';
+import { UserSelectionValidationDialogComponent } from '../../dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
 
 
 @Component({
@@ -21,7 +23,8 @@ export class MyEarningsComponent implements OnDestroy {
   constructor(
     private activeRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
-    private storageService: StorageService) {
+    private storageService: StorageService,
+    private validationDialog: MatDialog) {
 
     this.loadInitialUserSelection();
 
@@ -48,7 +51,7 @@ export class MyEarningsComponent implements OnDestroy {
 
   }
 
-  calculate(): void {
+  private calculate(): void {
 
     this.storageService.saveUserSelectionOnLocalStorage(this.userSelection);
     this.storageService.setUserSelectionOnURL(this.userSelection);
@@ -59,14 +62,23 @@ export class MyEarningsComponent implements OnDestroy {
 
   }
 
-  canCalculate(): boolean {
+  private canCalculate(): boolean {
     return this.userSelection.canCalculate();
+  }
+
+  tryCalculate(): void {
+    if (this.canCalculate()) {
+      this.calculate();
+    }
+    else {
+      this.validationDialog.open(UserSelectionValidationDialogComponent, { data: [this.userSelection]} );
+    }
   }
 
   goToCompare(): void {
 
     this.userSelection.personNumber = 1;
-    this.userSelection.name = "Person 1";
+    this.userSelection.name = AppConstants.Common.FIRST_USER_DEFAULT_NAME;
 
     this.storageService.cleanUserSelectionsOnLocalStorage();
     this.storageService.setUserSelectionsOnURL([this.userSelection]);

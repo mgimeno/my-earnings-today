@@ -50,7 +50,7 @@
         <app-currency-display [amount]=userSelection.stopwatchAmount [symbol]=userSelection.currencySymbol></app-currency-display>
       </div>
       <div class="details">
-        {{userSelection.timeElapsedSinceCalculated}} elapsed
+        {{timeElapsedSinceCalculated}} elapsed
       </div>
     </ng-container>
     <ng-container *ngIf="tile.codeName !== 'stopwatch'">

@@ -1,0 +1,49 @@
+
+
+<h1 mat-dialog-title>Missing details</h1>
+<div mat-dialog-content class="content">
+
+  <ng-container *ngFor="let userSelection of userSelections; let index = index;">
+
+    <ng-container *ngIf="!userSelection.canCalculate()">
+
+      <div *ngIf="showName()">
+        <b>{{getName(userSelection)}}</b>
+      </div>
+      <p *ngIf="!userSelection.hasName()">
+        Type a name
+      </p>
+      <p *ngIf="!userSelection.hasRate()">
+        Type how much you earn
+      </p>
+      <p *ngIf="!userSelection.currencySymbol">
+        Select a currency symbol
+      </p>
+      <p *ngIf="!userSelection.frequency">
+        Select a period
+      </p>
+      <p *ngIf="!userSelection.isAtLeastOneDayOfTheWeekSelected()">
+        Select at least one day of the week
+      </p>
+      <p *ngIf="!userSelection.startTime">
+        Select a 'From' time
+      </p>
+      <p *ngIf="!userSelection.endTime">
+        Select a 'To' time
+      </p>
+      <p *ngIf="userSelection.startTime && userSelection.endTime && !userSelection.areStartAndEndTimesValid()">
+        'From' time must be greater than 'To'
+      </p>
+    </ng-container>
+
+  </ng-container>
+
+  <p *ngIf="userSelections.length < getMinNumberOfUserSelectionsRequired()">
+    Add at least one more person
+  </p>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onClose()" cdkFocusInitial>Got it!</button>
+</div>

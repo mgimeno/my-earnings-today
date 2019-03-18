@@ -13,7 +13,7 @@ import { INameValue } from 'src/app/shared/intefaces/name-value.interface';
 export class UserSelectionComponent {
 
   @Input() userSelection: UserSelection;
-  @Input() isComparingTool: boolean;
+  @Input() isCompareTool: boolean;
 
   constructor() { }
 
@@ -26,19 +26,19 @@ export class UserSelectionComponent {
   }
 
   getNamePlaceholder(): string {
-    return this.userSelection.personNumber > 1 ? "What is their name?" : "What is your name?";
+    return this.isCompareTool && this.userSelection.personNumber > 1 ? "What is their name?" : "What is your name?";
   }
 
   getRatePlaceholder(): string {
-    return this.userSelection.personNumber > 1 ? "How much they earn?" : "How much you earn?";
+    return this.isCompareTool && this.userSelection.personNumber > 1 ? "How much they earn?" : "How much you earn?";
   }
 
   getWorkingWeekText(): string {
-    return this.userSelection.personNumber > 1 ? "Their working week is" : "Your working week is";
+    return this.isCompareTool && this.userSelection.personNumber > 1 ? "Their working week is" : "Your working week is";
   }
 
   showName(): boolean {
-    return (this.userSelection.personNumber != null);
+    return this.isCompareTool;
   }
    
 

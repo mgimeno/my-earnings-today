@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule
+  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule, MatDialogModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,7 @@ import { CompareToolComponent } from './components/smart/compare-tool/compare-to
 import { MyEarningsDetailsComponent } from './components/dumb/my-earnings-details/my-earnings-details.component';
 import { CurrencyDisplayComponent } from './components/dumb/currency-display/currency-display.component';
 import { CompareToolDetailsComponent } from './components/dumb/compare-tool-details/compare-tool-details.component';
+import { UserSelectionValidationDialogComponent } from './components/dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CompareToolDetailsComponent } from './components/dumb/compare-tool-deta
     CompareToolComponent,
     MyEarningsDetailsComponent,
     CurrencyDisplayComponent,
-    CompareToolDetailsComponent
+    CompareToolDetailsComponent,
+    UserSelectionValidationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,9 +54,10 @@ import { CompareToolDetailsComponent } from './components/dumb/compare-tool-deta
     MatBottomSheetModule,
     MatTabsModule,
     MatGridListModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ],
-  entryComponents: [ShareBottomSheetComponent],
+  entryComponents: [ShareBottomSheetComponent, UserSelectionValidationDialogComponent ],
   providers: [],
   bootstrap: [AppComponent]
 })
