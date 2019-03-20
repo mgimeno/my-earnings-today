@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { DateHelper } from 'src/app/shared/helpers/date-helper';
 import { AppConstants } from 'src/app/shared/constants/app-constants';
@@ -6,7 +6,8 @@ import { AppConstants } from 'src/app/shared/constants/app-constants';
 @Component({
   selector: 'app-compare-tool-details',
   templateUrl: './compare-tool-details.component.html',
-  styleUrls: ['./compare-tool-details.component.scss']
+  styleUrls: ['./compare-tool-details.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
@@ -24,6 +25,15 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
       'currentMonthAmount',
       'currentYearAmount'
     ];
+
+  readonly tiles: any[] = [
+    { codeName: "stopwatch", title: 'Stopwatch', amountProperty: 'stopwatchAmount', totalAmountProperty: null, color: 'lightblue' },
+    { codeName: "hour", title: 'This Hour', amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount', color: 'lightgray' },
+    { codeName: "today", title: 'Today', amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount', color: 'lightyellow' },
+    { codeName: "week", title: 'This Week', amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount', color: 'lightgreen' },
+    { codeName: "month", title: 'This Month', amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount', color: 'lightpink' },
+    { codeName: "year", title: 'This Year', amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount', color: '#DDBDF1' }
+  ];
 
   constructor() { }
 

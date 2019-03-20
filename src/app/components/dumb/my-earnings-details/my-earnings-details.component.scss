@@ -1,37 +1,41 @@
 
-.amount-earned {
-  font-size: 50px;
-  font-weight: bold;
-  margin: 20px 0;
-}
+app-my-earnings-details {
 
-.note{
-  font-size:14px;
-}
-
-mat-grid-list {
-  margin-top: 25px;
-}
-
-.mat-grid-tile {
-
-  figure {
-    flex-direction: column;
-    justify-content: unset !important;
+  .amount-earned {
+    font-size: 50px;
+    font-weight: bold;
+    margin: 20px 0;
   }
 
-  .mat-grid-tile-header {
-    height: 32px !important;
-    padding: 0 12px !important;
-    justify-content: center;
+  .note {
+    font-size: 14px;
   }
 
-  .current-amount {
-    margin: 42px auto 6px auto;
-    font-size: 19px;
+  .mat-grid-list {
+    margin-top: 25px;
   }
 
-  .details {
-    font-size: small;
+  .mat-grid-tile {
+
+    figure {
+      flex-direction: column;
+      justify-content: unset !important;
+      align-items: unset !important;
+    }
+
+    .mat-grid-tile-header {
+      height: 32px !important;
+      padding: 0 12px !important;
+      justify-content: center;
+    }
+
+    .current-amount {
+      margin: 42px auto 6px auto;
+      font-size: 19px;
+    }
+
+    .details {
+      font-size: small;
+    }
   }
 }

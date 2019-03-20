@@ -9,7 +9,7 @@ import { UserSelection } from 'src/app/shared/models/user-selection.model';
 export class UserSelectionValidationDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<UserSelectionValidationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private userSelections: UserSelection[]) { }
+    @Inject(MAT_DIALOG_DATA) public userSelections: UserSelection[]) { }
 
   showName(): boolean {
     return this.userSelections.length > 1;

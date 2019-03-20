@@ -27,6 +27,11 @@ input::-webkit-inner-spin-button {
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
+//Form fields bottom border;
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: rgba(0,0,0,0.12);
+}
+
 input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }

@@ -58,3 +58,38 @@
 </div>
 
 
+
+<mat-grid-list cols="1" rows="6" rowHeight="150px" gutterSize="0">
+  <mat-grid-tile *ngFor="let tile of tiles" [colspan]="1" [rowspan]="1" [style.background]="tile.color">
+
+    <mat-grid-tile-header>
+      {{tile.title}}
+    </mat-grid-tile-header>
+
+    <div style="display: flex;
+    flex-direction: column;
+    width: 100%;padding: 0 15px;margin-top: 45px;">
+      <ng-container *ngFor="let userSelection of userSelections">
+
+        <div style="display: flex;margin-bottom: 5px;">
+
+          <span style="text-align: left;">
+            {{userSelection.name}}
+          </span>
+
+          <span style="flex:1;    text-align: right;">
+            <app-currency-display [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></app-currency-display>
+          </span>
+          <!--<span  style="flex:1;    text-align: right;font-size:small;">
+            out of
+            <app-currency-display [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></app-currency-display>
+          </span>-->
+        </div>
+
+
+      </ng-container>
+    </div>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

@@ -18,7 +18,8 @@ export class CompareToolComponent {
   showResults: boolean = false;
   activeTabIndex: number = 0;
 
-  constructor(private activeRoute: ActivatedRoute,
+  constructor(
+    private activeRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
     private validationDialog: MatDialog) {

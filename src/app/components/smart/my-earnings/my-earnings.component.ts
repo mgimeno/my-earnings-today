@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatBottomSheet, MatDialog } from '@angular/material';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
@@ -11,8 +11,7 @@ import { UserSelectionValidationDialogComponent } from '../../dumb/user-selectio
 
 @Component({
   templateUrl: './my-earnings.component.html',
-  styleUrls: ['./my-earnings.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./my-earnings.component.scss']
 })
 export class MyEarningsComponent implements OnDestroy {
 

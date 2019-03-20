@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { AppConstants } from 'src/app/shared/constants/app-constants';
 import { INameValue } from 'src/app/shared/intefaces/name-value.interface';
@@ -7,8 +7,7 @@ import { INameValue } from 'src/app/shared/intefaces/name-value.interface';
 @Component({
   selector: 'app-user-selection',
   templateUrl: './user-selection.component.html',
-  styleUrls: ['./user-selection.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./user-selection.component.scss']
 })
 export class UserSelectionComponent {
 

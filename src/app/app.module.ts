@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule, MatDialogModule
+  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -58,7 +58,7 @@ import { UserSelectionValidationDialogComponent } from './components/dumb/user-s
     MatDialogModule
   ],
   entryComponents: [ShareBottomSheetComponent, UserSelectionValidationDialogComponent ],
-  providers: [],
+  providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: 250 } }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

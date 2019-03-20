@@ -7,7 +7,14 @@
     }
 
     public static getCurrencyPipeDigitsInfo(amount: number): string {
-      return Number.isInteger(amount) ? "1.0" : "1.2";
+
+      if (!amount) {
+        return "1.0";
+      }
+
+      let amountRoundedTo2Decimals: string = amount.toFixed(2);
+      
+      return Number.isInteger(+amountRoundedTo2Decimals) ? "1.0" : "1.2";
     }
 
   };

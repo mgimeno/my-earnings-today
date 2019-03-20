@@ -1,7 +1,7 @@
 $smallFontSize: 12px;
 
 .user-selection {
-  width:100%;
+  width: 100%;
   margin: 20px auto 0 auto;
 }
 
@@ -40,9 +40,4 @@ $smallFontSize: 12px;
   .mat-checkbox-inner-container {
     margin-right: 5px;
   }
-}
-
-//Form fields bottom border;
-.mat-form-field-appearance-legacy .mat-form-field-underline {
-  background-color: rgba(0,0,0,0.12);
 }
