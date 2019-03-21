@@ -5,12 +5,18 @@
     "\\src\\app",
     "\\src\\app\\components",
     "\\src\\app\\components\\dumb",
-    "\\src\\app\\components\\dumb\\currency-display",
+    "\\src\\app\\components\\dumb\\compare-tool-details",
+    "\\src\\app\\components\\dumb\\my-earnings-details",
+    "\\src\\app\\components\\dumb\\user-selection",
     "\\src\\app\\components\\smart",
-    "\\src\\app\\components\\smart\\page-not-found",
+    "\\src\\app\\components\\smart\\compare-tool",
+    "\\src\\app\\components\\smart\\my-earnings",
     "\\src\\app\\shared",
-    "\\src\\app\\shared\\constants"
+    "\\src\\app\\shared\\helpers",
+    "\\src\\app\\shared\\intefaces",
+    "\\src\\app\\shared\\models",
+    "\\src\\app\\shared\\services"
   ],
-  "SelectedNode": "\\src\\app\\app.module.ts",
+  "SelectedNode": "\\src\\app\\shared\\helpers\\date-helper.ts",
   "PreviewInSolutionExplorer": false
 }

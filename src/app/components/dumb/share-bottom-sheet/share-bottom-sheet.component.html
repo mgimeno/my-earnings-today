@@ -3,4 +3,6 @@
 <div id="sharethis-buttons"></div>
 
 <p><b>Or copy and share this link:</b></p>
-<p class="current-url">{{currentUrl}}</p>
+<div class="copy-link-container">
+  <button mat-flat-button color="primary" (click)="copyLinkToClipboard($event)">Copy link</button>
+</div>
