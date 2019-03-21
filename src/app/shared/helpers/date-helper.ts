@@ -1,3 +1,4 @@
+import { ITimeBetweenDates } from '../intefaces/time-between-dates.interface';
 
 export class DateHelper {
 
@@ -68,20 +69,20 @@ export class DateHelper {
     );
   }
 
- public static getNextDayOfWeek(date:Date, dayOfTheWeek: number): Date {
+  public static getNextDayOfWeek(date: Date, dayOfTheWeek: number): Date {
 
-   let resultDate = date;
+    let resultDate = date;
 
-   if (resultDate.getDay() === dayOfTheWeek) {
-     resultDate = DateHelper.addDays(resultDate, 1);
-   }
+    if (resultDate.getDay() === dayOfTheWeek) {
+      resultDate = DateHelper.addDays(resultDate, 1);
+    }
 
-   resultDate = new Date(resultDate.getTime());
+    resultDate = new Date(resultDate.getTime());
 
-   resultDate.setDate(resultDate.getDate() + (7 + dayOfTheWeek - resultDate.getDay()) % 7);
+    resultDate.setDate(resultDate.getDate() + (7 + dayOfTheWeek - resultDate.getDay()) % 7);
 
-  return resultDate;
-}
+    return resultDate;
+  }
 
   public static getMondayOfCurrentWeek(now: Date): Date {
     let date = new Date(now);
@@ -125,29 +126,76 @@ export class DateHelper {
     return date2;
   }
 
-  public static getTimeElapsedFromDate(fromDate: Date): string {
+  public static getFormattedTimeBetweenDates(fromDate: Date, toDate: Date = new Date()): string {
 
-    let now: Date = new Date();
-    let secondsElapsed = this.secondsBetweenDates(fromDate, now);
+    let timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
+
+    let hoursSeparator: string = ":";
+    let minutesSeparator: string = ":";
+
+    let hoursText = timeBetweenDates.hours.toString();
+    let minutesText = timeBetweenDates.minutes.toString();
+    let secondsText = timeBetweenDates.seconds.toString();
+
+    if (timeBetweenDates.hours == 0) { hoursText = ''; hoursSeparator = ''; }
+    if (timeBetweenDates.minutes < 10) { minutesText = "0" + timeBetweenDates.minutes; }
+    if (timeBetweenDates.seconds < 10) { secondsText = "0" + timeBetweenDates.seconds; }
+
+    return hoursText + hoursSeparator + minutesText + minutesSeparator + secondsText;
+  }
+
+  public static getFormattedTimeBetweenDatesVerbose(fromDate: Date, toDate: Date = new Date()): string {
+
+    //todo refactor this method.
+
+    let timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
+
+    let hoursSeparator: string = " hours ";
+    let minutesSeparator: string = " minutes ";
+    let secondsSuffix: string = " seconds";
+
+    let hoursText = timeBetweenDates.hours.toString();
+    let minutesText = timeBetweenDates.minutes.toString();
+    let secondsText = "";
+
+    if (timeBetweenDates.hours === 0) { hoursText = ''; hoursSeparator = ''; }
+    else if (timeBetweenDates.hours === 1) { hoursSeparator = ' hour '; }
+    if (timeBetweenDates.minutes === 0) { minutesText = ""; minutesSeparator = ""; }
+    else if (timeBetweenDates.minutes === 1) {  minutesSeparator = " minute "; }
+
+    if (timeBetweenDates.hours === 0 && timeBetweenDates.minutes === 0) {
+      
+      let seconds = timeBetweenDates.seconds;
+      //todo hack
+      if (seconds < 59) {
+        seconds++;
+      }
+
+      secondsText = seconds.toString();
+
+      if (seconds === 1) { secondsSuffix = " second "; }
+      secondsText += secondsSuffix;
+
+    }
+
+    return hoursText + hoursSeparator + minutesText + minutesSeparator + secondsText;
+  }
+
+  private static getTimeBetweenDates(fromDate: Date, toDate: Date): any {
+    let secondsElapsed = this.secondsBetweenDates(fromDate, toDate);
 
     let sec_num = parseInt(secondsElapsed.toString(), 10);
     let hours = Math.floor(sec_num / 3600);
     let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     let seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-    let hourSeparator = ':';
-    let minuteSeparator = ':';
+    return <ITimeBetweenDates>{
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds
+    };
 
-    let hoursText = hours.toString();
-    let minutesText = minutes.toString();
-    let secondsText = seconds.toString();
 
-    if (hours == 0) { hoursText = ''; hourSeparator = ''; }
-    if (minutes < 10 && hours != 0) { minutesText = "0" + minutes; }
-    if (seconds < 10) { secondsText = "0" + seconds; }
-    return hoursText + hourSeparator + minutesText + minuteSeparator + secondsText;
   }
-
-
 }
 

@@ -24,7 +24,7 @@
   <div class="amount-earned">
     <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
   </div>
-  <p class="note">around {{userSelection.getRemainingTimeToFinishWork()}} more to go</p>
+  <p class="note">{{userSelection.getRemainingTimeToFinishWork()}} more to go</p>
 
 </ng-container>
 

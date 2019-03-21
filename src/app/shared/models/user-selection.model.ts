@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+//import * as moment from 'moment';
 import { includes } from 'lodash';
 import { AppConstants } from '../constants/app-constants';
 import { INameValue } from '../intefaces/name-value.interface';
@@ -291,12 +291,38 @@ export class UserSelection {
   getRemainingTimeToStartWork(): string {
     //TODO this method is called many times, naybe do some calculations onCalculate event and store it as property instead
     //of calculating each single time.
+    //let now = new Date();
+    //let nowMoment = moment(now);
+
+    //if (!this.hasDayOff() && !this.workTodayHasStarted()) {
+    //  let startTimeMoment = moment(this.dayStartTime);
+    //  return `You start working in around ${nowMoment.to(startTimeMoment, true)}`;
+    //}
+    //else if (this.workTodayHasFinished() || this.hasDayOff()) {
+
+    //  let tomorrow = DateHelper.addDays(now, 1);
+    //  let nextWorkingDayStartTime = this.getNextWorkingDay(now);
+    //  let nextWorkingDayName = WeekDaysEnum[nextWorkingDayStartTime.getDay()];
+
+    //  if (this.hasDayOff(tomorrow)) {
+    //    return `You are off until next ${nextWorkingDayName} at ${this.startTime}`;
+    //  }
+    //  else {
+    //    let nextWorkingDayStartTimeMoment = moment(nextWorkingDayStartTime);
+    //    return `You start working in around ${nowMoment.to(nextWorkingDayStartTimeMoment, true)}`;
+    //  }
+
+    //}
+    //else {
+    //  //Should not ever reach this point
+    //  return "";
+    //}
+
+
     let now = new Date();
-    let nowMoment = moment(now);
 
     if (!this.hasDayOff() && !this.workTodayHasStarted()) {
-      let startTimeMoment = moment(this.dayStartTime);
-      return `You start working in around ${nowMoment.to(startTimeMoment, true)}`;
+      return `You start work in ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, this.dayStartTime)}`;
     }
     else if (this.workTodayHasFinished() || this.hasDayOff()) {
 
@@ -305,11 +331,10 @@ export class UserSelection {
       let nextWorkingDayName = WeekDaysEnum[nextWorkingDayStartTime.getDay()];
 
       if (this.hasDayOff(tomorrow)) {
-        return `You are off until next ${nextWorkingDayName} at ${this.startTime}`;
+        return `You're off until next ${nextWorkingDayName} at ${this.startTime}`;
       }
       else {
-        let nextWorkingDayStartTimeMoment = moment(nextWorkingDayStartTime);
-        return `You start working in around ${nowMoment.to(nextWorkingDayStartTimeMoment, true)}`;
+        return `You start work in ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, nextWorkingDayStartTime)}`;
       }
 
     }
@@ -332,9 +357,10 @@ export class UserSelection {
   }
 
   getRemainingTimeToFinishWork(): string {
-    let now = moment(new Date());
-    let endWork = moment(this.dayEndTime);
-    return now.to(endWork, true);
+    //let now = moment(new Date());
+    //let endWork = moment(this.dayEndTime);
+    //return now.to(endWork, true);
+    return DateHelper.getFormattedTimeBetweenDatesVerbose(new Date(), this.dayEndTime);
   }
 
   workTodayHasStarted(): boolean {

@@ -44,7 +44,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   private setupTimeElapsedInterval(): void {
     this.stopWatchIntervalId = window.setInterval(() => {
 
-      this.timeElapsedSinceCalculated = DateHelper.getTimeElapsedFromDate(this.userSelections[0].dateTimeWhenClickedCalculate);
+      this.timeElapsedSinceCalculated = DateHelper.getFormattedTimeBetweenDates(this.userSelections[0].dateTimeWhenClickedCalculate);
 
     }, AppConstants.Common.UPDATE_STOPWATCH_FREQUENCY_IN_MS);
   }

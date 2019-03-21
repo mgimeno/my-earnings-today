@@ -36,7 +36,7 @@ export class MyEarningsDetailsComponent implements OnInit, OnDestroy{
   private setupTimeElapsedInterval(): void {
     this.stopWatchIntervalId = window.setInterval(() => {
 
-      this.timeElapsedSinceCalculated = DateHelper.getTimeElapsedFromDate(this.userSelection.dateTimeWhenClickedCalculate);
+      this.timeElapsedSinceCalculated = DateHelper.getFormattedTimeBetweenDates(this.userSelection.dateTimeWhenClickedCalculate);
 
     }, AppConstants.Common.UPDATE_STOPWATCH_FREQUENCY_IN_MS);
   }

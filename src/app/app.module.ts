@@ -58,7 +58,7 @@ import { UserSelectionValidationDialogComponent } from './components/dumb/user-s
     MatDialogModule
   ],
   entryComponents: [ShareBottomSheetComponent, UserSelectionValidationDialogComponent ],
-  providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: 250 } }],
+  providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: 250, hasBackdrop: true } }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

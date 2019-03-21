@@ -25,9 +25,10 @@ export class MyEarningsComponent implements OnDestroy {
     private storageService: StorageService,
     private validationDialog: MatDialog) {
 
-    this.loadInitialUserSelection();
 
     this.setupOnParamsChange();
+
+    this.loadInitialUserSelection();
 
   }
 
@@ -38,6 +39,7 @@ export class MyEarningsComponent implements OnDestroy {
     }
     else if (this.storageService.hasUserSelectionOnLocalStorage()) {
       this.userSelection = this.storageService.getUserSelectionFromLocalStorage();
+      console.log("loaded from local storage");
     }
     else {
       this.userSelection = new UserSelection();
@@ -45,6 +47,7 @@ export class MyEarningsComponent implements OnDestroy {
     }
 
     if (this.userSelection.canCalculate()) {
+      console.log("can calculate");
       this.calculate();
     }
 
@@ -58,15 +61,12 @@ export class MyEarningsComponent implements OnDestroy {
     this.userSelection.calculate();
 
     this.showResults = true;
+    console.log(this.showResults);
 
-  }
-
-  private canCalculate(): boolean {
-    return this.userSelection.canCalculate();
   }
 
   tryCalculate(): void {
-    if (this.canCalculate()) {
+    if (this.userSelection.canCalculate()) {
       this.calculate();
     }
     else {
@@ -90,7 +90,9 @@ export class MyEarningsComponent implements OnDestroy {
   private setupOnParamsChange(): void {
     this.activeRoute.queryParams.subscribe(queryParams => {
       if (CommonHelper.isEmptyObject(queryParams)) {
-        this.userSelection.clearResults();
+        if (this.userSelection) {
+          this.userSelection.clearResults();
+        }
         this.showResults = false;
       }
     });

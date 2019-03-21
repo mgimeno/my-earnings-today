@@ -24,9 +24,9 @@ export class CompareToolComponent {
     private storageService: StorageService,
     private validationDialog: MatDialog) {
     
-    this.loadInitialUserSelections();
     this.setupOnParamsChange();
-    
+
+    this.loadInitialUserSelections();
   }
 
   private loadInitialUserSelections(): void {
@@ -99,7 +99,9 @@ export class CompareToolComponent {
 
   private clearAllIntervals(): void {
     console.log("Compare tool selections destroyed");
-    this.userSelections.forEach(us => { us.clearResults(); });
+    if (this.userSelections && this.userSelections.length) {
+      this.userSelections.forEach(us => { us.clearResults(); });
+    }
   }
 
   openShareBottomSheet(): void {

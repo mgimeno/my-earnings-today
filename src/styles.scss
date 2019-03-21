@@ -32,6 +32,10 @@ input::-webkit-inner-spin-button {
   background-color: rgba(0,0,0,0.12);
 }
 
+.mat-checkbox-layout .mat-checkbox-inner-container {
+  margin-right: 5px;
+}
+
 input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }
