@@ -11,8 +11,10 @@ declare var window: any;
 export class ShareBottomSheetComponent implements OnInit {
 
   isLinkCopiedToClipboard: boolean = false;
+  currentUrl: string;
 
   constructor(private bottomSheetRef: MatBottomSheetRef<ShareBottomSheetComponent>) {
+    this.currentUrl = decodeURI(window.location.href);
   }
 
   ngOnInit() {
@@ -27,21 +29,16 @@ export class ShareBottomSheetComponent implements OnInit {
       size: 32,
       show_mobile_buttons: true,
       spacing: 7,
-      url: this.getCurrentUrl(),
+      url: this.currentUrl,
       title: "My Earnings Today", //todo get this from environment?
       image: "https://www.myearningstoday.com/assets/logo.png",
       description: "Calculate how much you have already earned today", //todo get this from environment?
     });
   }
 
-  copyLinkToClipboard(event: MouseEvent): void {
+  onCopyLinkClick(event: MouseEvent): void {
     event.preventDefault();
-    CommonHelper.copyToClipboard(this.getCurrentUrl());
     this.isLinkCopiedToClipboard = true;
-  }
-
-  getCurrentUrl(): string {
-    return decodeURI(window.location.href);
   }
 
   close(): void {

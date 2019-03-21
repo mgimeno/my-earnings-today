@@ -7,6 +7,7 @@ import {
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
   MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS
 } from '@angular/material';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,7 +56,8 @@ import { UserSelectionValidationDialogComponent } from './components/dumb/user-s
     MatTabsModule,
     MatGridListModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    ClipboardModule
   ],
   entryComponents: [ShareBottomSheetComponent, UserSelectionValidationDialogComponent ],
   providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: 250, hasBackdrop: true } }],

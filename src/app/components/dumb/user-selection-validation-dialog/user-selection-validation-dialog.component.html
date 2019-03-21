@@ -14,7 +14,8 @@
         Type a name
       </p>
       <p *ngIf="!userSelection.hasRate()">
-        Type how much you earn
+        {{getValidationMessageForRate(userSelection)}}
+        
       </p>
       <p *ngIf="!userSelection.currencySymbol">
         Select a currency symbol

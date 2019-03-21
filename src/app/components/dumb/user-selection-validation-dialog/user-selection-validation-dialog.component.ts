@@ -24,6 +24,10 @@ export class UserSelectionValidationDialogComponent {
     return (userSelection.hasName() ? userSelection.name : `Person ${userSelection.personNumber}`);
   }
 
+  getValidationMessageForRate(userSelection: UserSelection): string {
+    return `Type how much ${(userSelection.personNumber > 1 ? "they" : "you")} earn`;
+  }
+
   onClose(): void {
     this.dialogRef.close();
   }

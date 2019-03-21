@@ -3,6 +3,15 @@
 <div id="sharethis-buttons"></div>
 
 <p><b>Or copy and share this link:</b></p>
-<div class="copy-link-container">
-  <button mat-flat-button color="primary" (click)="copyLinkToClipboard($event)">Copy link</button>
+<div class="copy-link-container" #container>
+  <button mat-flat-button
+          color="primary"
+          [class.link-copied]="isLinkCopiedToClipboard"
+          ngxClipboard
+          [cbContent]="currentUrl"
+          [container]="container"
+          (click)="onCopyLinkClick($event)">
+    <span *ngIf="!isLinkCopiedToClipboard">Copy link</span>
+    <span *ngIf="isLinkCopiedToClipboard">Copied!</span>
+  </button>
 </div>
