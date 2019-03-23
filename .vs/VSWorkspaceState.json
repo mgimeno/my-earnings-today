@@ -6,17 +6,11 @@
     "\\src\\app\\components",
     "\\src\\app\\components\\dumb",
     "\\src\\app\\components\\dumb\\compare-tool-details",
-    "\\src\\app\\components\\dumb\\my-earnings-details",
-    "\\src\\app\\components\\dumb\\user-selection",
-    "\\src\\app\\components\\smart",
-    "\\src\\app\\components\\smart\\compare-tool",
-    "\\src\\app\\components\\smart\\my-earnings",
+    "\\src\\app\\components\\dumb\\share-bottom-sheet",
+    "\\src\\app\\components\\dumb\\user-selection-validation-dialog",
     "\\src\\app\\shared",
-    "\\src\\app\\shared\\helpers",
-    "\\src\\app\\shared\\intefaces",
-    "\\src\\app\\shared\\models",
-    "\\src\\app\\shared\\services"
+    "\\src\\app\\shared\\helpers"
   ],
-  "SelectedNode": "\\src\\app\\shared\\helpers\\date-helper.ts",
+  "SelectedNode": "\\src\\app\\components\\dumb\\share-bottom-sheet\\share-bottom-sheet.component.html",
   "PreviewInSolutionExplorer": false
 }

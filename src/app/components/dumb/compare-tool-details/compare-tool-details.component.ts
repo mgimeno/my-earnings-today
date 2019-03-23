@@ -16,16 +16,6 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   stopWatchIntervalId: number = null;
   timeElapsedSinceCalculated = "00:00";
 
-  readonly displayedColumns: string[] =
-    ['name',
-      'stopwatchAmount',
-      'currentHourAmount',
-      'currentDayAmount',
-      'currentWeekAmount',
-      'currentMonthAmount',
-      'currentYearAmount'
-    ];
-
   readonly tiles: any[] = [
     { codeName: "stopwatch", title: 'Stopwatch', amountProperty: 'stopwatchAmount', totalAmountProperty: null, color: 'lightblue' },
     { codeName: "hour", title: 'This Hour', amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount', color: 'lightgray' },

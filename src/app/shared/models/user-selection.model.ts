@@ -94,25 +94,9 @@ export class UserSelection {
       this.workingHoursThisMonth = (workingDaysThisMonth * this.hoursWorkedPerDay);
       this.workingHoursThisYear = (workingDaysThisYear * this.hoursWorkedPerDay);
 
-      console.log("dayStartTime", this.dayStartTime);
-      console.log("dayEndTime", this.dayEndTime);
-      console.log({ workingDaysArray });
-      console.log("hoursWorkedPerDay", this.hoursWorkedPerDay);
-      console.log({ workingDaysThisWeek });
-      console.log({ workingDaysThisMonth });
-      console.log({ workingDaysThisYear });
-
-
       this.calculateAmountEarnedPerHour();
 
-      console.log("amountEarnedPerHour", this.amountEarnedPerHour);
-
       this.updateTotalAmounts();
-
-      console.log("totalDayAmount", this.totalDayAmount);
-      console.log("totalWeekAmount", this.totalWeekAmount);
-      console.log("totalMonthAmount", this.totalMonthAmount);
-      console.log("totalYearAmount", this.totalYearAmount);
 
       this.updateStopwatchAmount(now);
       this.updateCurrentHourAmount(now);
@@ -127,7 +111,7 @@ export class UserSelection {
   }
 
   private updateTotalAmounts(): void {
-    this.totalHourAmount = 0; //TODO
+    this.totalHourAmount = this.amountEarnedPerHour;
     this.totalDayAmount = (this.amountEarnedPerHour * this.hoursWorkedPerDay);
     this.totalWeekAmount = (this.amountEarnedPerHour * this.workingHoursThisWeek);
     this.totalMonthAmount = (this.amountEarnedPerHour * this.workingHoursThisMonth);
@@ -139,7 +123,7 @@ export class UserSelection {
     switch (this.frequency.value) {
       //TODO Make Frequency values a Enum too.
       case "hour":
-        this.amountEarnedPerHour = this.rate;
+        this.amountEarnedPerHour = +this.rate;
         break;
       case "day":
         this.amountEarnedPerHour = (this.rate / this.hoursWorkedPerDay);
@@ -157,12 +141,15 @@ export class UserSelection {
   }
 
   private updateStopwatchAmount(now) {
-    //TODO
-    this.stopwatchAmount = 1;
+    let startPeriod = new Date(this.dateTimeWhenClickedCalculate);
+
+    this.stopwatchAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.Stopwatch, startPeriod, now);
   }
   private updateCurrentHourAmount(now) {
-    //TODO
-    this.currentHourAmount = 2;
+
+    let startPeriod = new Date(now);
+
+    this.currentHourAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.CurrentHour, startPeriod, now);
   }
 
   private updateCurrentDayAmount(now: Date): void {
@@ -204,9 +191,12 @@ export class UserSelection {
     let daysWorkedFromStartOfPeriodExcludingToday: number = 0;
 
     switch (periodType) {
-      case PeriodEnum.CurrentDay:
+      case PeriodEnum.Stopwatch:
+        daysWorkedFromStartOfPeriodExcludingToday = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
+        break;
       case PeriodEnum.CurrentHour:
       case PeriodEnum.CurrentDay:
+        daysWorkedFromStartOfPeriodExcludingToday = 0;
         break;
       case PeriodEnum.CurrentWeek:
         if (!DateHelper.isMonday(now)) {
@@ -230,9 +220,26 @@ export class UserSelection {
     let hoursWorkedToday: number = 0;
 
     if (!this.hasDayOff(now) && this.workTodayHasStarted()) {
-      //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
-      console.log("DATEEEEEE", DateHelper.minDate(now, this.dayEndTime));
-      hoursWorkedToday = DateHelper.hoursBetweenDates(this.dayStartTime, DateHelper.minDate(now, this.dayEndTime));
+
+      if (periodType === PeriodEnum.CurrentHour) {
+        let currentHourStart = new Date(now);
+        currentHourStart.setMinutes(0, 0, 0);
+        let currentHourEnd = new Date(now);
+        currentHourEnd.setMinutes(59, 59, 999);
+        console.log({ currentHourStart });
+        console.log({ currentHourEnd });
+        //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
+        hoursWorkedToday = DateHelper.hoursBetweenDates(currentHourStart, DateHelper.minDate(now, currentHourEnd));
+      }
+      else if (periodType === PeriodEnum.Stopwatch) {
+        //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
+        hoursWorkedToday = DateHelper.hoursBetweenDates(this.dateTimeWhenClickedCalculate, DateHelper.minDate(now, this.dayEndTime));
+      }
+      else {
+        //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
+        hoursWorkedToday = DateHelper.hoursBetweenDates(this.dayStartTime, DateHelper.minDate(now, this.dayEndTime));
+      }
+
     }
 
     let totalHoursWorked = (hoursWorkedFromStartOfPeriodExcludingToday + hoursWorkedToday);

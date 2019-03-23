@@ -26,6 +26,10 @@ export class DateHelper {
   }
 
   public static getDaysWorkedInPeriod(workingDaysOfTheWeek: Array<number>, startDate: Date, endDate: Date) {
+    if (startDate > endDate) {
+      return 0;
+    }
+
     let ndays = 1 + Math.round((endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000));
     let sum = (a, b) => {
       return a + Math.floor((ndays + (startDate.getDay() + 6 - b) % 7) / 7);

@@ -1,69 +1,24 @@
-<h1>Compare Results</h1>
+<h1>Today you have already earned</h1>
 
-<div class="table-container">
+<div class="m-t-30 m-b-30">
+  <ng-container *ngFor="let userSelection of userSelections">
 
-  <table mat-table [dataSource]="userSelections">
+    <div class="today-earned-container">
+      <div class="name">{{userSelection.name}}</div>
+      <div class="amount">
+        <app-currency-display [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></app-currency-display>
+      </div>
+    </div>
 
-    <ng-container matColumnDef="name" sticky>
-      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="stopwatchAmount">
-      <mat-header-cell *matHeaderCellDef>Stopwatch</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <app-currency-display [amount]=element.stopwatchAmount [symbol]=element.currencySymbol></app-currency-display>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="currentHourAmount">
-      <mat-header-cell *matHeaderCellDef>This Hour</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <app-currency-display [amount]=element.currentHourAmount [symbol]=element.currencySymbol></app-currency-display>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="currentDayAmount">
-      <mat-header-cell *matHeaderCellDef>Today</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <app-currency-display [amount]=element.currentDayAmount [symbol]=element.currencySymbol></app-currency-display>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="currentWeekAmount">
-      <mat-header-cell *matHeaderCellDef>This Week</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <app-currency-display [amount]=element.currentWeekAmount [symbol]=element.currencySymbol></app-currency-display>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="currentMonthAmount">
-      <mat-header-cell *matHeaderCellDef>This Month</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <app-currency-display [amount]=element.currentMonthAmount [symbol]=element.currencySymbol></app-currency-display>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="currentYearAmount">
-      <mat-header-cell *matHeaderCellDef>This Year</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <app-currency-display [amount]=element.currentYearAmount [symbol]=element.currencySymbol></app-currency-display>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </table>
+  </ng-container>
 
 </div>
 
-
-
-<mat-grid-list cols="1" rows="6" rowHeight="150px" gutterSize="0">
+<mat-grid-list cols="1" rows="6" rowHeight="{{((userSelections.length + 1) * 30)}}px" gutterSize="0">
   <mat-grid-tile *ngFor="let tile of tiles" [colspan]="1" [rowspan]="1" [style.background]="tile.color">
-
     <mat-grid-tile-header>
-      {{tile.title}}
+      {{tile.title
+    }}
     </mat-grid-tile-header>
 
     <div style="display: flex;
@@ -81,15 +36,15 @@
             <app-currency-display [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></app-currency-display>
           </span>
           <!--<span  style="flex:1;    text-align: right;font-size:small;">
-            out of
-            <app-currency-display [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></app-currency-display>
-          </span>-->
+          out of
+          <app-currency-display [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></app-currency-display>
+        </span>-->
         </div>
 
 
       </ng-container>
     </div>
 
-  </mat-grid-tile>
+    </mat-grid-tile>
 
-</mat-grid-list>
+    </mat-grid-list>
