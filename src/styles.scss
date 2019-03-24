@@ -48,8 +48,14 @@ input[type=number] {
   color: rgba(0,0,0,0.22);
 }
 
-.mat-tab-label{
+.mat-tab-label {
   height: 35px !important;
+  min-width: 120px !important;
+  padding: 0 6px 0 16px !important;
+
+  &:first-of-type {
+    padding: 0 16px !important;
+  }
 }
 
 .clickable{
