@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS
+  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule,
+  MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS
 } from '@angular/material';
 import { ClipboardModule } from 'ngx-clipboard';
 
@@ -21,6 +22,7 @@ import { MyEarningsDetailsComponent } from './components/dumb/my-earnings-detail
 import { CurrencyDisplayComponent } from './components/dumb/currency-display/currency-display.component';
 import { CompareToolDetailsComponent } from './components/dumb/compare-tool-details/compare-tool-details.component';
 import { UserSelectionValidationDialogComponent } from './components/dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
+import { ConfirmDialogComponent } from './components/dumb/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { UserSelectionValidationDialogComponent } from './components/dumb/user-s
     MyEarningsDetailsComponent,
     CurrencyDisplayComponent,
     CompareToolDetailsComponent,
-    UserSelectionValidationDialogComponent
+    UserSelectionValidationDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,7 @@ import { UserSelectionValidationDialogComponent } from './components/dumb/user-s
     MatDialogModule,
     ClipboardModule
   ],
-  entryComponents: [ShareBottomSheetComponent, UserSelectionValidationDialogComponent ],
+  entryComponents: [ShareBottomSheetComponent, UserSelectionValidationDialogComponent, ConfirmDialogComponent ],
   providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: 250, hasBackdrop: true } }],
   bootstrap: [AppComponent]
 })

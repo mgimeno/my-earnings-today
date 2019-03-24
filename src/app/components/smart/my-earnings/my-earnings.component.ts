@@ -23,7 +23,7 @@ export class MyEarningsComponent implements OnDestroy {
     private activeRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
-    private validationDialog: MatDialog) {
+    private dialog: MatDialog) {
 
 
     this.setupOnParamsChange();
@@ -70,7 +70,7 @@ export class MyEarningsComponent implements OnDestroy {
       this.calculate();
     }
     else {
-      this.validationDialog.open(UserSelectionValidationDialogComponent, { data: [this.userSelection]} );
+      this.dialog.open(UserSelectionValidationDialogComponent, { data: [this.userSelection]} );
     }
   }
 

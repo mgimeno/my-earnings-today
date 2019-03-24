@@ -7,6 +7,8 @@ import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 import { UserSelectionValidationDialogComponent } from '../../dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
+import { IConfirmDialog } from 'src/app/shared/intefaces/confirm-dialog.interface';
+import { ConfirmDialogComponent } from '../../dumb/confirm-dialog/confirm-dialog.component';
 
 @Component({
   templateUrl: './compare-tool.component.html',
@@ -22,8 +24,8 @@ export class CompareToolComponent {
     private activeRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
-    private validationDialog: MatDialog) {
-    
+    private dialog: MatDialog) {
+
     this.setupOnParamsChange();
 
     this.loadInitialUserSelections();
@@ -38,7 +40,7 @@ export class CompareToolComponent {
       if (this.storageService.hasUserSelectionOnURL(personNumber)) {
         let userSelection = this.storageService.getUserSelectionFromURL(personNumber);
         this.userSelections.push(userSelection);
-        
+
       }
       else if (this.storageService.hasUserSelectionOnLocalStorage(personNumber)) {
         let userSelection = this.storageService.getUserSelectionFromLocalStorage(personNumber);
@@ -71,12 +73,12 @@ export class CompareToolComponent {
   }
 
   tryCalculate(): void {
-    
+
     if (this.canCalculate()) {
       this.calculate();
     }
     else {
-      this.validationDialog.open(UserSelectionValidationDialogComponent, { data: this.userSelections });
+      this.dialog.open(UserSelectionValidationDialogComponent, { data: this.userSelections });
     }
   }
 
@@ -95,7 +97,24 @@ export class CompareToolComponent {
     return this.userSelections.length < environment.compareToolMaxPersons;
   }
 
-  
+  removePerson(event: MouseEvent, tabIndex: number): void {
+    event.stopPropagation();
+
+    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: <IConfirmDialog>{
+        body: "Do you want to remove this person?",
+        cancelButtonText: "Cancel",
+        confirmButtonText: "Yes"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.userSelections.splice(tabIndex, 1);
+    //TODO recalculate personIndexes, also names (it uses index) if untouched.
+      }
+    });
+  }
 
   private clearAllIntervals(): void {
     console.log("Compare tool selections destroyed");
@@ -118,7 +137,7 @@ export class CompareToolComponent {
   }
 
   ngOnDestroy(): void {
-    this.clearAllIntervals();    
+    this.clearAllIntervals();
   }
 
 }

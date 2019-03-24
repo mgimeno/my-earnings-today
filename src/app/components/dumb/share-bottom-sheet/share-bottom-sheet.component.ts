@@ -36,8 +36,7 @@ export class ShareBottomSheetComponent implements OnInit {
     });
   }
 
-  onCopyLinkClick(event: MouseEvent): void {
-    event.preventDefault();
+  onCopyLinkClick(): void {
     this.isLinkCopiedToClipboard = true;
   }
 

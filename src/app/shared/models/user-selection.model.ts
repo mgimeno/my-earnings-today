@@ -245,11 +245,6 @@ export class UserSelection {
           hoursWorkedToday = DateHelper.hoursBetweenDates(DateHelper.maxDate(this.dateTimeWhenClickedCalculate, this.dayStartTime), DateHelper.minDate(now, this.dayEndTime));
         }
 
-        console.log("clicked", this.dateTimeWhenClickedCalculate);
-        console.log("min", DateHelper.minDate(now, this.dayEndTime));
-
-        console.log({ hoursWorkedFromStartOfPeriodExcludingToday });
-        console.log({ hoursWorkedToday });
       }
       else {
         //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.

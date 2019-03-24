@@ -10,7 +10,7 @@
           ngxClipboard
           [cbContent]="currentUrl"
           [container]="container"
-          (click)="onCopyLinkClick($event)">
+          (click)="onCopyLinkClick()">
     <span *ngIf="!isLinkCopiedToClipboard">Copy link</span>
     <span *ngIf="isLinkCopiedToClipboard">Copied!</span>
   </button>

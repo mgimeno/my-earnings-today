@@ -7,7 +7,14 @@
 
     <mat-tab-group [selectedIndex]="activeTabIndex">
 
-      <mat-tab *ngFor="let userSelection of userSelections;" [label]="userSelection.name">
+      <mat-tab *ngFor="let userSelection of userSelections; let index = index;">
+
+        <ng-template mat-tab-label>
+          <section class="tab-label">
+            <span class="title">{{userSelection.name}}</span>
+            <mat-icon *ngIf="index > 0" class="close-icon clickable" (click)="removePerson($event,index)">clear</mat-icon>
+          </section>
+        </ng-template>
 
         <app-user-selection [userSelection]=userSelection [isCompareTool]=true></app-user-selection>
 

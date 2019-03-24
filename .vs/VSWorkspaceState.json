@@ -5,13 +5,13 @@
     "\\src\\app",
     "\\src\\app\\components",
     "\\src\\app\\components\\dumb",
+    "\\src\\app\\components\\dumb\\compare-tool-details",
     "\\src\\app\\components\\dumb\\my-earnings-details",
     "\\src\\app\\components\\dumb\\share-bottom-sheet",
-    "\\src\\app\\components\\dumb\\user-selection",
     "\\src\\app\\shared",
-    "\\src\\app\\shared\\enums",
+    "\\src\\app\\shared\\helpers",
     "\\src\\app\\shared\\models"
   ],
-  "SelectedNode": "\\src\\app\\components\\dumb\\user-selection\\user-selection.component.html",
+  "SelectedNode": "\\src\\app\\shared\\models\\user-selection.model.ts",
   "PreviewInSolutionExplorer": false
 }

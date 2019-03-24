@@ -52,6 +52,16 @@ input[type=number] {
   height: 35px !important;
 }
 
+.clickable{
+  cursor:pointer;
+}
+
+.mat-dialog-actions {
+  justify-content: center;
+  margin-top: 10px;
+}
+
+
 .buttons {
   text-align: center;
   display: flex;
