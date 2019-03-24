@@ -130,6 +130,13 @@ export class DateHelper {
     return date2;
   }
 
+  public static maxDate(date1: Date, date2: Date): Date {
+    if (date1 > date2) {
+      return date1;
+    }
+    return date2;
+  }
+
   public static getFormattedTimeBetweenDates(fromDate: Date, toDate: Date = new Date()): string {
 
     let timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);

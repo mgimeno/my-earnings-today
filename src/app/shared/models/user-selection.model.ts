@@ -96,7 +96,7 @@ export class UserSelection {
 
       this.calculateAmountEarnedPerHour();
 
-      this.updateTotalAmounts();
+      this.updateTotalAmounts(now);
 
       this.updateStopwatchAmount(now);
       this.updateCurrentHourAmount(now);
@@ -107,12 +107,12 @@ export class UserSelection {
 
     }, AppConstants.Common.UPDATE_AMOUNTS_FREQUENCY_IN_MS);
 
-    console.log(this);
+
   }
 
-  private updateTotalAmounts(): void {
-    this.totalHourAmount = this.amountEarnedPerHour;
-    this.totalDayAmount = (this.amountEarnedPerHour * this.hoursWorkedPerDay);
+  private updateTotalAmounts(now: Date): void {
+    this.totalHourAmount = (!this.isCurrentlyWorking() ? 0 : this.amountEarnedPerHour);
+    this.totalDayAmount = (this.hasDayOff(now) ? 0 : (this.amountEarnedPerHour * this.hoursWorkedPerDay));
     this.totalWeekAmount = (this.amountEarnedPerHour * this.workingHoursThisWeek);
     this.totalMonthAmount = (this.amountEarnedPerHour * this.workingHoursThisMonth);
     this.totalYearAmount = (this.amountEarnedPerHour * this.workingHoursThisYear);
@@ -219,21 +219,37 @@ export class UserSelection {
     let hoursWorkedFromStartOfPeriodExcludingToday = (daysWorkedFromStartOfPeriodExcludingToday * this.hoursWorkedPerDay);
     let hoursWorkedToday: number = 0;
 
+    
+
     if (!this.hasDayOff(now) && this.workTodayHasStarted()) {
 
       if (periodType === PeriodEnum.CurrentHour) {
-        let currentHourStart = new Date(now);
-        currentHourStart.setMinutes(0, 0, 0);
-        let currentHourEnd = new Date(now);
-        currentHourEnd.setMinutes(59, 59, 999);
-        console.log({ currentHourStart });
-        console.log({ currentHourEnd });
-        //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
-        hoursWorkedToday = DateHelper.hoursBetweenDates(currentHourStart, DateHelper.minDate(now, currentHourEnd));
+
+        if (!this.workTodayHasFinished()) {
+          let currentHourStart = new Date(now);
+          currentHourStart.setMinutes(0, 0, 0);
+          let currentHourEnd = new Date(now);
+          currentHourEnd.setMinutes(59, 59, 999);
+
+          //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
+          hoursWorkedToday = DateHelper.hoursBetweenDates(currentHourStart, DateHelper.minDate(now, currentHourEnd));
+        }
       }
       else if (periodType === PeriodEnum.Stopwatch) {
-        //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
-        hoursWorkedToday = DateHelper.hoursBetweenDates(this.dateTimeWhenClickedCalculate, DateHelper.minDate(now, this.dayEndTime));
+
+        if (this.dateTimeWhenClickedCalculate > this.dayEndTime) {
+          hoursWorkedToday = 0;
+        }
+        else {
+          //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
+          hoursWorkedToday = DateHelper.hoursBetweenDates(DateHelper.maxDate(this.dateTimeWhenClickedCalculate, this.dayStartTime), DateHelper.minDate(now, this.dayEndTime));
+        }
+
+        console.log("clicked", this.dateTimeWhenClickedCalculate);
+        console.log("min", DateHelper.minDate(now, this.dayEndTime));
+
+        console.log({ hoursWorkedFromStartOfPeriodExcludingToday });
+        console.log({ hoursWorkedToday });
       }
       else {
         //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
