@@ -104,17 +104,43 @@ export class CompareToolComponent {
       data: <IConfirmDialog>{
         body: "Do you want to remove this person?",
         cancelButtonText: "Cancel",
-        confirmButtonText: "Yes"
+        confirmButtonText: "Remove"
       }
     });
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.userSelections.splice(tabIndex, 1);
-    //TODO recalculate personIndexes, also names (it uses index) if untouched.
+
+        this.reorderUserSelections();
       }
     });
   }
+
+
+  private reorderUserSelections(): void {
+
+    let personNumber = 1;
+
+    for (let index = 1; index < this.userSelections.length; index++) {
+
+      personNumber++;
+
+      let userSelection = this.userSelections[index];
+
+      if (userSelection.personNumber != personNumber) {
+        
+        if (userSelection.name === `Person ${userSelection.personNumber}`) {
+          userSelection.name = `Person ${personNumber}`;
+        }
+
+        userSelection.personNumber = personNumber;
+      }
+
+    }
+
+  }
+
 
   private clearAllIntervals(): void {
     console.log("Compare tool selections destroyed");
