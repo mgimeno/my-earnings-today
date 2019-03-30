@@ -1,6 +1,8 @@
-app-compare-tool-details {
 
-  .today-earned-container {
+.today-earned-container {
+  margin: 30px 0;
+
+  .person {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,33 +17,6 @@ app-compare-tool-details {
 
     .amount {
       font-size: 25px;
-    }
-  }
-
-  .mat-grid-list {
-    margin-top: 25px;
-  }
-
-  .mat-grid-tile {
-
-    figure {
-      justify-content: unset !important;
-      align-items: unset !important;
-    }
-
-    .mat-grid-tile-header {
-      height: 32px !important;
-      padding: 0 12px !important;
-      justify-content: center;
-    }
-
-    .current-amount {
-      margin: 42px auto 6px auto;
-      font-size: 19px;
-    }
-
-    .details {
-      font-size: small;
     }
   }
 }

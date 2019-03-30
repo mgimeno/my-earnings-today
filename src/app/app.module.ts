@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatOptionModule,
   MatSelectModule, MatInputModule, MatIconModule, MatToolbarModule, MatSidenavModule,
-  MatListModule, MatBottomSheetModule, MatTabsModule, MatGridListModule, MatTableModule,
+  MatListModule, MatBottomSheetModule, MatTabsModule,
   MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS
 } from '@angular/material';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -57,8 +57,6 @@ import { ConfirmDialogComponent } from './components/dumb/confirm-dialog/confirm
     MatListModule,
     MatBottomSheetModule,
     MatTabsModule,
-    MatGridListModule,
-    MatTableModule,
     MatDialogModule,
     ClipboardModule
   ],
