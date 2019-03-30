@@ -113,6 +113,8 @@ export class CompareToolComponent {
         this.userSelections.splice(tabIndex, 1);
 
         this.reorderUserSelections();
+
+        this.activeTabIndex = (this.userSelections[tabIndex] ? tabIndex : (tabIndex - 1));
       }
     });
   }
