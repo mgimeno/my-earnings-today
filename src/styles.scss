@@ -40,6 +40,14 @@ input::-webkit-inner-spin-button {
   color: $primaryColor;
 }
 
+.mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $primaryColor;
+}
+
+.mat-checkbox-checked .mat-checkbox-background {
+  background-color: lighten($primaryColor, 20%) !important;
+}
+
 input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }
