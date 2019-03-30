@@ -226,10 +226,16 @@ export class UserSelection {
       if (periodType === PeriodEnum.CurrentHour) {
 
         if (!this.workTodayHasFinished()) {
-          let currentHourStart = new Date(now);
-          currentHourStart.setMinutes(0, 0, 0);
-          let currentHourEnd = new Date(now);
-          currentHourEnd.setMinutes(59, 59, 999);
+
+          let currentHourStart: Date = new Date(now);
+          let currentHourEnd: Date = new Date(now);
+
+          if (this.dayStartTime.getMinutes() <= now.getMinutes()) {
+            currentHourStart.setHours(now.getHours(), this.dayStartTime.getMinutes(), 0, 0);
+          }
+          else {
+            currentHourStart.setHours(now.getHours() - 1, this.dayStartTime.getMinutes(), 0, 0);
+          }
 
           //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
           hoursWorkedToday = DateHelper.hoursBetweenDates(currentHourStart, DateHelper.minDate(now, currentHourEnd));
@@ -309,33 +315,6 @@ export class UserSelection {
   getRemainingTimeToStartWork(): string {
     //TODO this method is called many times, naybe do some calculations onCalculate event and store it as property instead
     //of calculating each single time.
-    //let now = new Date();
-    //let nowMoment = moment(now);
-
-    //if (!this.hasDayOff() && !this.workTodayHasStarted()) {
-    //  let startTimeMoment = moment(this.dayStartTime);
-    //  return `You start working in around ${nowMoment.to(startTimeMoment, true)}`;
-    //}
-    //else if (this.workTodayHasFinished() || this.hasDayOff()) {
-
-    //  let tomorrow = DateHelper.addDays(now, 1);
-    //  let nextWorkingDayStartTime = this.getNextWorkingDay(now);
-    //  let nextWorkingDayName = WeekDaysEnum[nextWorkingDayStartTime.getDay()];
-
-    //  if (this.hasDayOff(tomorrow)) {
-    //    return `You are off until next ${nextWorkingDayName} at ${this.startTime}`;
-    //  }
-    //  else {
-    //    let nextWorkingDayStartTimeMoment = moment(nextWorkingDayStartTime);
-    //    return `You start working in around ${nowMoment.to(nextWorkingDayStartTimeMoment, true)}`;
-    //  }
-
-    //}
-    //else {
-    //  //Should not ever reach this point
-    //  return "";
-    //}
-
 
     let now = new Date();
 
@@ -375,9 +354,6 @@ export class UserSelection {
   }
 
   getRemainingTimeToFinishWork(): string {
-    //let now = moment(new Date());
-    //let endWork = moment(this.dayEndTime);
-    //return now.to(endWork, true);
     return DateHelper.getFormattedTimeBetweenDatesVerbose(new Date(), this.dayEndTime);
   }
 

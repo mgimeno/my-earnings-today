@@ -6,15 +6,11 @@
     "\\src\\app\\components",
     "\\src\\app\\components\\dumb",
     "\\src\\app\\components\\dumb\\confirm-dialog",
+    "\\src\\app\\components\\dumb\\share-bottom-sheet",
     "\\src\\app\\components\\dumb\\user-selection",
     "\\src\\app\\components\\dumb\\user-selection-validation-dialog",
-    "\\src\\app\\components\\smart",
-    "\\src\\app\\components\\smart\\compare-tool",
-    "\\src\\app\\components\\smart\\my-earnings",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\intefaces",
-    "\\src\\app\\shared\\models"
+    "\\src\\app\\components\\smart"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\src\\app\\components\\smart\\compare-tool\\compare-tool.component.scss",
   "PreviewInSolutionExplorer": false
 }
