@@ -5,12 +5,16 @@
     "\\src\\app",
     "\\src\\app\\components",
     "\\src\\app\\components\\dumb",
-    "\\src\\app\\components\\dumb\\confirm-dialog",
-    "\\src\\app\\components\\dumb\\share-bottom-sheet",
-    "\\src\\app\\components\\dumb\\user-selection",
-    "\\src\\app\\components\\dumb\\user-selection-validation-dialog",
-    "\\src\\app\\components\\smart"
+    "\\src\\app\\components\\dumb\\compare-tool-details",
+    "\\src\\app\\components\\dumb\\my-earnings-details",
+    "\\src\\app\\components\\smart",
+    "\\src\\app\\components\\smart\\compare-tool",
+    "\\src\\app\\components\\smart\\my-earnings",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\helpers",
+    "\\src\\app\\shared\\models",
+    "\\src\\sass"
   ],
-  "SelectedNode": "\\src\\app\\components\\smart\\compare-tool\\compare-tool.component.scss",
+  "SelectedNode": "\\src\\app\\components\\dumb\\my-earnings-details\\my-earnings-details.component.html",
   "PreviewInSolutionExplorer": false
 }
