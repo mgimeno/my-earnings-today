@@ -44,6 +44,7 @@
               "src/favicon-96.png",
               "src/browserconfig.xml",
               "src/humans.txt",
+              "src/robots.txt",
               "src/sitemap.xml",
               "src/assets"
             ],
@@ -141,6 +142,7 @@
               "src/favicon-96.png",
               "src/browserconfig.xml",
               "src/humans.txt",
+              "src/robots.txt",
               "src/sitemap.xml",
               "src/assets"
             ]
