@@ -9,12 +9,8 @@
     "\\src\\app\\components\\dumb\\my-earnings-details",
     "\\src\\app\\components\\smart",
     "\\src\\app\\components\\smart\\compare-tool",
-    "\\src\\app\\components\\smart\\my-earnings",
-    "\\src\\app\\shared",
-    "\\src\\app\\shared\\helpers",
-    "\\src\\app\\shared\\models",
-    "\\src\\sass"
+    "\\src\\app\\components\\smart\\my-earnings"
   ],
-  "SelectedNode": "\\src\\app\\components\\dumb\\my-earnings-details\\my-earnings-details.component.html",
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }

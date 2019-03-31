@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material';
-import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 
 declare var window: any;
 

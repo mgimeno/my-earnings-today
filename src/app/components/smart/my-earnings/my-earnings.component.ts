@@ -25,11 +25,9 @@ export class MyEarningsComponent implements OnDestroy {
     private storageService: StorageService,
     private dialog: MatDialog) {
 
-
     this.setupOnParamsChange();
 
     this.loadInitialUserSelection();
-
   }
 
   private loadInitialUserSelection(): void {
@@ -39,7 +37,6 @@ export class MyEarningsComponent implements OnDestroy {
     }
     else if (this.storageService.hasUserSelectionOnLocalStorage()) {
       this.userSelection = this.storageService.getUserSelectionFromLocalStorage();
-      console.log("loaded from local storage");
     }
     else {
       this.userSelection = new UserSelection();
@@ -47,7 +44,6 @@ export class MyEarningsComponent implements OnDestroy {
     }
 
     if (this.userSelection.canCalculate()) {
-      console.log("can calculate");
       this.calculate();
     }
 

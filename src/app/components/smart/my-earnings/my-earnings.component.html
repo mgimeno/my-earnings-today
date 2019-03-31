@@ -1,33 +1,27 @@
 
 
-  <div *ngIf="userSelection && !showResults" class="text-center">
+<div *ngIf="userSelection && !showResults" class="text-center">
 
-    <h1>Let's see how much you've already earned today</h1>
+  <h1>Let's see how much you've already earned today</h1>
 
-    <app-user-selection [userSelection]=userSelection [isCompareTool]=false></app-user-selection>
+  <app-user-selection [userSelection]=userSelection [isCompareTool]=false></app-user-selection>
 
+  <div class="buttons m-t-15">
+    <button type="submit" class="text-center" mat-raised-button color="primary" (click)="tryCalculate()">Calculate</button>
+    <button mat-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
   </div>
 
+</div>
 
-  <div *ngIf="showResults" class="text-center">
 
-    <app-my-earnings-details [userSelection]=userSelection></app-my-earnings-details>
+<div *ngIf="showResults" class="text-center">
 
+  <app-my-earnings-details [userSelection]=userSelection></app-my-earnings-details>
+
+  <div class="buttons m-t-30">
+    <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
+    <button mat-raised-button color="primary" (click)="goToCompare()"><mat-icon>compare_arrows</mat-icon> Compare</button>
+    <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
   </div>
 
-
-  <div class="buttons" [ngClass]="showResults ? 'm-t-30' : 'm-t-15'">
-
-    <ng-container *ngIf="!showResults">
-      <button type="submit" class="text-center" mat-raised-button color="primary" (click)="tryCalculate()">Calculate</button>
-      <button mat-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
-    </ng-container>
-
-    <ng-container *ngIf="showResults">
-      <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
-      <button mat-raised-button color="primary" (click)="goToCompare()"><mat-icon>compare_arrows</mat-icon> Compare</button>
-      <button mat-raised-button  (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
-    </ng-container>
-
-  </div>
-
+</div>

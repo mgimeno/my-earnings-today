@@ -1,48 +1,41 @@
 
 
 
-  <div *ngIf="userSelections && userSelections.length && !showResults" class="text-center">
+<div *ngIf="userSelections && userSelections.length && !showResults" class="text-center">
 
-    <h1>Compare earnings with others</h1>
+  <h1>Compare earnings with others</h1>
 
-    <mat-tab-group [selectedIndex]="activeTabIndex">
+  <mat-tab-group [selectedIndex]="activeTabIndex">
 
-      <mat-tab *ngFor="let userSelection of userSelections; let index = index;">
+    <mat-tab *ngFor="let userSelection of userSelections; let index = index;">
 
-        <ng-template mat-tab-label>
-          <section class="tab-label">
-            <span class="title">{{userSelection.name}}</span>
-            <mat-icon *ngIf="index > 0" class="close-icon clickable" (click)="removePerson($event,index)">clear</mat-icon>
-          </section>
-        </ng-template>
+      <ng-template mat-tab-label>
+        <section class="tab-label">
+          <span class="title">{{userSelection.name}}</span>
+          <mat-icon *ngIf="index > 0" class="close-icon clickable" (click)="removePerson($event,index)">clear</mat-icon>
+        </section>
+      </ng-template>
 
-        <app-user-selection [userSelection]=userSelection [isCompareTool]=true></app-user-selection>
+      <app-user-selection [userSelection]=userSelection [isCompareTool]=true></app-user-selection>
 
-      </mat-tab>
-    </mat-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
+  <div class="buttons m-t-15">
+    <button mat-raised-button color="accent" [disabled]="!canAddMorePersons()" (click)="addPerson()"><mat-icon class="add-icon">person_add</mat-icon> Add Person</button>
+    <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()">Calculate</button>
   </div>
 
+</div>
 
-  <div *ngIf="showResults" class="text-center">
 
-    <app-compare-tool-details [userSelections]=userSelections></app-compare-tool-details>
+<div *ngIf="showResults" class="text-center">
 
+  <app-compare-tool-details [userSelections]=userSelections></app-compare-tool-details>
+
+  <div class="buttons m-t-30">
+    <button mat-raised-button [routerLink]="['/compare']"><mat-icon>reply</mat-icon> back</button>
+    <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
   </div>
 
-
-  <div class="buttons" [ngClass]="showResults ? 'm-t-30' : 'm-t-15'">
-
-    <ng-container *ngIf="!showResults">
-      <button mat-raised-button color="accent" [disabled]="!canAddMorePersons()" (click)="addPerson()"><mat-icon class="add-icon">person_add</mat-icon> Add Person</button>
-      <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()">Calculate</button>
-    </ng-container>
-
-    <ng-container *ngIf="showResults">
-      <button  mat-raised-button [routerLink]="['/compare']"><mat-icon>reply</mat-icon> back</button>
-      <button  mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
-    </ng-container>
-
-  </div>
-
-
+</div>
