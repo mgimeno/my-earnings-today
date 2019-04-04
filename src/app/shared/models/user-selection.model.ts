@@ -80,6 +80,8 @@ export class UserSelection {
 
     this.updateAmountsIntervalId = window.setInterval(() => {
 
+      let timerStart = new Date().getTime();
+
       //This logic of now and dayStartTime, dayEndTime needs to be on the interval so if we pass to next day it still works
       let now: Date = new Date();
       this.buildStartAndEndTimeDates(now);
@@ -104,6 +106,8 @@ export class UserSelection {
       this.updateCurrentWeekAmount(now);
       this.updateCurrentMonthAmount(now);
       this.updateCurrentYearAmount(now);
+
+      console.log(`Calculated in ${((new Date().getTime() - timerStart))} ms.`);
 
     }, AppConstants.Common.UPDATE_AMOUNTS_FREQUENCY_IN_MS);
 

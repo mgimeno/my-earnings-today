@@ -5,12 +5,12 @@
     "\\src\\app",
     "\\src\\app\\components",
     "\\src\\app\\components\\dumb",
-    "\\src\\app\\components\\dumb\\compare-tool-details",
-    "\\src\\app\\components\\dumb\\my-earnings-details",
-    "\\src\\app\\components\\smart",
-    "\\src\\app\\components\\smart\\compare-tool",
-    "\\src\\app\\components\\smart\\my-earnings"
+    "\\src\\app\\components\\dumb\\confirm-dialog",
+    "\\src\\app\\components\\dumb\\currency-display",
+    "\\src\\app\\components\\dumb\\share-bottom-sheet",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\models"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\src\\app\\shared\\models\\user-selection.model.ts",
   "PreviewInSolutionExplorer": false
 }
