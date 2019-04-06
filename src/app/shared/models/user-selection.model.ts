@@ -1,4 +1,3 @@
-//import * as moment from 'moment';
 import { includes } from 'lodash';
 import { AppConstants } from '../constants/app-constants';
 import { INameValue } from '../intefaces/name-value.interface';
@@ -77,7 +76,6 @@ export class UserSelection {
     this.dateTimeWhenClickedCalculate = new Date();
     let workingDaysArray = this.getWeekWorkingDaysArray();
 
-
     this.updateAmountsIntervalId = window.setInterval(() => {
 
       let timerStart = new Date().getTime();
@@ -110,7 +108,6 @@ export class UserSelection {
       console.log(`Calculated in ${((new Date().getTime() - timerStart))} ms.`);
 
     }, AppConstants.Common.UPDATE_AMOUNTS_FREQUENCY_IN_MS);
-
 
   }
 
