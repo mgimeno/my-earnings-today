@@ -21,11 +21,12 @@ export class UserSelection {
   dateTimeWhenClickedCalculate: Date = null;
 
   hoursWorkedPerDay: number = null;
+  workingDaysThisWeek: number = null;
+  workingDaysThisMonth: number = null;
+  workingDaysThisYear: number = null;
   workingHoursThisWeek: number = null;
   workingHoursThisMonth: number = null;
   workingHoursThisYear: number = null;
-
-  amountEarnedPerHour: number = null;
 
   stopwatchAmount: number = null;
   currentHourAmount: number = null;
@@ -39,6 +40,9 @@ export class UserSelection {
   totalWeekAmount: number = null;
   totalMonthAmount: number = null;
   totalYearAmount: number = null;
+
+  totalDayAmountWhenNotOff: number = null;
+  totalHourAmountWhenNotOff: number = null;
 
   updateAmountsIntervalId: number = null;
 
@@ -65,6 +69,7 @@ export class UserSelection {
   private buildStartAndEndTimeDates(now: Date): void {
     this.dayStartTime = DateHelper.buildDate(now, this.startTime);
     this.dayEndTime = DateHelper.buildDate(now, this.endTime);
+
     if (this.endTime < this.startTime && this.endTime === "00:00") {
       this.dayStartTime = DateHelper.addMiliseconds(this.dayStartTime, -1);
       this.dayEndTime = DateHelper.getDateAtOneMilisecondBeforeEndOfDay(now);
@@ -78,23 +83,19 @@ export class UserSelection {
 
     this.updateAmountsIntervalId = window.setInterval(() => {
 
-      let timerStart = new Date().getTime();
-
       //This logic of now and dayStartTime, dayEndTime needs to be on the interval so if we pass to next day it still works
       let now: Date = new Date();
       this.buildStartAndEndTimeDates(now);
 
       this.hoursWorkedPerDay = DateHelper.hoursBetweenDates(this.dayStartTime, this.dayEndTime);
 
-      let workingDaysThisWeek = workingDaysArray.length;
-      let workingDaysThisMonth = DateHelper.getDaysWorkedInPeriod(workingDaysArray, DateHelper.getFirstDayOfCurrentMonth(now), DateHelper.getLastDayOfCurrentMonth(now));
-      let workingDaysThisYear = DateHelper.getDaysWorkedInPeriod(workingDaysArray, DateHelper.getFirstDayOfCurrentYear(now), DateHelper.getLastDayOfCurrentYear(now));
+      this.workingDaysThisWeek = workingDaysArray.length;
+      this.workingDaysThisMonth = DateHelper.getDaysWorkedInPeriod(workingDaysArray, DateHelper.getFirstDayOfCurrentMonth(now), DateHelper.getLastDayOfCurrentMonth(now));
+      this.workingDaysThisYear = DateHelper.getDaysWorkedInPeriod(workingDaysArray, DateHelper.getFirstDayOfCurrentYear(now), DateHelper.getLastDayOfCurrentYear(now));
 
-      this.workingHoursThisWeek = (workingDaysThisWeek * this.hoursWorkedPerDay);
-      this.workingHoursThisMonth = (workingDaysThisMonth * this.hoursWorkedPerDay);
-      this.workingHoursThisYear = (workingDaysThisYear * this.hoursWorkedPerDay);
-
-      this.calculateAmountEarnedPerHour();
+      this.workingHoursThisWeek = (this.workingDaysThisWeek * this.hoursWorkedPerDay);
+      this.workingHoursThisMonth = (this.workingDaysThisMonth * this.hoursWorkedPerDay);
+      this.workingHoursThisYear = (this.workingDaysThisYear * this.hoursWorkedPerDay);
 
       this.updateTotalAmounts(now);
 
@@ -105,38 +106,65 @@ export class UserSelection {
       this.updateCurrentMonthAmount(now);
       this.updateCurrentYearAmount(now);
 
-      console.log(`Calculated in ${((new Date().getTime() - timerStart))} ms.`);
-
     }, AppConstants.Common.UPDATE_AMOUNTS_FREQUENCY_IN_MS);
 
   }
 
   private updateTotalAmounts(now: Date): void {
-    this.totalHourAmount = (!this.isCurrentlyWorking() ? 0 : this.amountEarnedPerHour);
-    this.totalDayAmount = (this.hasDayOff(now) ? 0 : (this.amountEarnedPerHour * this.hoursWorkedPerDay));
-    this.totalWeekAmount = (this.amountEarnedPerHour * this.workingHoursThisWeek);
-    this.totalMonthAmount = (this.amountEarnedPerHour * this.workingHoursThisMonth);
-    this.totalYearAmount = (this.amountEarnedPerHour * this.workingHoursThisYear);
-  }
-
-  private calculateAmountEarnedPerHour(): void {
 
     switch (this.frequency.value) {
       //TODO Make Frequency values a Enum too.
       case "hour":
-        this.amountEarnedPerHour = +this.rate;
+        this.totalDayAmountWhenNotOff = (this.rate * this.hoursWorkedPerDay);
+        this.totalHourAmountWhenNotOff = +this.rate;
+
+        this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
+        this.totalHourAmount = (!this.isCurrentlyWorking() ? 0 : this.totalHourAmountWhenNotOff);
+        this.totalWeekAmount = (this.rate * this.workingHoursThisWeek);
+        this.totalMonthAmount = (this.rate * this.workingHoursThisMonth);
+        this.totalYearAmount = (this.rate * this.workingHoursThisYear);
         break;
       case "day":
-        this.amountEarnedPerHour = (this.rate / this.hoursWorkedPerDay);
+        this.totalDayAmountWhenNotOff = +this.rate;
+        this.totalHourAmountWhenNotOff = (this.rate / this.hoursWorkedPerDay);
+
+        this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
+        this.totalHourAmount = (!this.isCurrentlyWorking() ? 0 : this.totalHourAmountWhenNotOff);
+        this.totalWeekAmount = (this.rate * this.workingDaysThisWeek);
+        this.totalMonthAmount = (this.rate * this.workingDaysThisMonth);
+        this.totalYearAmount = (this.rate * this.workingDaysThisYear);
         break;
       case "week":
-        this.amountEarnedPerHour = (this.rate / this.workingHoursThisWeek);
+        this.totalDayAmountWhenNotOff = (this.rate / this.workingDaysThisWeek);
+        this.totalHourAmountWhenNotOff = (this.totalDayAmountWhenNotOff / this.hoursWorkedPerDay)
+
+        this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
+        this.totalHourAmount = (!this.isCurrentlyWorking() ? 0 : this.totalHourAmountWhenNotOff);
+        this.totalWeekAmount = +this.rate;
+        this.totalMonthAmount = (this.totalDayAmountWhenNotOff * this.workingDaysThisMonth);
+        this.totalYearAmount = (this.totalDayAmountWhenNotOff * this.workingDaysThisYear);
         break;
       case "month":
-        this.amountEarnedPerHour = (this.rate / this.workingHoursThisMonth);
+        this.totalMonthAmount = +this.rate;
+        this.totalYearAmount = (this.rate * 12);
+
+        this.totalDayAmountWhenNotOff = (this.totalMonthAmount / this.workingDaysThisMonth);
+        this.totalHourAmountWhenNotOff = (this.totalDayAmountWhenNotOff / this.hoursWorkedPerDay);
+
+        this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
+        this.totalHourAmount = (!this.isCurrentlyWorking() ? 0 : this.totalHourAmountWhenNotOff);
+        this.totalWeekAmount = (this.workingDaysThisWeek * this.totalDayAmountWhenNotOff);
         break;
       case "year":
-        this.amountEarnedPerHour = (this.rate / this.workingHoursThisYear);
+        this.totalYearAmount = +this.rate;
+        this.totalMonthAmount = (this.rate / 12);
+
+        this.totalDayAmountWhenNotOff = (this.totalMonthAmount / this.workingDaysThisMonth);
+        this.totalHourAmountWhenNotOff = (this.totalDayAmountWhenNotOff / this.hoursWorkedPerDay);
+
+        this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
+        this.totalHourAmount = (!this.isCurrentlyWorking() ? 0 : this.totalHourAmountWhenNotOff);
+        this.totalWeekAmount = (this.workingDaysThisWeek * this.totalDayAmountWhenNotOff);
         break;
     }
   }
@@ -144,22 +172,25 @@ export class UserSelection {
   private updateStopwatchAmount(now) {
     let startPeriod = new Date(this.dateTimeWhenClickedCalculate);
 
-    this.stopwatchAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.Stopwatch, startPeriod, now);
+    let earnedUntilYesterday = this.getAmountEarnedUntilYesterday(PeriodEnum.Stopwatch, startPeriod, now);
+
+    let hoursWorkedSinceClickedCalculate = 0;
+    if (!this.hasDayOff(now) && this.workTodayHasStarted() && (this.dateTimeWhenClickedCalculate < this.dayEndTime)) {
+      hoursWorkedSinceClickedCalculate = DateHelper.hoursBetweenDates(DateHelper.maxDate(this.dateTimeWhenClickedCalculate, this.dayStartTime), DateHelper.minDate(now, this.dayEndTime));
+    }
+
+    let earnedToday = (hoursWorkedSinceClickedCalculate * this.totalHourAmountWhenNotOff);
+
+    this.stopwatchAmount = (earnedUntilYesterday + earnedToday);
   }
   private updateCurrentHourAmount(now) {
 
-    let startPeriod = new Date(now);
-
-    this.currentHourAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.CurrentHour, startPeriod, now);
+    this.currentHourAmount = this.getAmountEarnedThisHour(now);
   }
 
   private updateCurrentDayAmount(now: Date): void {
 
-    let startPeriod = new Date(now);
-    startPeriod.setHours(0, 0, 0, 0);
-
-    this.currentDayAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.CurrentDay, startPeriod, now);
-
+    this.currentDayAmount = this.getAmountEarnedToday(now);
   }
 
   private updateCurrentWeekAmount(now: Date): void {
@@ -167,104 +198,137 @@ export class UserSelection {
     let startPeriod = DateHelper.getMondayOfCurrentWeek(now);
     startPeriod.setHours(0, 0, 0, 0);
 
-    this.currentWeekAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.CurrentWeek, startPeriod, now);
+    let earnedUntilYesterday = this.getAmountEarnedUntilYesterday(PeriodEnum.CurrentWeek, startPeriod, now);
+
+    let earnedToday = this.getAmountEarnedToday(now);
+
+    this.currentWeekAmount = (earnedUntilYesterday + earnedToday);
   }
 
   private updateCurrentMonthAmount(now: Date): void {
 
     let startPeriod = DateHelper.getFirstDayOfCurrentMonth(now);
 
-    this.currentMonthAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.CurrentMonth, startPeriod, now);
+    let earnedUntilYesterday = this.getAmountEarnedUntilYesterday(PeriodEnum.CurrentMonth, startPeriod, now);
+
+    let earnedToday = this.getAmountEarnedToday(now);
+
+    this.currentMonthAmount = (earnedUntilYesterday + earnedToday);
   }
 
   private updateCurrentYearAmount(now: Date): void {
 
     let startPeriod = DateHelper.getFirstDayOfCurrentYear(now);
 
-    this.currentYearAmount = this.getAmountEarnedByPeriodUntilNow(PeriodEnum.CurrentYear, startPeriod, now);
+    let earnedUntilYesterday = this.getAmountEarnedUntilYesterday(PeriodEnum.CurrentYear, startPeriod, now);
+
+    let earnedToday = this.getAmountEarnedToday(now);
+
+    this.currentYearAmount = (earnedUntilYesterday + earnedToday);;
   }
 
-  private getAmountEarnedByPeriodUntilNow(periodType: PeriodEnum, startPeriod: Date, now: Date): number {
+  private getAmountEarnedThisHour(now: Date): number {
+
+    let earnedThisHour: number = 0;
+
+    if (this.isCurrentlyWorking()) {
+
+      let currentHourStart: Date = new Date(now);
+      let currentHourEnd: Date = new Date(now);
+
+      if (this.dayStartTime.getMinutes() <= now.getMinutes()) {
+        currentHourStart.setHours(now.getHours(), this.dayStartTime.getMinutes(), 0, 0);
+      }
+      else {
+        currentHourStart.setHours(now.getHours() - 1, this.dayStartTime.getMinutes(), 0, 0);
+      }
+
+      let hoursWorkedToday = DateHelper.hoursBetweenDates(currentHourStart, DateHelper.minDate(now, currentHourEnd));
+      earnedThisHour = hoursWorkedToday * this.totalHourAmountWhenNotOff;
+
+    }
+
+    return earnedThisHour;
+  }
+
+  private getAmountEarnedToday(now: Date): number {
+    //TODO this function is called many times and should be called only once on each interval.
+    let earnedToday: number = 0;
+
+    if (!this.hasDayOff(now) && this.workTodayHasStarted()) {
+      let hoursWorkedToday = this.getNumberOfHoursWorkedToday(now);
+      earnedToday = hoursWorkedToday * this.totalHourAmountWhenNotOff;
+    }
+
+    return earnedToday;
+  }
+
+  private getAmountEarnedUntilYesterday(periodType: PeriodEnum, startPeriod: Date, now: Date): number {
+
+    let result = 0;
+
+    if (periodType === PeriodEnum.CurrentYear && this.frequency.value === "year") {
+      let monthsWorkedInFull = now.getMonth(); //getMonth() is 0 index.
+      let firstdayOfCurrentMonth = DateHelper.getFirstDayOfCurrentMonth(now);
+      let daysWorkedThisMonthUntilYesterday = this.getNumberOfDaysWorkedUntilYesterday(PeriodEnum.CurrentMonth, firstdayOfCurrentMonth, now);
+
+      result = ((monthsWorkedInFull * this.totalMonthAmount) + (daysWorkedThisMonthUntilYesterday * this.totalDayAmountWhenNotOff));
+    }
+    else {
+      let daysWorkedUntilYesterday = this.getNumberOfDaysWorkedUntilYesterday(periodType, startPeriod, now);
+      result = (daysWorkedUntilYesterday * this.totalDayAmountWhenNotOff);
+    }
+
+    return result;
+  }
+
+  private getNumberOfDaysWorkedUntilYesterday(periodType: PeriodEnum, startPeriod: Date, now: Date): number {
 
     let yesterday = DateHelper.addDays(now, - 1);
     yesterday.setHours(0, 0, 0, 0);
 
-    let daysWorkedFromStartOfPeriodExcludingToday: number = 0;
+    let result: number = 0;
 
     switch (periodType) {
       case PeriodEnum.Stopwatch:
-        daysWorkedFromStartOfPeriodExcludingToday = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
+        result = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
         break;
       case PeriodEnum.CurrentHour:
       case PeriodEnum.CurrentDay:
-        daysWorkedFromStartOfPeriodExcludingToday = 0;
+        result = 0;
         break;
       case PeriodEnum.CurrentWeek:
         if (!DateHelper.isMonday(now)) {
-          daysWorkedFromStartOfPeriodExcludingToday = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
+          result = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
         }
         break;
       case PeriodEnum.CurrentMonth:
         if (!DateHelper.isFirstDayOfTheMonth(now)) {
-          daysWorkedFromStartOfPeriodExcludingToday = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
+          result = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
         }
         break;
       case PeriodEnum.CurrentYear:
         if (!DateHelper.isFirstDayOfTheYear(now)) {
-          daysWorkedFromStartOfPeriodExcludingToday = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
+          result = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
         }
         break;
 
     }
 
-    let hoursWorkedFromStartOfPeriodExcludingToday = (daysWorkedFromStartOfPeriodExcludingToday * this.hoursWorkedPerDay);
+    return result;
+
+  }
+
+  private getNumberOfHoursWorkedToday(now: Date): number {
+
     let hoursWorkedToday: number = 0;
 
-    
-
     if (!this.hasDayOff(now) && this.workTodayHasStarted()) {
-
-      if (periodType === PeriodEnum.CurrentHour) {
-
-        if (!this.workTodayHasFinished()) {
-
-          let currentHourStart: Date = new Date(now);
-          let currentHourEnd: Date = new Date(now);
-
-          if (this.dayStartTime.getMinutes() <= now.getMinutes()) {
-            currentHourStart.setHours(now.getHours(), this.dayStartTime.getMinutes(), 0, 0);
-          }
-          else {
-            currentHourStart.setHours(now.getHours() - 1, this.dayStartTime.getMinutes(), 0, 0);
-          }
-
-          //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
-          hoursWorkedToday = DateHelper.hoursBetweenDates(currentHourStart, DateHelper.minDate(now, currentHourEnd));
-        }
-      }
-      else if (periodType === PeriodEnum.Stopwatch) {
-
-        if (this.dateTimeWhenClickedCalculate > this.dayEndTime) {
-          hoursWorkedToday = 0;
-        }
-        else {
-          //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
-          hoursWorkedToday = DateHelper.hoursBetweenDates(DateHelper.maxDate(this.dateTimeWhenClickedCalculate, this.dayStartTime), DateHelper.minDate(now, this.dayEndTime));
-        }
-
-      }
-      else {
-        //TODO Sin valor absoluto. valor tiene que ser mayor que 0, sino nada.
-        hoursWorkedToday = DateHelper.hoursBetweenDates(this.dayStartTime, DateHelper.minDate(now, this.dayEndTime));
-      }
-
+      hoursWorkedToday = DateHelper.hoursBetweenDates(this.dayStartTime, DateHelper.minDate(now, this.dayEndTime));
     }
 
-    let totalHoursWorked = (hoursWorkedFromStartOfPeriodExcludingToday + hoursWorkedToday);
+    return hoursWorkedToday;
 
-    let periodAmount = (totalHoursWorked * this.amountEarnedPerHour);
-
-    return periodAmount;
   }
 
   hasDayOff(date: Date = null): boolean {
