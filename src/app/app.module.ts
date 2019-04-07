@@ -19,10 +19,10 @@ import { PageNotFoundComponent } from './components/smart/page-not-found/page-no
 import { UserSelectionComponent } from './components/dumb/user-selection/user-selection.component';
 import { CompareToolComponent } from './components/smart/compare-tool/compare-tool.component';
 import { MyEarningsDetailsComponent } from './components/dumb/my-earnings-details/my-earnings-details.component';
-import { CurrencyDisplayComponent } from './components/dumb/currency-display/currency-display.component';
 import { CompareToolDetailsComponent } from './components/dumb/compare-tool-details/compare-tool-details.component';
 import { UserSelectionValidationDialogComponent } from './components/dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
 import { ConfirmDialogComponent } from './components/dumb/confirm-dialog/confirm-dialog.component';
+import { CurrencyDirective } from './shared/directives/currency.directive';
 
 
 @NgModule({
@@ -35,10 +35,10 @@ import { ConfirmDialogComponent } from './components/dumb/confirm-dialog/confirm
     UserSelectionComponent,
     CompareToolComponent,
     MyEarningsDetailsComponent,
-    CurrencyDisplayComponent,
     CompareToolDetailsComponent,
     UserSelectionValidationDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    CurrencyDirective
   ],
   imports: [
     BrowserModule,

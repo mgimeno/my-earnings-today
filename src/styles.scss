@@ -73,6 +73,12 @@ input[type=number] {
   cursor: pointer;
 }
 
+span.decimal {
+  font-size: smaller;
+  color: rgba(0, 0, 0, 0.70); //TODO ?
+}
+
+
 .mat-dialog-actions {
   justify-content: center;
   margin-top: 10px;

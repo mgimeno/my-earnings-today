@@ -57,8 +57,6 @@ export class MyEarningsComponent implements OnDestroy {
     this.userSelection.calculate();
 
     this.showResults = true;
-    console.log(this.showResults);
-
   }
 
   tryCalculate(): void {
