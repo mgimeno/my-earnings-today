@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material';
+import { environment } from '../../../../environments/environment';
 
 declare var window: any;
 
@@ -13,7 +14,7 @@ export class ShareBottomSheetComponent implements OnInit {
   currentUrl: string;
 
   constructor(private bottomSheetRef: MatBottomSheetRef<ShareBottomSheetComponent>) {
-    this.currentUrl = decodeURI(window.location.href);
+    this.currentUrl = decodeURI(window.location.href); 
   }
 
   ngOnInit() {
@@ -29,9 +30,9 @@ export class ShareBottomSheetComponent implements OnInit {
       show_mobile_buttons: true,
       spacing: 7,
       url: this.currentUrl,
-      title: "My Earnings Today", //todo get this from environment?
-      image: "https://www.myearningstoday.com/assets/logo.png",
-      description: "Calculate how much you have already earned today", //todo get this from environment?
+      title: environment.appTitle,
+      image: environment.logoUrl,
+      description: environment.appDescription
     });
   }
 

@@ -10,6 +10,8 @@ export class CurrencyDirective implements OnChanges {
 
   amountRoundedTo2Decimals: string = null;
 
+  private readonly decimalsSeparator = '.'; //TODO this has to be locale, depending on the browser lang. Investigate how (related to toLocaleString())
+
   constructor(private el: ElementRef) { }
 
   ngOnChanges() {
@@ -20,8 +22,6 @@ export class CurrencyDirective implements OnChanges {
 
     this.amountRoundedTo2Decimals = this.amount.toFixed(2);
 
-    //TODO this won't work with spanish lang. separator is "," . toLocaleString might do the trick (depends on browser, not currency
-      //which prob is best)
     let indexOfDecimalSeparator = this.amountRoundedTo2Decimals.indexOf(".");
     let integerPart = Number(this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString();
 
@@ -29,7 +29,7 @@ export class CurrencyDirective implements OnChanges {
       
       let decimalPart = this.amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
 
-      this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}<span class='decimal'>.${decimalPart}</span>`;
+      this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}<span class='decimal'>${this.decimalsSeparator}${decimalPart}</span>`;
     }
     else {
       this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}`;

@@ -20,7 +20,6 @@ export class UserSelectionValidationDialogComponent {
   }
 
   getName(userSelection: UserSelection): string {
-    //TODO maybe use lodash _.isEmpty()
     return (userSelection.hasName() ? userSelection.name : `Person ${userSelection.personNumber}`);
   }
 

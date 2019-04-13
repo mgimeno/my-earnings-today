@@ -360,7 +360,6 @@ export class UserSelection {
   }
 
   hasName(): boolean {
-    //todo maybe use lodash _.isEmpty()
     return this.name && this.name.trim() !== "";
   }
 
@@ -442,7 +441,7 @@ export class UserSelection {
     this.startTime = "09:00";
     this.endTime = "17:00";
     this.currencySymbol = AppConstants.Common.CURRENCY_SYMBOLS[0];
-    this.frequency = AppConstants.Common.FREQUENCIES[1];
+    this.frequency = AppConstants.Common.FREQUENCIES[3];
 
     this.weekWorkingDays = new Array<boolean>();
     this.weekWorkingDays[WeekDaysEnum.Sunday] = false;

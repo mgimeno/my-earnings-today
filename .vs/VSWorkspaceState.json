@@ -5,12 +5,11 @@
     "\\src\\app",
     "\\src\\app\\components",
     "\\src\\app\\components\\dumb",
-    "\\src\\app\\components\\dumb\\compare-tool-details",
     "\\src\\app\\components\\smart",
-    "\\src\\app\\components\\smart\\compare-tool",
+    "\\src\\app\\components\\smart\\about",
     "\\src\\app\\shared",
-    "\\src\\app\\shared\\models"
+    "\\src\\sass"
   ],
-  "SelectedNode": "\\src\\app\\components\\smart\\compare-tool\\compare-tool.component.html",
+  "SelectedNode": "\\src\\sass\\variables.scss",
   "PreviewInSolutionExplorer": false
 }
