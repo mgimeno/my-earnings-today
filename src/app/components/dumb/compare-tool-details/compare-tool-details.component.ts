@@ -105,7 +105,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
           data.push(us.totalYearAmount);
           break;
       }
-      
+
     });
 
 
@@ -124,8 +124,9 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
       options: {
         responsive: true,
+        scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
         legend: {
-          display: false,
+          display: false
         },
         tooltips: {
           xPadding: 12,
@@ -153,7 +154,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
               if (Number.isInteger(+amountRoundedTo2Decimals)) {
 
                 return `${data.labels[index]}: ${symbol}${integerPart}`;
-                
+
               }
               else {
                 let decimalPart = amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
@@ -202,8 +203,9 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
       options: {
         responsive: true,
+        scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
         legend: {
-          display: false,
+          display: false
         },
         tooltips: {
           xPadding: 12,

@@ -82,6 +82,19 @@ span.decimal {
   color: rgba(0, 0, 0, 0.70);
 }
 
+.chart-period-select {
+  width: 80px;
+  font-weight: unset;
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+
+    .mat-form-field-underline {
+      top: 41px;
+    }
+  }
+}
+
 
 .mat-dialog-actions {
   justify-content: center;
