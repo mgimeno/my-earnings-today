@@ -16,7 +16,23 @@
     }
 
     .amount {
-      font-size: 25px;
+      font-size: 30px;
     }
   }
 }
+
+.charts-container {
+  margin-top: 30px;
+
+  .chart-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .chart-period-select{
+    width: 80px;
+    font-weight:unset;
+  }
+}
+
+

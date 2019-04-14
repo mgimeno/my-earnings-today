@@ -16,12 +16,39 @@
 </div>
 
 
-<!--<div class="text-center">
-  <button mat-flat-button color="primary" >Graphs</button>
-  <button mat-flat-button >Details</button>
-</div>-->
+<div class="text-center">
+  <button mat-flat-button [color]="isShowCharts ? 'primary' : null" (click)="showCharts()">Charts</button>
+  <button mat-flat-button [color]="!isShowCharts ? 'primary' : null" (click)="showDetails()">Details</button>
+</div>
 
-<div class="tiles-container one-tile-per-row">
+
+<div *ngIf="isShowCharts" class="charts-container">
+
+  <h2>
+    Total expected this
+    <mat-form-field class="chart-period-select">
+      <mat-select [(ngModel)]="selectedChartPeriod" (ngModelChange)="onChartPeriodChanged()">
+        <mat-option *ngFor="let period of allPeriods" [value]="period">
+          {{period.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </h2>
+  <div class="chart-container">
+    <canvas id="compare-earnings-chart"></canvas>
+  </div>
+
+  <br />
+
+  <h2>Hours worked per week</h2>
+  <div class="chart-container">
+    <canvas id="compare-hours-worked-chart"></canvas>
+  </div>
+
+</div>
+
+
+<div *ngIf="!isShowCharts" class="tiles-container one-tile-per-row">
 
   <div class="tile tile-{{index + 1}}" *ngFor="let tile of tiles; let index = index">
 

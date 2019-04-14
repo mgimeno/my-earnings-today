@@ -22,8 +22,8 @@ export class CurrencyDirective implements OnChanges {
 
     this.amountRoundedTo2Decimals = this.amount.toFixed(2);
 
-    let indexOfDecimalSeparator = this.amountRoundedTo2Decimals.indexOf(".");
-    let integerPart = Number(this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString();
+    let indexOfDecimalSeparator = this.amountRoundedTo2Decimals.indexOf("."); //TODO try if this works in spanish locale
+    let integerPart = Number(this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
 
     if (this.showDecimalPlaces()) {
       
