@@ -267,7 +267,7 @@ export class UserSelection {
 
     let result = 0;
 
-    if (periodType === PeriodEnum.CurrentYear && this.frequency.value === "year") {
+    if (periodType === PeriodEnum.CurrentYear && (this.frequency.value === "year" || this.frequency.value === "month")) {
       let monthsWorkedInFull = now.getMonth(); //getMonth() is 0 index.
       let firstdayOfCurrentMonth = DateHelper.getFirstDayOfCurrentMonth(now);
       let daysWorkedThisMonthUntilYesterday = this.getNumberOfDaysWorkedUntilYesterday(PeriodEnum.CurrentMonth, firstdayOfCurrentMonth, now);
