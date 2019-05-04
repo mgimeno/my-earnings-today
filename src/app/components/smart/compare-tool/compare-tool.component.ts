@@ -52,8 +52,14 @@ export class CompareToolComponent {
     if (this.canCalculate()) {
       this.calculate();
     }
-    else if (!this.userSelections.length) {
+    else if (this.userSelections.length === 0) {
       this.addPerson();
+    }
+    else if (this.userSelections.length === 1) {
+      setTimeout(() => {
+        this.addPerson();
+      }, 500);
+      
     }
 
   }
