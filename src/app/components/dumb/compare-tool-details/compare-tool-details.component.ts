@@ -6,6 +6,7 @@ import * as Chart from 'chart.js';
 import { ChartTooltipItem, ChartData } from 'chart.js';
 import { INameValue } from '../../../shared/intefaces/name-value.interface';
 import { PeriodEnum } from '../../../shared/enums/period.enum';
+import * as ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-compare-tool-details',
@@ -45,10 +46,10 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   //TODO colours? prob use same than the tiles. also put this as constants or so
   private readonly chartBackgroundColours: string[] = [
     "rgb(255, 99, 132)",
-    "rgb(54, 162, 235)",
+    "#3e95cd",
     "rgb(255, 205, 86)",
-    "#3e95cd", "#8e5ea2"//, "#3cba9f", "#e8c3b9", "#c45850",
-    //    "gray", "black", "red", "yellow"
+    "#8e5ea2",
+    "#71cdcd"
   ];
 
   readonly tiles: any[] = [
@@ -65,6 +66,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+
     this.setupTimeElapsedInterval();
     this.showCharts();
   }
@@ -87,6 +89,8 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   }
 
   private loadCompareEarningsChart(): void {
+
+
 
     let canvas = <HTMLCanvasElement>document.getElementById("compare-earnings-chart");
     let ctx = canvas.getContext('2d');
@@ -128,27 +132,25 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
         datasets: [{
           data: data,
           backgroundColor: this.chartBackgroundColours,
-          borderWidth: 1
+          borderWidth: 1,
         }]
       },
-
+      plugins: [ChartDataLabels],
       options: {
-        responsive: true,
-        scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
-        legend: {
-          display: false
-        },
-        tooltips: {
-          xPadding: 12,
-          yPadding: 12,
-          callbacks: {
-            title: (tooltipItem: ChartTooltipItem[], data: ChartData) => {
-              return "";
+        plugins: {
+          datalabels: {
+            color: (context: ChartDataLabels.Context) => {
+              return this.chartBackgroundColours[context.dataIndex];
             },
-            label: (tooltipItem: ChartTooltipItem, data: ChartData) => {
-
-              let index = tooltipItem.index;
-              let amount: number = Number(data.datasets[0].data[index]);
+            font: (context: ChartDataLabels.Context) => {
+              return { size: 13, weight: "bold" };
+            },
+            align: 'end',
+            anchor: 'end',
+            formatter: (value: any, context: ChartDataLabels.Context) => {
+              
+              let index = context.dataIndex;
+              let amount: number = Number(context.chart.data.datasets[0].data[index]);
 
               if (!amount) {
                 return null;
@@ -163,17 +165,32 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
               if (Number.isInteger(+amountRoundedTo2Decimals)) {
 
-                return `${data.labels[index]}: ${symbol}${integerPart}`;
+                return `${symbol}${integerPart}`;
 
               }
               else {
                 let decimalPart = amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
                 //TODO do I need all this or I can just use the currency pipe? (langs?)
-                return `${data.labels[index]}: ${symbol}${integerPart}${this.decimalsSeparator}${decimalPart}`;
+                return `${symbol}${integerPart}${this.decimalsSeparator}${decimalPart}`;
               }
-
             }
           }
+        },
+        responsive: true,
+        scales: {
+          yAxes: [{ ticks: { beginAtZero: true } }]
+        },
+        legend: {
+          display: false
+        },
+        layout: {
+          padding: {
+            top: 32
+          }
+        },
+        aspectRatio: 1.25,
+        tooltips: {
+          enabled: false
         }
       }
 
@@ -212,27 +229,38 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
       },
 
       options: {
+        plugins: {
+          datalabels: {
+            color: (context: ChartDataLabels.Context) => {
+              return this.chartBackgroundColours[context.dataIndex];
+            },
+            font: (context: ChartDataLabels.Context) => {
+              return { size: 13, weight: "bold" };
+            },
+            align: 'end',
+            anchor: 'end',
+            formatter: (value: any, context: ChartDataLabels.Context) => {
+
+              let index = context.dataIndex;
+              let hours = context.chart.data.datasets[0].data[index];
+
+              return `${hours}h`;
+            }
+          }
+        },
         responsive: true,
         scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
         legend: {
           display: false
         },
-        tooltips: {
-          xPadding: 12,
-          yPadding: 12,
-          callbacks: {
-            title: (tooltipItem: ChartTooltipItem[], data: ChartData) => {
-              return "";
-            },
-            label: (tooltipItem: ChartTooltipItem, data: ChartData) => {
-
-              let index = tooltipItem.index;
-              let value = data.datasets[0].data[index];
-              let label = `${data.labels[index]}: ${value} hours`;
-
-              return label;
-            }
+        layout: {
+          padding: {
+            top: 32
           }
+        },
+        aspectRatio: 2,
+        tooltips: {
+          enabled: false
         }
       }
 
