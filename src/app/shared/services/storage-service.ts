@@ -20,26 +20,23 @@ export class StorageService {
 
   }
 
-  hasUserSelectionOnLocalStorage(personNumber: number = null): boolean {
+  hasUserSelectionOnLocalStorage(personNumber: number): boolean {
 
     return (
-      (!personNumber || localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)])
-      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)]
-      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)]
-      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)]
-      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)]
-      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)]
-      && localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)]);
+         (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)] != undefined)
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)] != undefined)
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)] != undefined)
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)] != undefined)
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)] != undefined)
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)] != undefined)
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)] != undefined));
   }
 
-  getUserSelectionFromLocalStorage(personNumber: number = null): UserSelection {
+  getUserSelectionFromLocalStorage(personNumber: number): UserSelection {
 
     let userSelection: UserSelection = new UserSelection(personNumber);
 
-    if (personNumber) {
-      userSelection.name = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)];
-    }
-
+    userSelection.name = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)];
     userSelection.rate = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)];
     userSelection.currencySymbol = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)];
     userSelection.startTime = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)];
@@ -61,10 +58,7 @@ export class StorageService {
 
     let personNumber = userSelection.personNumber;
 
-    if (personNumber) {
-      localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)] = userSelection.name;
-    }
-
+    localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)] = userSelection.name;
     localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)] = userSelection.rate;
     localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)] = userSelection.frequency.value;
     localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)] = userSelection.currencySymbol;
@@ -83,12 +77,12 @@ export class StorageService {
   }
 
 
-  private getLocalStorageFullKey(key: string, personNumber: number = null): string {
-    return `${this.localStoragePrefix}${key}${personNumber || ""}`;
+  private getLocalStorageFullKey(key: string, personNumber: number): string {
+    return `${this.localStoragePrefix}${key}${personNumber}`;
   }
 
-  private getURLFullParamKey(key: string, personNumber: number = null): string {
-    return `${key}${personNumber || ""}`;
+  private getURLFullParamKey(key: string, personNumber: number): string {
+    return `${key}${personNumber}`;
   }
 
   cleanUserSelectionsOnLocalStorage(): void {
@@ -106,11 +100,11 @@ export class StorageService {
     }
   }
 
-  hasUserSelectionOnURL(personNumber: number = null): boolean {
+  hasUserSelectionOnURL(personNumber: number): boolean {
     let queryParams: Params = this.activatedRoute.snapshot.queryParams;
 
     return (
-      (!personNumber || queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)])
+         queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)]
@@ -120,7 +114,7 @@ export class StorageService {
       );
   }
 
-  getUserSelectionFromURL(personNumber: number = null): UserSelection {
+  getUserSelectionFromURL(personNumber: number): UserSelection {
 
     let queryParams = this.activatedRoute.snapshot.queryParams;
 
@@ -134,7 +128,7 @@ export class StorageService {
     let endQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)];
     let workDaysQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)];
 
-    if (personNumber && nameQP) {
+    if (nameQP) {
       userSelection.name = nameQP;
     }
     if (rateQP && !isNaN(rateQP) && rateQP > 0) {
@@ -177,10 +171,7 @@ export class StorageService {
 
     let params: any = <any>{};
 
-    if (personNumber){
-      params[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)] = userSelection.name;
-    }
-
+    params[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)] = userSelection.name;
     params[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)] = userSelection.rate;
     params[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)] = userSelection.frequency.value;
     params[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)] = userSelection.currencySymbol;
@@ -199,10 +190,7 @@ export class StorageService {
 
       let personNumber = us.personNumber;
 
-      if (personNumber) {
-        params[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)] = us.name;
-      }
-
+      params[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)] = us.name;
       params[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)] = us.rate;
       params[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)] = us.frequency.value;
       params[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)] = us.currencySymbol;

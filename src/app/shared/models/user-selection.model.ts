@@ -46,13 +46,13 @@ export class UserSelection {
 
   updateAmountsIntervalId: number = null;
 
-  constructor(personNumber: number = null) {
+  constructor(personNumber: number) {
     this.personNumber = personNumber;
 
-    if (!personNumber || personNumber === 1) {
+    if (personNumber === 1) {
       this.name = AppConstants.Common.FIRST_USER_DEFAULT_NAME;
     }
-    else if (personNumber > 1) {
+    else {
       this.name = `Person ${personNumber}`;
     }
 

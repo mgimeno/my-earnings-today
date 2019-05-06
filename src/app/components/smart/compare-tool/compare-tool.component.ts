@@ -70,7 +70,7 @@ export class CompareToolComponent {
   }
 
   private calculate(): void {
-
+    
     this.storageService.saveUserSelectionsOnLocalStorage(this.userSelections);
     this.storageService.setUserSelectionsOnURL(this.userSelections);
 

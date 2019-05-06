@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet, MatDialog } from '@angular/material';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
@@ -21,6 +21,7 @@ export class MyEarningsComponent implements OnDestroy {
 
   constructor(
     private activeRoute: ActivatedRoute,
+    private router: Router,
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
     private dialog: MatDialog) {
@@ -32,14 +33,16 @@ export class MyEarningsComponent implements OnDestroy {
 
   private loadInitialUserSelection(): void {
 
-    if (this.storageService.hasUserSelectionOnURL()) {
-      this.userSelection = this.storageService.getUserSelectionFromURL();
+    let personNumber = 1;
+
+    if (this.storageService.hasUserSelectionOnURL(personNumber)) {
+      this.userSelection = this.storageService.getUserSelectionFromURL(personNumber);
     }
-    else if (this.storageService.hasUserSelectionOnLocalStorage()) {
-      this.userSelection = this.storageService.getUserSelectionFromLocalStorage();
+    else if (this.storageService.hasUserSelectionOnLocalStorage(personNumber)) {
+      this.userSelection = this.storageService.getUserSelectionFromLocalStorage(personNumber);
     }
     else {
-      this.userSelection = new UserSelection();
+      this.userSelection = new UserSelection(personNumber);
       this.userSelection.setDefaultValues();
     }
 
@@ -70,11 +73,9 @@ export class MyEarningsComponent implements OnDestroy {
 
   goToCompare(): void {
 
-    this.userSelection.personNumber = 1;
-    this.userSelection.name = AppConstants.Common.FIRST_USER_DEFAULT_NAME;
+    this.storageService.saveUserSelectionOnLocalStorage(this.userSelection);
 
-    this.storageService.cleanUserSelectionsOnLocalStorage();
-    this.storageService.setUserSelectionsOnURL([this.userSelection]);
+    this.router.navigate(['/compare']);
   }
 
   openShareBottomSheet(): void {
