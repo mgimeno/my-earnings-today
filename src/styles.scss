@@ -84,7 +84,7 @@ span.decimal {
 }
 
 .chart-period-select {
-  width: 80px;
+  width: 110px;
   font-weight: bold;
 
   .mat-form-field-wrapper {
@@ -98,11 +98,11 @@ span.decimal {
 
 .highlight-select {
   .mat-select-arrow {
-    color: lighten($primaryColor, 30%);
+    color: lighten($primaryColor, 30%) !important;
   }
 
   .mat-form-field-ripple {
-    background-color: lighten($primaryColor, 30%);
+    background-color: lighten($primaryColor, 30%) !important;
     opacity: 1;
     transform: scaleX(1);
   }

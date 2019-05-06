@@ -27,11 +27,11 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   //todo ?
   chartAllPeriods: INameValue[] = [
-    { name: "hour", value: PeriodEnum.CurrentHour },
-    { name: "day", value: PeriodEnum.CurrentDay },
-    { name: "week", value: PeriodEnum.CurrentWeek },
-    { name: "month", value: PeriodEnum.CurrentMonth },
-    { name: "year", value: PeriodEnum.CurrentYear }
+    { name: "this hour", value: PeriodEnum.CurrentHour },
+    { name: "today", value: PeriodEnum.CurrentDay },
+    { name: "this week", value: PeriodEnum.CurrentWeek },
+    { name: "this month", value: PeriodEnum.CurrentMonth },
+    { name: "this year", value: PeriodEnum.CurrentYear }
   ];
 
   chartSelectedPeriod: INameValue = this.chartAllPeriods[3];
