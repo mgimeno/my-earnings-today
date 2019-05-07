@@ -3,7 +3,7 @@
 <h1 mat-dialog-title>Missing details</h1>
 <div mat-dialog-content class="content">
 
-  <ng-container *ngFor="let userSelection of userSelections; let index = index;">
+  <ng-container *ngFor="let userSelection of data.userSelections; let index = index;">
 
     <ng-container *ngIf="!userSelection.canCalculate()">
 
@@ -15,7 +15,6 @@
       </p>
       <p *ngIf="!userSelection.hasRate()">
         {{getValidationMessageForRate(userSelection)}}
-        
       </p>
       <p *ngIf="!userSelection.currencySymbol">
         Select a currency symbol
@@ -39,7 +38,7 @@
 
   </ng-container>
 
-  <p *ngIf="userSelections.length < getMinNumberOfUserSelectionsRequired()">
+  <p *ngIf="data.isCompareTool && (data.userSelections.length < getMinNumberOfUserSelectionsRequired())">
     Add at least one more person
   </p>
 

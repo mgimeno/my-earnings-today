@@ -9,14 +9,14 @@ import { UserSelection } from 'src/app/shared/models/user-selection.model';
 export class UserSelectionValidationDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<UserSelectionValidationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public userSelections: UserSelection[]) { }
+    @Inject(MAT_DIALOG_DATA) public data: { userSelections: UserSelection[], isCompareTool: boolean }) { }
 
   showName(): boolean {
-    return this.userSelections.length > 1;
+    return this.data.isCompareTool;
   }
 
   getMinNumberOfUserSelectionsRequired(): number {
-    return this.userSelections.length === 1 && !this.userSelections[0].personNumber ? 1 : 2;
+    return this.data.isCompareTool ? 2 : 1;
   }
 
   getName(userSelection: UserSelection): string {

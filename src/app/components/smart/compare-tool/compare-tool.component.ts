@@ -84,7 +84,7 @@ export class CompareToolComponent {
       this.calculate();
     }
     else {
-      this.dialog.open(UserSelectionValidationDialogComponent, { data: this.userSelections });
+      this.dialog.open(UserSelectionValidationDialogComponent, { data: { userSelections: this.userSelections, isCompareTool: true } });
     }
   }
 

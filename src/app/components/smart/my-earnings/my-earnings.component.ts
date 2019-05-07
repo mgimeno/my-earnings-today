@@ -67,7 +67,9 @@ export class MyEarningsComponent implements OnDestroy {
       this.calculate();
     }
     else {
-      this.dialog.open(UserSelectionValidationDialogComponent, { data: [this.userSelection]} );
+      this.dialog.open(UserSelectionValidationDialogComponent, {
+        data: { userSelections: [this.userSelection], isCompareTool: false }
+      });
     }
   }
 
