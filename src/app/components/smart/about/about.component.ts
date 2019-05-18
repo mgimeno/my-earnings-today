@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   templateUrl: './about.component.html',
@@ -6,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AboutComponent{
 
-  constructor() { }
+  creatorProfileLink: string = null;
+
+  constructor() {
+    this.creatorProfileLink = environment.creatorProfileLink;
+  }
 
 }

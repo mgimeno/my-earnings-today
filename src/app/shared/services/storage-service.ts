@@ -23,13 +23,13 @@ export class StorageService {
   hasUserSelectionOnLocalStorage(personNumber: number): boolean {
 
     return (
-         (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)] != undefined)
-      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)] != undefined)
-      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)] != undefined)
-      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)] != undefined)
-      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)] != undefined)
-      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)] != undefined)
-      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)] != undefined));
+         (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)])
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)])
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)])
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)])
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)])
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)])
+      && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)]));
   }
 
   getUserSelectionFromLocalStorage(personNumber: number): UserSelection {

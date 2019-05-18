@@ -5,7 +5,7 @@
   </mat-form-field>
 
   <mat-form-field class="rate-form-field">
-    <input type="number" min="1" matInput placeholder="{{getRatePlaceholder()}}" [(ngModel)]="userSelection.rate">
+    <input type="number" inputmode="decimal" min="1" matInput placeholder="{{getRatePlaceholder()}}" [(ngModel)]="userSelection.rate">
   </mat-form-field>
 
   <mat-form-field class="currency-form-field">

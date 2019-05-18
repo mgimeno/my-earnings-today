@@ -8,7 +8,8 @@ export const environment = {
   appDescription: "Calculate how much you have already earned today and compare with others",
   logoUrl: "https://www.myearningstoday.com/assets/logo.png",
   localStoragePrefix: "my-earnings-today_dev_",
-  compareToolMaxPersons: 5
+  compareToolMaxPersons: 5,
+  creatorProfileLink: "https://www.linkedin.com/in/marcosgimeno/"
 };
 
 /*

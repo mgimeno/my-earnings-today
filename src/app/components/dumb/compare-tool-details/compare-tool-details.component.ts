@@ -241,10 +241,10 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
             anchor: 'end',
             formatter: (value: any, context: ChartDataLabels.Context) => {
 
-              let index = context.dataIndex;
-              let hours = context.chart.data.datasets[0].data[index];
+              let index: number = context.dataIndex;
+              let hours: number = <number>context.chart.data.datasets[0].data[index];
 
-              return `${hours}h`;
+              return `${Number.isInteger(hours) ? hours : hours.toFixed(2)}h`;
             }
           }
         },
