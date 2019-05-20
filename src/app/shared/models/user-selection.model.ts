@@ -99,12 +99,7 @@ export class UserSelection {
 
       this.updateTotalAmounts(now);
 
-      this.updateStopwatchAmount(now);
-      this.updateCurrentHourAmount(now);
-      this.updateCurrentDayAmount(now);
-      this.updateCurrentWeekAmount(now);
-      this.updateCurrentMonthAmount(now);
-      this.updateCurrentYearAmount(now);
+      this.updateCurrentAmounts(now);
 
     }, AppConstants.Common.UPDATE_AMOUNTS_FREQUENCY_IN_MS);
 
@@ -169,10 +164,16 @@ export class UserSelection {
     }
   }
 
-  private updateStopwatchAmount(now) {
-    let startPeriod = new Date(this.dateTimeWhenClickedCalculate);
+  private updateCurrentAmounts(now: Date): void {
+    this.updateStopwatchAmount(now);
+    this.updateCurrentHourAmount(now);
+    this.updateCurrentDayAmount(now);
+    this.updateCurrentWeekAmount(now);
+    this.updateCurrentMonthAmount(now);
+    this.updateCurrentYearAmount(now);
+  }
 
-    let earnedUntilYesterday = this.getAmountEarnedUntilYesterday(PeriodEnum.Stopwatch, startPeriod, now);
+  private updateStopwatchAmount(now) {
 
     let hoursWorkedSinceClickedCalculate = 0;
     if (!this.hasDayOff(now) && this.workTodayHasStarted() && (this.dateTimeWhenClickedCalculate < this.dayEndTime)) {
@@ -181,7 +182,7 @@ export class UserSelection {
 
     let earnedToday = (hoursWorkedSinceClickedCalculate * this.totalHourAmountWhenNotOff);
 
-    this.stopwatchAmount = (earnedUntilYesterday + earnedToday);
+    this.stopwatchAmount = earnedToday;
   }
   private updateCurrentHourAmount(now) {
 
@@ -291,8 +292,6 @@ export class UserSelection {
 
     switch (periodType) {
       case PeriodEnum.Stopwatch:
-        result = DateHelper.getDaysWorkedInPeriod(this.getWeekWorkingDaysArray(), startPeriod, yesterday);
-        break;
       case PeriodEnum.CurrentHour:
       case PeriodEnum.CurrentDay:
         result = 0;
