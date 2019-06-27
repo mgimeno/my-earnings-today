@@ -67,7 +67,11 @@ import { CurrencyDirective } from './shared/directives/currency.directive';
     MatDialogModule,
     ClipboardModule
   ],
-  entryComponents: [ShareBottomSheetComponent, UserSelectionValidationDialogComponent, ConfirmDialogComponent ],
+  entryComponents: [
+    ShareBottomSheetComponent,
+    UserSelectionValidationDialogComponent,
+    ConfirmDialogComponent
+  ],
   providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: 250, hasBackdrop: true } }],
   bootstrap: [AppComponent]
 })
