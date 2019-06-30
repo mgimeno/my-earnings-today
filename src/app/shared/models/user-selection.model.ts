@@ -384,7 +384,7 @@ export class UserSelection {
     if (!this.hasDayOff() && !this.workTodayHasStarted()) {
       return `You start work in ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, this.dayStartTime)}`;
     }
-    else if (this.workTodayHasFinished() || this.hasDayOff()) {
+    else if ((!this.hasDayOff() && this.workTodayHasFinished()) || this.hasDayOff()) {
 
       let tomorrow = DateHelper.addDays(now, 1);
       let nextWorkingDayStartTime = this.getNextWorkingDay(now);
@@ -394,7 +394,17 @@ export class UserSelection {
         return `You're off until next ${nextWorkingDayName} at ${this.startTime}`;
       }
       else {
-        return `You start work in ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, nextWorkingDayStartTime)}`;
+
+        const secondsUntilStartWorking = DateHelper.secondsBetweenDates(now, nextWorkingDayStartTime);
+        const oneFullDayInSeconds = (24 * 60 * 60);
+
+        if (secondsUntilStartWorking > oneFullDayInSeconds) {
+          return `You start work tomorrow at ${this.startTime}`;
+        }
+        else {
+          return `You start work in ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, nextWorkingDayStartTime)}`;
+        }
+        
       }
 
     }
