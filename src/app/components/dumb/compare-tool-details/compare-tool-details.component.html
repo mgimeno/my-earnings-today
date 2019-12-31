@@ -27,8 +27,8 @@
   <h2>
     Total expected this
     <mat-form-field class="chart-period-select">
-      <mat-select [(ngModel)]="selectedChartPeriod" (ngModelChange)="onChartPeriodChanged()">
-        <mat-option *ngFor="let period of allPeriods" [value]="period">
+      <mat-select [(ngModel)]="chartSelectedPeriod" (ngModelChange)="onChartPeriodChanged()">
+        <mat-option *ngFor="let period of chartAllPeriods" [value]="period">
           {{period.name}}
         </mat-option>
       </mat-select>
@@ -50,6 +50,16 @@
 
 <div *ngIf="!isShowCharts" class="tiles-container one-tile-per-row">
 
+  <h2>
+    <mat-form-field class="details-type-select">
+      <mat-select [(ngModel)]="detailsSelectedType">
+        <mat-option *ngFor="let type of detailsAllTypes" [value]="type">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </h2>
+
   <div class="tile tile-{{index + 1}}" *ngFor="let tile of tiles; let index = index">
 
     <div class="header">
@@ -69,7 +79,9 @@
             </span>
 
             <span class="amount">
-              <span appCurrency [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></span>
+
+              <span *ngIf="isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></span>
+              <span *ngIf="!isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></span>
             </span>
 
           </div>

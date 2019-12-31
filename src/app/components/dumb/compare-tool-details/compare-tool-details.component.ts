@@ -25,7 +25,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   compareEarningsChart: Chart;
 
   //todo ?
-  allPeriods: INameValue[] = [
+  chartAllPeriods: INameValue[] = [
     { name: "hour", value: PeriodEnum.CurrentHour },
     { name: "day", value: PeriodEnum.CurrentDay },
     { name: "week", value: PeriodEnum.CurrentWeek },
@@ -33,7 +33,14 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
     { name: "year", value: PeriodEnum.CurrentYear }
   ];
 
-  selectedChartPeriod: INameValue = this.allPeriods[3];
+  chartSelectedPeriod: INameValue = this.chartAllPeriods[3];
+
+  detailsAllTypes: INameValue[] = [ //todo constanst?
+    { name: "Already earned", value: "already-earned" },
+    { name: "Total expected", value: "total-expected" }
+  ];
+
+  detailsSelectedType: INameValue = this.detailsAllTypes[0];
 
   //TODO colours? prob use same than the tiles. also put this as constants or so
   private readonly chartBackgroundColours: string[] = [
@@ -71,9 +78,12 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   }
 
   onChartPeriodChanged(): void {
-    console.log(this.selectedChartPeriod);
     this.compareEarningsChart.destroy();
     this.loadCompareEarningsChart();
+  }
+
+  isDetailsTypeAlreadyEarned(): boolean {
+    return this.detailsSelectedType.value === "already-earned";
   }
 
   private loadCompareEarningsChart(): void {
@@ -88,7 +98,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
       labels.push(us.name);
 
-      switch (this.selectedChartPeriod.value) {
+      switch (this.chartSelectedPeriod.value) {
         case PeriodEnum.CurrentHour:
           data.push(us.totalHourAmount);
           break;

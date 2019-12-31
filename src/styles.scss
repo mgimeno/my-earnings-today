@@ -18,7 +18,7 @@ h1 {
   font-size: 16px;
 }
 
-h2{
+h2 {
   font-size: 15px;
 }
 
@@ -84,7 +84,7 @@ span.decimal {
 
 .chart-period-select {
   width: 80px;
-  font-weight: unset;
+  font-weight: bold;
 
   .mat-form-field-wrapper {
     padding-bottom: 0 !important;
@@ -94,6 +94,8 @@ span.decimal {
     }
   }
 }
+
+
 
 
 .mat-dialog-actions {
@@ -137,9 +139,10 @@ span.decimal {
 .tiles-container {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 25px;
+
 
   &.two-tiles-per-row {
+    margin-top: 25px;
 
     .tile {
       flex: 0 50%;
@@ -147,8 +150,27 @@ span.decimal {
   }
 
   &.one-tile-per-row {
+    margin-top: 30px;
+
     .tile {
       flex: 0 100%;
+    }
+
+    h2 {
+      margin: 0 auto 25px auto;
+
+      .details-type-select {
+        font-weight: bold;
+        width: 140px;
+
+        .mat-form-field-wrapper {
+          padding-bottom: 0 !important;
+
+          .mat-form-field-underline {
+            top: 41px;
+          }
+        }
+      }
     }
   }
 
