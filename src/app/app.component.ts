@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   window = window;
-  windowSizeChangeTimeout: NodeJS.Timeout = null
+  windowSizeChangeTimeout: any = null
 
   alwaysShowSideNav: boolean = CommonHelper.isLargeScreen();
 
