@@ -11,8 +11,8 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container" [hasBackdrop]="!alwaysShowSideNav">
-    <mat-sidenav #snav fixedTopGap="56" role="navigation" mode="side" [opened]=alwaysShowSideNav
-      fixedInViewport="false">
+    <mat-sidenav #snav fixedTopGap="56" role="navigation" [mode]="(alwaysShowSideNav ? 'side' : 'over')"
+      [opened]=alwaysShowSideNav fixedInViewport="false">
       <mat-nav-list>
         <a mat-list-item (click)="goTo('/');">My earnings</a>
         <a mat-list-item (click)="goTo('/compare');">Compare</a>
