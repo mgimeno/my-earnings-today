@@ -165,7 +165,8 @@ span.decimal {
   flex-wrap: wrap;
 
   &.two-tiles-per-row {
-    margin-top: 25px;
+    margin: 25px auto 0 auto;
+    max-width: 450px;
 
     .tile {
       flex: 0 50%;

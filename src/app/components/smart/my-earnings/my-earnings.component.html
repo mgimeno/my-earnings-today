@@ -1,14 +1,15 @@
-
-
 <div *ngIf="userSelection && !showResults" class="text-center">
 
   <h1>Let's see how much you've already earned today</h1>
 
   <app-user-selection [userSelection]=userSelection [isCompareTool]=false></app-user-selection>
 
-  <div class="buttons m-t-15">
-    <button type="submit" class="text-center" mat-raised-button color="primary" (click)="tryCalculate()">Calculate</button>
-    <button mat-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
+  <div class="buttons m-t-20">
+    <button type="submit" class="text-center" mat-raised-button color="primary"
+      (click)="tryCalculate()">Calculate</button>
+    <button mat-button (click)="openShareBottomSheet()">
+      <mat-icon>share</mat-icon>Share this
+    </button>
   </div>
 
 </div>
@@ -18,10 +19,16 @@
 
   <app-my-earnings-details [userSelection]=userSelection></app-my-earnings-details>
 
-  <div class="buttons m-t-30">
-    <button mat-raised-button [routerLink]="['/']"><mat-icon>reply</mat-icon> back</button>
-    <button mat-raised-button color="primary" (click)="goToCompare()"><mat-icon>compare_arrows</mat-icon> Compare</button>
-    <button mat-raised-button (click)="openShareBottomSheet()"><mat-icon>share</mat-icon>Share this</button>
+  <div class="buttons m-t-40">
+    <button mat-raised-button [routerLink]="['/']">
+      <mat-icon>reply</mat-icon> Back
+    </button>
+    <button mat-raised-button color="primary" (click)="goToCompare()">
+      <mat-icon>compare_arrows</mat-icon> Compare
+    </button>
+    <button mat-raised-button (click)="openShareBottomSheet()">
+      <mat-icon>share</mat-icon>Share this
+    </button>
   </div>
 
 </div>
