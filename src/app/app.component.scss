@@ -2,18 +2,6 @@
 
 .mat-toolbar {
   height: $headerHeight;
-
-  .toolbar-content {
-    display: flex;
-    align-items: center;
-  }
-}
-
-@media only screen and (min-width: $maxWidth) {
-  .toolbar-content {
-    width: $maxWidth;
-    margin: 0 auto;
-  }
 }
 
 .main-container {
@@ -44,7 +32,7 @@
     margin-top: 56px;
     flex: 1 0 auto;
     .mat-sidenav {
-      width: 200px;
+      width: 190px;
     }
 
     .mat-sidenav-content {

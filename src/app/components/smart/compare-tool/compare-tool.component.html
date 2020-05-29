@@ -33,7 +33,7 @@
   <app-compare-tool-details [userSelections]=userSelections></app-compare-tool-details>
 
   <div class="buttons m-t-35">
-    <button mat-raised-button [routerLink]="['/compare']">
+    <button mat-raised-button (click)="goBack()">
       <mat-icon>reply</mat-icon> Back
     </button>
     <button mat-raised-button (click)="openShareBottomSheet()">

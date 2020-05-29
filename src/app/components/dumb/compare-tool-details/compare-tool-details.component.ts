@@ -2,8 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { DateHelper } from 'src/app/shared/helpers/date-helper';
 import { AppConstants } from 'src/app/shared/constants/app-constants';
-import * as Chart from 'chart.js';
-import { ChartTooltipItem, ChartData } from 'chart.js';
+import * as Chart from 'chart.js/dist/Chart.js';
 import { INameValue } from '../../../shared/intefaces/name-value.interface';
 import { PeriodEnum } from '../../../shared/enums/period.enum';
 import * as ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -148,7 +147,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
             align: 'end',
             anchor: 'end',
             formatter: (value: any, context: ChartDataLabels.Context) => {
-              
+
               let index = context.dataIndex;
               let amount: number = Number(context.chart.data.datasets[0].data[index]);
 

@@ -20,7 +20,7 @@
   <app-my-earnings-details [userSelection]=userSelection></app-my-earnings-details>
 
   <div class="buttons m-t-40">
-    <button mat-raised-button [routerLink]="['/']">
+    <button mat-raised-button (click)="goBack()">
       <mat-icon>reply</mat-icon> Back
     </button>
     <button mat-raised-button color="primary" (click)="goToCompare()">

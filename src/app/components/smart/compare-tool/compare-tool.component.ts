@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from 'src/app/shared/services/storage-service';
@@ -15,7 +15,7 @@ import { ConfirmDialogComponent } from '../../dumb/confirm-dialog/confirm-dialog
   templateUrl: './compare-tool.component.html',
   styleUrls: ['./compare-tool.component.scss']
 })
-export class CompareToolComponent {
+export class CompareToolComponent implements OnDestroy {
 
   userSelections: Array<UserSelection>;
   showResults: boolean = false;
@@ -25,7 +25,8 @@ export class CompareToolComponent {
     private activeRoute: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private router: Router) {
 
     this.setupOnParamsChange();
 
@@ -60,7 +61,7 @@ export class CompareToolComponent {
       setTimeout(() => {
         this.addPerson();
       }, 500);
-      
+
     }
 
   }
@@ -71,7 +72,7 @@ export class CompareToolComponent {
   }
 
   private calculate(): void {
-    
+
     this.storageService.saveUserSelectionsOnLocalStorage(this.userSelections);
     this.storageService.setUserSelectionsOnURL(this.userSelections);
 
@@ -126,6 +127,14 @@ export class CompareToolComponent {
     });
   }
 
+  goBack(): void {
+
+    this.router.navigate(['/compare']);
+
+    window.scrollTo(0, 0);
+
+  }
+
 
   private reorderUserSelections(): void {
 
@@ -138,7 +147,7 @@ export class CompareToolComponent {
       let userSelection = this.userSelections[index];
 
       if (userSelection.personNumber != personNumber) {
-        
+
         if (userSelection.name === `Person ${userSelection.personNumber}`) {
           userSelection.name = `Person ${personNumber}`;
         }

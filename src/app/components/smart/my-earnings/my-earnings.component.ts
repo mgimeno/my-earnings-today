@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,7 +6,6 @@ import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { StorageService } from 'src/app/shared/services/storage-service';
-import { AppConstants } from 'src/app/shared/constants/app-constants';
 import { UserSelectionValidationDialogComponent } from '../../dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
 
 
@@ -30,6 +29,8 @@ export class MyEarningsComponent implements OnDestroy {
     this.setupOnParamsChange();
 
     this.loadInitialUserSelection();
+
+
   }
 
   private loadInitialUserSelection(): void {
@@ -61,6 +62,8 @@ export class MyEarningsComponent implements OnDestroy {
     this.userSelection.calculate();
 
     this.showResults = true;
+
+    window.scrollTo(0, 0);
   }
 
   tryCalculate(): void {
@@ -79,6 +82,17 @@ export class MyEarningsComponent implements OnDestroy {
     this.storageService.saveUserSelectionOnLocalStorage(this.userSelection);
 
     this.router.navigate(['/compare']);
+
+    window.scrollTo(0, 0);
+
+  }
+
+  goBack(): void {
+
+    this.router.navigate(['/']);
+
+    window.scrollTo(0, 0);
+
   }
 
   openShareBottomSheet(): void {
