@@ -1,19 +1,26 @@
-
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import 'variables';
-@import 'space-helpers';
+@import "variables";
+@import "space-helpers";
 
-html, body {
+html,
+body {
   margin: 0;
+}
+
+html {
   background-color: #fafafa;
 }
 
+body {
+  font-size: 18px;
+}
+
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 h1 {
-  margin-bottom: 25px;
+  margin-bottom: 35px;
   font-size: 16px;
 }
 
@@ -31,16 +38,24 @@ input::-webkit-inner-spin-button {
 
 //Form fields bottom border;
 .mat-form-field-appearance-legacy .mat-form-field-underline {
-  background-color: rgba(0,0,0,0.12);
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 .mat-checkbox-layout .mat-checkbox-inner-container {
   margin-right: 5px;
+
+  .mat-checkbox-label {
+    font-size: 15px;
+  }
 }
 
 .mat-form-field .mat-form-field-label {
   color: $primaryColor;
-  font-weight:bolder;
+  font-weight: bolder;
+}
+
+.mat-form-field {
+  margin: 4px 0;
 }
 
 .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
@@ -51,7 +66,7 @@ input::-webkit-inner-spin-button {
   background-color: lighten($primaryColor, 20%) !important;
 }
 
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
 }
 
@@ -60,7 +75,7 @@ input[type=number] {
 }
 
 .mat-select-arrow {
-  color: rgba(0,0,0,0.22);
+  color: rgba(0, 0, 0, 0.22);
 }
 
 .mat-tab-label {
@@ -73,13 +88,17 @@ input[type=number] {
   }
 }
 
+.mat-tab-label-active .title {
+  font-weight: bold;
+}
+
 .clickable {
   cursor: pointer;
 }
 
 span.decimal {
   font-size: smaller;
-  color: rgba(0, 0, 0, 0.70);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .chart-period-select {
@@ -107,21 +126,16 @@ span.decimal {
   }
 }
 
-
-
 .mat-dialog-actions {
   justify-content: center;
   margin-top: 10px;
 }
-
 
 .buttons {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-
 
   button {
     width: $buttonWidth;
@@ -146,11 +160,9 @@ span.decimal {
   }
 }
 
-
 .tiles-container {
   display: flex;
   flex-wrap: wrap;
-
 
   &.two-tiles-per-row {
     margin-top: 25px;
@@ -212,24 +224,23 @@ span.decimal {
       background-color: $tileColor6;
     }
 
-
     .header {
       color: white;
       font-size: 14px;
       padding: 7px 0;
-      background: rgba(0,0,0,.38);
+      background: rgba(0, 0, 0, 0.38);
     }
 
     .body {
       padding: 12px 0;
 
       .current-amount {
-        font-size: 22px;
+        font-size: 25px;
         margin-bottom: 6px;
       }
 
       .details {
-        font-size: small;
+        font-size: 16px;
       }
 
       .multiple-persons-container {
@@ -250,5 +261,16 @@ span.decimal {
         }
       }
     }
+  }
+}
+
+@media only screen and (min-height: 800px) {
+  h1 {
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+
+  .mat-form-field {
+    margin: 10px 0;
   }
 }

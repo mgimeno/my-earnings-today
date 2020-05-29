@@ -1,12 +1,13 @@
-
-
 <div class="main-container">
 
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <a class="title" [routerLink]="['/']">My Earnings Today</a>
+
+    <div class="toolbar-content">
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <a class="title" [routerLink]="['/']">My earnings today</a>
+    </div>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
@@ -20,12 +21,11 @@
 
     <mat-sidenav-content>
 
+      <div class="router-outlet-container">
         <router-outlet></router-outlet>
-      
+      </div>
+
     </mat-sidenav-content>
 
   </mat-sidenav-container>
 </div>
-
-
-

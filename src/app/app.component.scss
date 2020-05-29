@@ -1,8 +1,19 @@
-@import 'variables';
+@import "variables";
 
-
-mat-toolbar {
+.mat-toolbar {
   height: $headerHeight;
+
+  .toolbar-content {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media only screen and (min-width: $maxWidth) {
+  .toolbar-content {
+    width: $maxWidth;
+    margin: 0 auto;
+  }
 }
 
 .main-container {
@@ -32,12 +43,17 @@ mat-toolbar {
   .sidenav-container {
     margin-top: 56px;
     flex: 1 0 auto;
-    mat-sidenav {
+    .mat-sidenav {
       width: 200px;
     }
 
-    mat-sidenav-content {
+    .mat-sidenav-content {
       padding: 25px 34px 30px 34px;
+
+      .router-outlet-container {
+        max-width: $maxWidth;
+        margin: 0 auto;
+      }
     }
   }
 }

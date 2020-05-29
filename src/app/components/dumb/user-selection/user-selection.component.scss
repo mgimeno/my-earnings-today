@@ -1,6 +1,6 @@
-@import 'variables';
+@import "variables";
 
-$smallFontSize: 12px;
+$smallFontSize: 14px;
 
 .user-selection {
   width: 100%;
@@ -19,7 +19,6 @@ $smallFontSize: 12px;
   width: 100%;
 }
 
-
 .time-form-field {
   width: 50%;
 }
@@ -28,7 +27,7 @@ $smallFontSize: 12px;
   text-align: left;
   font-size: $smallFontSize;
   color: $primaryColor;
-  font-weight:bolder;
+  font-weight: bolder;
 }
 
 .week-days {
@@ -37,7 +36,7 @@ $smallFontSize: 12px;
   display: flex;
   justify-content: space-between;
 
-  .empty-block {
-    width: 34px;
+  & > * {
+    flex: 1 1 0px;
   }
 }
