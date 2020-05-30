@@ -12,11 +12,14 @@
 
   <mat-sidenav-container class="sidenav-container" [hasBackdrop]="!alwaysShowSideNav">
     <mat-sidenav #snav fixedTopGap="56" role="navigation" [mode]="(alwaysShowSideNav ? 'side' : 'over')"
-      [opened]=alwaysShowSideNav fixedInViewport="false">
+      [opened]=alwaysShowSideNav fixedInViewport="true">
       <mat-nav-list>
-        <a mat-list-item (click)="goTo('/');">My earnings</a>
-        <a mat-list-item (click)="goTo('/compare');">Compare</a>
-        <a mat-list-item (click)="goTo('/about');">About</a>
+        <a mat-list-item [routerLink]="['/']" (click)="window.scrollTo(0, 0); !alwaysShowSideNav && snav.toggle();">My
+          earnings</a>
+        <a mat-list-item [routerLink]="['/compare']"
+          (click)="window.scrollTo(0, 0); !alwaysShowSideNav && snav.toggle();">Compare</a>
+        <a mat-list-item [routerLink]="['/about']"
+          (click)="window.scrollTo(0, 0); !alwaysShowSideNav && snav.toggle();">About</a>
       </mat-nav-list>
     </mat-sidenav>
 

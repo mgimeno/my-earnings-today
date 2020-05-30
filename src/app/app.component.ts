@@ -17,16 +17,6 @@ export class AppComponent {
   constructor(private router: Router) {
   }
 
-  goTo(path: string): void {
-
-    if (!this.alwaysShowSideNav) {
-      (document.querySelector('#snav') as any).toggle();
-    }
-
-    this.router.navigate([path]);
-
-    window.scrollTo(0, 0);
-  }
 
   @HostListener('window:resize', ['$event'])
   windowSizeChange(event) {
