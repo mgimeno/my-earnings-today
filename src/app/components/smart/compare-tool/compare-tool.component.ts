@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -26,7 +26,8 @@ export class CompareToolComponent implements OnDestroy {
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
     private dialog: MatDialog,
-    private router: Router) {
+    private router: Router,
+    private cdr: ChangeDetectorRef) {
 
     this.setupOnParamsChange();
 
@@ -91,6 +92,8 @@ export class CompareToolComponent implements OnDestroy {
   }
 
   addPerson(): void {
+    window.scrollTo(0, 0);
+
     let personNumber = (this.userSelections.length + 1);
 
     let newUserSelection = new UserSelection(personNumber);
@@ -99,6 +102,15 @@ export class CompareToolComponent implements OnDestroy {
     this.userSelections.push(newUserSelection);
 
     this.activeTabIndex = (personNumber - 1);
+
+    if (!(this.cdr as ViewRef).destroyed) {
+      this.cdr.detectChanges();
+    }
+
+
+
+    this.scrollTabHeadersToTheFarRight();
+
   }
 
   canAddMorePersons(): boolean {
@@ -135,6 +147,10 @@ export class CompareToolComponent implements OnDestroy {
 
   }
 
+  openShareBottomSheet(): void {
+    this.bottomSheet.open(ShareBottomSheetComponent);
+  }
+
 
   private reorderUserSelections(): void {
 
@@ -167,10 +183,6 @@ export class CompareToolComponent implements OnDestroy {
     }
   }
 
-  openShareBottomSheet(): void {
-    this.bottomSheet.open(ShareBottomSheetComponent);
-  }
-
   private setupOnParamsChange(): void {
     this.activeRoute.queryParams.subscribe(queryParams => {
       if (CommonHelper.isEmptyObject(queryParams)) {
@@ -178,6 +190,18 @@ export class CompareToolComponent implements OnDestroy {
         this.showResults = false;
       }
     });
+  }
+
+  private scrollTabHeadersToTheFarRight(): void {
+    setTimeout(() => {
+      const element = document.querySelector(".mat-tab-header-pagination-after") as any;
+
+      for (let i = 0; i < 6; i++) {
+        element.click();
+      }
+
+
+    }, 50);
   }
 
   ngOnDestroy(): void {
