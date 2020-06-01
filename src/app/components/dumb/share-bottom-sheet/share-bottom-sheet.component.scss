@@ -1,12 +1,16 @@
-#sharethis-buttons {
-  margin: 25px 0;
-}
+.share-container {
+  font-size: 15px;
 
-.copy-link-container {
-  margin: 25px 0;
-  text-align: center;
+  #sharethis-buttons {
+    margin: 25px 0;
+  }
 
-  .link-copied {
-    background-color: green;
+  .copy-link-container {
+    margin: 25px 0;
+    text-align: center;
+
+    .link-copied {
+      background-color: green;
+    }
   }
 }

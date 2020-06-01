@@ -22,7 +22,8 @@
     <button mat-raised-button color="accent" [disabled]="!canAddMorePersons()" (click)="addPerson()">
       <mat-icon class="add-icon">person_add</mat-icon> Add Person
     </button>
-    <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()">Calculate</button>
+    <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()"
+      cdkFocusInitial>Calculate</button>
   </div>
 
 </div>

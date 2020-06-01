@@ -101,17 +101,22 @@ span.decimal {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.chart-period-select {
-  width: 115px;
+.chart-expected-select,
+.chart-hours-select {
   font-weight: bold;
 
-  .mat-form-field-wrapper {
-    padding-bottom: 0 !important;
-
-    .mat-form-field-underline {
-      top: 41px;
-    }
+  .mat-form-field-underline {
+    top: 41px;
   }
+}
+
+.chart-expected-select {
+  width: 115px;
+}
+
+.chart-hours-select {
+  width: 80px;
+  bottom: 1px;
 }
 
 .highlight-select {

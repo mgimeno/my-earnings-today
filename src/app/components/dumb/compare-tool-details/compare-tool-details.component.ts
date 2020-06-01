@@ -25,7 +25,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   compareEarningsChart: Chart;
 
   //todo ?
-  chartAllPeriods: INameValue[] = [
+  chartAllExpectedPeriods: INameValue[] = [
     { name: "this hour", value: PeriodEnum.CurrentHour },
     { name: "today", value: PeriodEnum.CurrentDay },
     { name: "this week", value: PeriodEnum.CurrentWeek },
@@ -33,7 +33,17 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
     { name: "this year", value: PeriodEnum.CurrentYear }
   ];
 
-  chartSelectedPeriod: INameValue = this.chartAllPeriods[3];
+  chartSelectedExpectedPeriod: INameValue = this.chartAllExpectedPeriods[3];
+
+  //todo ?
+  chartAllHoursPeriods: INameValue[] = [
+    { name: "day", value: PeriodEnum.CurrentDay },
+    { name: "week", value: PeriodEnum.CurrentWeek },
+    { name: "month", value: PeriodEnum.CurrentMonth },
+    { name: "year", value: PeriodEnum.CurrentYear }
+  ];
+
+  chartSelectedHoursPeriod: INameValue = this.chartAllHoursPeriods[1];
 
   detailsAllTypes: INameValue[] = [ //todo constanst?
     { name: "Already earned", value: "already-earned" },
@@ -78,18 +88,30 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
     }, AppConstants.Common.UPDATE_STOPWATCH_FREQUENCY_IN_MS);
   }
 
-  onChartPeriodChanged(): void {
+  onChartExpectedPeriodChanged(): void {
     this.compareEarningsChart.destroy();
     this.loadCompareEarningsChart();
+  }
+
+  onChartHoursPeriodChanged(): void {
+    this.hoursPerWeekChart.destroy();
+    this.loadHoursWorkedPerWeekChart();
   }
 
   isDetailsTypeAlreadyEarned(): boolean {
     return this.detailsSelectedType.value === "already-earned";
   }
 
+  //todo Fix this, instead of getting the tiles from a method (called many times), on change of the this.detailsSelectedType.value, assign the tiles array to the variable tiles
+  getTiles(): any[] {
+    if (this.isDetailsTypeAlreadyEarned()) {
+      return this.tiles;
+    }
+    return this.tiles.slice(1);
+
+  }
+
   private loadCompareEarningsChart(): void {
-
-
 
     let canvas = <HTMLCanvasElement>document.getElementById("compare-earnings-chart");
     let ctx = canvas.getContext('2d');
@@ -97,11 +119,17 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
     let labels: string[] = [];
     let data: number[] = [];
 
+    let currencySymbol = this.userSelections[0].currencySymbol;
+
     this.userSelections.forEach(us => {
+
+      if (us.currencySymbol !== currencySymbol) {
+        currencySymbol = '';
+      }
 
       labels.push(us.name);
 
-      switch (this.chartSelectedPeriod.value) {
+      switch (this.chartSelectedExpectedPeriod.value) {
         case PeriodEnum.CurrentHour:
           data.push(us.totalHourAmount);
           break;
@@ -177,7 +205,15 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
         },
         responsive: true,
         scales: {
-          yAxes: [{ ticks: { beginAtZero: true } }]
+          yAxes: [{
+            ticks:
+            {
+              beginAtZero: true,
+              callback: (label, index, labels) => {
+                return currencySymbol + label.toLocaleString();
+              }
+            }
+          }]
         },
         legend: {
           display: false
@@ -210,7 +246,23 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
     this.userSelections.forEach(us => {
       labels.push(us.name);
-      data.push(us.workingHoursThisWeek);
+
+
+      switch (this.chartSelectedHoursPeriod.value) {
+        case PeriodEnum.CurrentDay:
+          data.push(us.hoursWorkedPerDay);
+          break;
+        case PeriodEnum.CurrentWeek:
+          data.push(us.workingHoursThisWeek);
+          break;
+        case PeriodEnum.CurrentMonth:
+          data.push(us.workingHoursThisWeek * 4.34524);
+          break;
+        case PeriodEnum.CurrentYear:
+          data.push(us.workingHoursThisYear);
+          break;
+      }
+
     });
 
 
@@ -243,12 +295,22 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
               let index: number = context.dataIndex;
               let hours: number = <number>context.chart.data.datasets[0].data[index];
 
-              return `${Number.isInteger(hours) ? hours : hours.toFixed(2)}h`;
+              return `${(Number.isInteger(hours) ? hours : hours.toFixed(2)).toLocaleString()}h`;
             }
           }
         },
         responsive: true,
-        scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
+        scales: {
+          yAxes: [{
+            ticks:
+            {
+              beginAtZero: true,
+              callback: (label, index, labels) => {
+                return label.toLocaleString() + 'h';
+              }
+            }
+          }]
+        },
         legend: {
           display: false
         },

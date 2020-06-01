@@ -1,7 +1,5 @@
-
-
 <h1 mat-dialog-title>Missing details</h1>
-<div mat-dialog-content class="content">
+<mat-dialog-content class="content">
 
   <ng-container *ngFor="let userSelection of data.userSelections; let index = index;">
 
@@ -43,7 +41,7 @@
   </p>
 
 
-</div>
-<div mat-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="onClose()" cdkFocusInitial>Got it!</button>
-</div>
+</mat-dialog-actions>

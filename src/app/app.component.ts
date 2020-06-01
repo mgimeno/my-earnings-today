@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonHelper } from './shared/helpers/common-helper';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,20 @@ export class AppComponent {
 
   alwaysShowSideNav: boolean = CommonHelper.isLargeScreen();
 
+  currentUrl = '/';
+
   constructor(private router: Router) {
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = this.router.routerState.snapshot.url;
+        console.log(this.currentUrl);
+      }
+    });
+  }
+
+  doesUrlStartWith(url: string): boolean {
+    return this.currentUrl.startsWith(url);
   }
 
 

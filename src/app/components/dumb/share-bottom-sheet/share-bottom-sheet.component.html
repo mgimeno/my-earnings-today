@@ -1,16 +1,15 @@
-<p><b>Share on</b></p>
-<div id="sharethis-buttons"></div>
+<div class="share-container">
 
-<p><b>Or copy and share the link</b></p>
-<div class="copy-link-container" #container>
-  <button mat-flat-button
-          color="primary"
-          [class.link-copied]="isLinkCopiedToClipboard"
-          ngxClipboard
-          [cbContent]="currentUrl"
-          [container]="container"
-          (click)="onCopyLinkClick()">
-    <span *ngIf="!isLinkCopiedToClipboard">Copy link</span>
-    <span *ngIf="isLinkCopiedToClipboard">Copied!</span>
-  </button>
+  <p><b>Share on</b></p>
+  <div id="sharethis-buttons"></div>
+
+  <p><b>Or copy and share the link</b></p>
+  <div class="copy-link-container" #container>
+    <button mat-flat-button color="primary" [class.link-copied]="isLinkCopiedToClipboard" ngxClipboard
+      [cbContent]="currentUrl" [container]="container" (click)="onCopyLinkClick()">
+      <span *ngIf="!isLinkCopiedToClipboard">Copy link</span>
+      <span *ngIf="isLinkCopiedToClipboard">Copied!</span>
+    </button>
+  </div>
+
 </div>

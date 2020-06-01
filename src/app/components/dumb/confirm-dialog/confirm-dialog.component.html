@@ -1,11 +1,10 @@
-
 <h1 *ngIf="data.title" mat-dialog-title>{{data.title}}</h1>
-<div mat-dialog-content>
+<mat-dialog-content>
   {{data.body}}
-</div>
+</mat-dialog-content>
 
 
-<div mat-dialog-actions>
+<mat-dialog-actions>
   <button mat-raised-button (click)="onCancel()">{{data.cancelButtonText}}</button>
   <button mat-raised-button color="warn" (click)="onConfirm()" cdkFocusInitial>{{data.confirmButtonText}}</button>
-</div>
+</mat-dialog-actions>

@@ -5,8 +5,8 @@
   <app-user-selection [userSelection]=userSelection [isCompareTool]=false></app-user-selection>
 
   <div class="buttons m-t-20">
-    <button type="submit" class="text-center" mat-raised-button color="primary"
-      (click)="tryCalculate()">Calculate</button>
+    <button type="submit" class="text-center" mat-raised-button color="primary" (click)="tryCalculate()"
+      cdkFocusInitial>Calculate</button>
     <button mat-button (click)="openShareBottomSheet()">
       <mat-icon>share</mat-icon>Share this
     </button>

@@ -25,12 +25,10 @@
 <div *ngIf="isShowCharts" class="charts-container">
 
   <h2>
-    Total expected 
-    <mat-form-field class="chart-period-select highlight-select">
-      <mat-select [(ngModel)]="chartSelectedPeriod" (ngModelChange)="onChartPeriodChanged()">
-        <mat-option *ngFor="let period of chartAllPeriods" [value]="period">
-          {{period.name}}
-        </mat-option>
+    <span>Total expected </span>
+    <mat-form-field class="chart-expected-select highlight-select">
+      <mat-select [(ngModel)]="chartSelectedExpectedPeriod" (ngModelChange)="onChartExpectedPeriodChanged()">
+        <mat-option *ngFor="let period of chartAllExpectedPeriods" [value]="period">{{period.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </h2>
@@ -40,7 +38,14 @@
 
   <br />
 
-  <h2>Hours worked per week</h2>
+  <h2>
+    <span>Hours worked per </span>
+    <mat-form-field class="chart-hours-select highlight-select">
+      <mat-select [(ngModel)]="chartSelectedHoursPeriod" (ngModelChange)="onChartHoursPeriodChanged()">
+        <mat-option *ngFor="let period of chartAllHoursPeriods" [value]="period">{{period.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </h2>
   <div class="chart-container">
     <canvas id="compare-hours-worked-chart"></canvas>
   </div>
@@ -60,10 +65,11 @@
     </mat-form-field>
   </h2>
 
-  <div class="tile tile-{{index + 1}}" *ngFor="let tile of tiles; let index = index">
+  <div class="tile tile-{{index + 1}}" *ngFor="let tile of getTiles(); let index = index">
 
     <div class="header">
       {{tile.title}}
+      <span *ngIf="index === 0 && isDetailsTypeAlreadyEarned()"> ({{timeElapsedSinceCalculated}})</span>
     </div>
 
     <div class="body">
@@ -80,8 +86,10 @@
 
             <span class="amount">
 
-              <span *ngIf="isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></span>
-              <span *ngIf="!isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></span>
+              <span *ngIf="isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.amountProperty]
+                [symbol]=userSelection.currencySymbol></span>
+              <span *ngIf="!isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.totalAmountProperty]
+                [symbol]=userSelection.currencySymbol></span>
             </span>
 
           </div>
