@@ -21,7 +21,7 @@ h2 {
     font-size: 14px;
     height: 60px;
     background-size: 50px 50px;
-    color: $primaryColor;
+    color: #444;
 
     &:hover {
       .heart {
@@ -32,6 +32,10 @@ h2 {
         -webkit-transform: scaleX(1);
         transform: scaleX(1);
       }
+    }
+
+    .heart {
+      color: $primaryColor;
     }
 
     .underline {
