@@ -295,7 +295,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
               let index: number = context.dataIndex;
               let hours: number = <number>context.chart.data.datasets[0].data[index];
 
-              return `${(Number.isInteger(hours) ? hours : hours.toFixed(2)).toLocaleString()}h`;
+              return `${(Number.isInteger(hours) ? hours : hours.toFixed(2)).toLocaleString()} h`;
             }
           }
         },
@@ -306,7 +306,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
             {
               beginAtZero: true,
               callback: (label, index, labels) => {
-                return label.toLocaleString() + 'h';
+                return label.toLocaleString() + " h";
               }
             }
           }]
