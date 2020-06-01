@@ -7,7 +7,8 @@
     <div class="person">
       <div class="name">{{userSelection.name}}</div>
       <div class="amount">
-        <span appCurrency [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></span>
+        <span appCurrency [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol
+          [forceShowDecimalPlaces]=true></span>
       </div>
     </div>
 
@@ -87,9 +88,9 @@
             <span class="amount">
 
               <span *ngIf="isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.amountProperty]
-                [symbol]=userSelection.currencySymbol></span>
+                [symbol]=userSelection.currencySymbol [forceShowDecimalPlaces]=true></span>
               <span *ngIf="!isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.totalAmountProperty]
-                [symbol]=userSelection.currencySymbol></span>
+                [symbol]=userSelection.currencySymbol [forceShowDecimalPlaces]=true></span>
             </span>
 
           </div>

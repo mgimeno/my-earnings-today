@@ -7,6 +7,7 @@ export class CurrencyDirective implements OnChanges {
 
   @Input() amount: number;
   @Input() symbol: string;
+  @Input() forceShowDecimalPlaces: boolean = false;
 
   amountRoundedTo2Decimals: string = null;
 
@@ -26,7 +27,7 @@ export class CurrencyDirective implements OnChanges {
     let integerPart = Number(this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
 
     if (this.showDecimalPlaces()) {
-      
+
       let decimalPart = this.amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
 
       this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}<span class='decimal'>${this.decimalsSeparator}${decimalPart}</span>`;
@@ -37,6 +38,6 @@ export class CurrencyDirective implements OnChanges {
   }
 
   showDecimalPlaces(): boolean {
-    return Number.isInteger(+this.amountRoundedTo2Decimals) ? false : true;
+    return (this.amountRoundedTo2Decimals !== "0.00") && (this.forceShowDecimalPlaces || !Number.isInteger(+this.amountRoundedTo2Decimals)) ? true : false;
   }
 }
