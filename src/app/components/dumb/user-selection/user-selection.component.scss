@@ -5,6 +5,8 @@ $smallFontSize: 14px;
 .user-selection {
   width: 100%;
   margin: 20px auto 0 auto;
+
+  overflow: hidden; //todo this is a fix for Microsoft Edge.
 }
 
 .rate-form-field {
