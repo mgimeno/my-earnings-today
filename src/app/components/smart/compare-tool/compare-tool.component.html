@@ -19,8 +19,9 @@
   </mat-tab-group>
 
   <div class="buttons m-t-20">
-    <button mat-raised-button color="accent" [disabled]="!canAddMorePersons()" (click)="addPerson()">
-      <mat-icon class="add-icon">person_add</mat-icon> Add Person
+    <button class="add-person-button text-center" mat-raised-button color="accent" [disabled]="!canAddMorePersons()"
+      (click)="addPerson()">
+      <mat-icon class="add-icon">person_add</mat-icon> Add person
     </button>
     <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()"
       cdkFocusInitial>Calculate</button>
