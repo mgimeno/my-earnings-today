@@ -118,8 +118,30 @@ export class UserSelection {
     return DateHelper.hoursBetweenDates(currentHourStartAndEndDates.start, currentHourStartAndEndDates.end);
   }
 
+
+  private getTotalHourAmount(now: Date, hoursPercentage: number): number {
+
+    if (this.frequency.value === "hour") {
+      return (hoursPercentage * this.totalHourAmountWhenNotOff / 100);
+    }
+    else {
+
+      if (!this.isWorkingAtSomePointDuringCurrentHour(now)) {
+        return 0;
+      }
+      else if (this.workingHoursToday < 1 && (this.dayStartTime.getHours() === DateHelper.addMiliseconds(this.dayEndTime, -1).getHours())) {
+        return this.totalDayAmountWhenNotOff;
+      }
+      else {
+        return (hoursPercentage * this.totalHourAmountWhenNotOff / 100);
+      }
+
+    }
+  }
+
   private updateTotalAmounts(now: Date): void {
 
+    //todo rename this, also put in on this. variable so I don't need to always pass it as parameter
     const hoursPercentage = this.workingHoursThisHour / 1 * 100;
     //console.log("workingHoursThisHour", this.workingHoursThisHour);
 
@@ -129,9 +151,9 @@ export class UserSelection {
         this.totalDayAmountWhenNotOff = +this.rate * this.workingHoursToday;
         this.totalHourAmountWhenNotOff = +this.rate;
 
+        this.totalHourAmount = this.getTotalHourAmount(now, hoursPercentage);
 
         this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
-        this.totalHourAmount = (hoursPercentage * this.totalHourAmountWhenNotOff / 100);
         this.totalWeekAmount = (+this.rate * this.workingHoursThisWeek);
         this.totalMonthAmount = (+this.rate * this.workingHoursThisMonth);
         this.totalYearAmount = (+this.rate * this.workingHoursThisYear);
@@ -140,7 +162,8 @@ export class UserSelection {
         this.totalDayAmountWhenNotOff = +this.rate;
         this.totalHourAmountWhenNotOff = (this.workingHoursToday > 1 ? (this.totalDayAmountWhenNotOff / this.workingHoursToday) : (this.totalDayAmountWhenNotOff * this.workingHoursToday));
 
-        this.totalHourAmount = (this.isWorkingAtSomePointDuringCurrentHour(now) ? (hoursPercentage * this.totalHourAmountWhenNotOff / 100) : 0);
+        this.totalHourAmount = this.getTotalHourAmount(now, hoursPercentage);
+
         this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
         this.totalWeekAmount = (+this.rate * this.workingDaysThisWeek);
         this.totalMonthAmount = (+this.rate * this.workingDaysThisMonth);
@@ -151,7 +174,8 @@ export class UserSelection {
         this.totalDayAmountWhenNotOff = (+this.rate / this.workingDaysThisWeek);
         this.totalHourAmountWhenNotOff = (this.workingHoursToday > 1 ? (this.totalDayAmountWhenNotOff / this.workingHoursToday) : (this.totalDayAmountWhenNotOff * this.workingHoursToday));
 
-        this.totalHourAmount = (this.isWorkingAtSomePointDuringCurrentHour(now) ? (hoursPercentage * this.totalHourAmountWhenNotOff / 100) : 0);
+        this.totalHourAmount = this.getTotalHourAmount(now, hoursPercentage);
+
         this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
         this.totalWeekAmount = +this.rate;
         this.totalMonthAmount = (this.totalDayAmountWhenNotOff * this.workingDaysThisMonth);
@@ -164,7 +188,8 @@ export class UserSelection {
         this.totalDayAmountWhenNotOff = (this.totalMonthAmount / this.workingDaysThisMonth);
         this.totalHourAmountWhenNotOff = (this.workingHoursToday > 1 ? (this.totalDayAmountWhenNotOff / this.workingHoursToday) : (this.totalDayAmountWhenNotOff * this.workingHoursToday));
 
-        this.totalHourAmount = (this.isWorkingAtSomePointDuringCurrentHour(now) ? (hoursPercentage * this.totalHourAmountWhenNotOff / 100) : 0);
+        this.totalHourAmount = this.getTotalHourAmount(now, hoursPercentage);
+
         this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
         this.totalWeekAmount = (this.workingDaysThisWeek * this.totalDayAmountWhenNotOff);
         break;
@@ -175,7 +200,8 @@ export class UserSelection {
         this.totalDayAmountWhenNotOff = (this.totalMonthAmount / this.workingDaysThisMonth);
         this.totalHourAmountWhenNotOff = (this.workingHoursToday > 1 ? (this.totalDayAmountWhenNotOff / this.workingHoursToday) : (this.totalDayAmountWhenNotOff * this.workingHoursToday));
 
-        this.totalHourAmount = (this.isWorkingAtSomePointDuringCurrentHour(now) ? (hoursPercentage * this.totalHourAmountWhenNotOff / 100) : 0);
+        this.totalHourAmount = this.getTotalHourAmount(now, hoursPercentage);
+
         this.totalDayAmount = (this.hasDayOff(now) ? 0 : this.totalDayAmountWhenNotOff);
         this.totalWeekAmount = (this.workingDaysThisWeek * this.totalDayAmountWhenNotOff);
         break;
@@ -295,12 +321,12 @@ export class UserSelection {
 
       earnedThisHour = percentageCompleted * this.totalHourAmount / 100;
 
-      console.log("start", currentHourStartAndEndDates.start);
-      console.log("end", currentHourStartAndEndDates.end);
-      console.log({ timeWorkedDuringCurrentHourInHours });
-      console.log({ totalTimeThatShouldWorkThisHourInHours });
-      console.log({ percentageCompleted });
-      console.log(this.totalHourAmountWhenNotOff);
+      // console.log("start", currentHourStartAndEndDates.start);
+      // console.log("end", currentHourStartAndEndDates.end);
+      // console.log({ timeWorkedDuringCurrentHourInHours });
+      // console.log({ totalTimeThatShouldWorkThisHourInHours });
+      // console.log({ percentageCompleted });
+      // console.log(this.totalHourAmountWhenNotOff);
     }
 
     return earnedThisHour;
