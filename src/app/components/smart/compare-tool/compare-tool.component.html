@@ -19,7 +19,7 @@
   </mat-tab-group>
 
   <div class="buttons m-t-20">
-    <button class="add-person-button text-center" mat-raised-button color="accent" [disabled]="!canAddMorePersons()"
+    <button class="add-person-button text-center" mat-raised-button [disabled]="!canAddMorePersons()"
       (click)="addPerson()">
       <mat-icon class="add-icon">person_add</mat-icon> Add person
     </button>

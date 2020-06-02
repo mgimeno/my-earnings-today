@@ -20,7 +20,7 @@
 
   <br />
 
-  <mat-form-field class="full-width-form-field">
+  <mat-form-field class="frequency-form-field full-width-form-field">
     <mat-select [(ngModel)]="userSelection.frequency">
       <mat-option *ngFor="let frequency of getAllFrequencies()" [value]="frequency">
         {{frequency.name}}
