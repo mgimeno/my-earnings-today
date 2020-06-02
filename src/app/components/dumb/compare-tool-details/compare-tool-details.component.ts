@@ -250,7 +250,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
       switch (this.chartSelectedHoursPeriod.value) {
         case PeriodEnum.CurrentDay:
-          data.push(us.hoursWorkedPerDay);
+          data.push(us.workingHoursToday);
           break;
         case PeriodEnum.CurrentWeek:
           data.push(us.workingHoursThisWeek);
