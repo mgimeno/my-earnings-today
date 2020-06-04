@@ -1,6 +1,6 @@
 <div class="user-selection">
 
-  <mat-form-field *ngIf="showName()" class="full-width-form-field">
+  <mat-form-field *ngIf="showName" class="full-width-form-field">
     <input type="text" maxlength="10" matInput [placeholder]=namePlaceholder [(ngModel)]="userSelection.name"
       autocomplete=”false” name=“searchName”>
   </mat-form-field>
@@ -12,7 +12,7 @@
 
   <mat-form-field class="currency-form-field">
     <mat-select [(ngModel)]="userSelection.currencySymbol">
-      <mat-option *ngFor="let symbol of getAllCurrencySymbols()" [value]="symbol">
+      <mat-option *ngFor="let symbol of allCurrencySymbols" [value]="symbol">
         {{symbol}}
       </mat-option>
     </mat-select>
@@ -22,7 +22,7 @@
 
   <mat-form-field class="frequency-form-field full-width-form-field">
     <mat-select [(ngModel)]="userSelection.frequency">
-      <mat-option *ngFor="let frequency of getAllFrequencies()" [value]="frequency">
+      <mat-option *ngFor="let frequency of allFrequencies" [value]="frequency">
         {{frequency.name}}
       </mat-option>
     </mat-select>
@@ -31,15 +31,36 @@
   <p class="section-description">{{workingWeekText}}</p>
 
   <section class="week-days">
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[1]" i18n="@@user-selection">Mon</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[2]" i18n="@@user-selection.tue">Tue</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[3]" i18n="@@user-selection.wed">Wed</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[4]" i18n="@@user-selection.thu">Thu</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[5]" i18n="@@user-selection.fri">Fri</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[1]">
+      <span class="show-on-small-screen" i18n="@@user-selection.mon">Mon</span>
+      <span class="show-on-big-screen" i18n="@@Monday">Monday</span>
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[2]">
+      <span class="show-on-small-screen" i18n="@@user-selection.tue">Tue</span>
+      <span class="show-on-big-screen" i18n="@@Tuesday">Tuesday</span>
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[3]">
+      <span class="show-on-small-screen" i18n="@@user-selection.wed">Wed</span>
+      <span class="show-on-big-screen" i18n="@@Wednesday">Wednesday</span>
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[4]">
+      <span class="show-on-small-screen" i18n="@@user-selection.thu">Thu</span>
+      <span class="show-on-big-screen" i18n="@@Thursday">Thursday</span>
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[5]">
+      <span class="show-on-small-screen" i18n="@@user-selection.fri">Fri</span>
+      <span class="show-on-big-screen" i18n="@@Friday">Friday</span>
+    </mat-checkbox>
   </section>
   <section class="week-days">
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[6]" i18n="@@user-selection.sat">Sat</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[0]" i18n="@@user-selection.sun">Sun</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[6]">
+      <span class="show-on-small-screen" i18n="@@user-selection.sat">Sat</span>
+      <span class="show-on-big-screen" i18n="@@Saturday">Saturday</span>
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[0]">
+      <span class="show-on-small-screen" i18n="@@user-selection.sun">Sun</span>
+      <span class="show-on-big-screen" i18n="@@Sunday">Sunday</span>
+    </mat-checkbox>
     <span class="empty-block"></span>
     <span class="empty-block"></span>
     <span class="empty-block"></span>

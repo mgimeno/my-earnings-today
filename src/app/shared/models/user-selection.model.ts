@@ -54,7 +54,7 @@ export class UserSelection {
       this.name = AppConstants.Common.FIRST_USER_DEFAULT_NAME;
     }
     else {
-      this.name = `Person ${personNumber}`;
+      this.name = `${$localize`:@@user-selection-model.person:Person`} ${personNumber}`;
     }
 
     this.weekWorkingDays = new Array<boolean>();
@@ -463,7 +463,7 @@ export class UserSelection {
     let now = new Date();
 
     if (!this.hasDayOff() && !this.workTodayHasStarted()) {
-      return `You start work in ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, this.dayStartTime)}`;
+      return `${$localize`:@@user-selection-model.you-start-work-in:You start work in`} ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, this.dayStartTime)}`;
     }
     else if ((!this.hasDayOff() && this.workTodayHasFinished()) || this.hasDayOff()) {
 
@@ -472,7 +472,8 @@ export class UserSelection {
       let nextWorkingDayName = WeekDaysEnum[nextWorkingDayStartTime.getDay()];
 
       if (this.hasDayOff(tomorrow)) {
-        return `You're off until next ${nextWorkingDayName} at ${this.startTime}`;
+        //todo translate nextWorkingDayName
+        return `${$localize`:@@user-selection-model.you-are-off-until-next:You're off until next`} ${nextWorkingDayName} at ${this.startTime}`;
       }
       else {
 
@@ -480,10 +481,10 @@ export class UserSelection {
         const oneFullDayInSeconds = (24 * 60 * 60);
 
         if (secondsUntilStartWorking > oneFullDayInSeconds) {
-          return `You start work tomorrow at ${this.startTime}`;
+          return `${$localize`:@@user-selection-model.you-start-work-tomorrow-at:You start work tomorrow at`} ${this.startTime}`;
         }
         else {
-          return `You start work in ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, nextWorkingDayStartTime)}`;
+          return `${$localize`:@@user-selection-model.you-start-work-in:You start work in`} ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, nextWorkingDayStartTime)}`;
         }
 
       }

@@ -14,7 +14,7 @@ export class ShareBottomSheetComponent implements OnInit {
   currentUrl: string;
 
   constructor(private bottomSheetRef: MatBottomSheetRef<ShareBottomSheetComponent>) {
-    this.currentUrl = decodeURI(window.location.href); 
+    this.currentUrl = decodeURI(window.location.href);
   }
 
   ngOnInit() {
@@ -30,9 +30,9 @@ export class ShareBottomSheetComponent implements OnInit {
       show_mobile_buttons: true,
       spacing: 7,
       url: this.currentUrl,
-      title: environment.appTitle,
+      title: $localize`:@@index.title:My Earnings Today`,
       image: environment.logoUrl,
-      description: environment.appDescription
+      description: $localize`:@@index.meta_description:Calculate how much you have already earned today and compare with others`
     });
   }
 

@@ -20,11 +20,13 @@ export class UserSelectionValidationDialogComponent {
   }
 
   getName(userSelection: UserSelection): string {
-    return (userSelection.hasName() ? userSelection.name : `Person ${userSelection.personNumber}`);
+    return (userSelection.hasName() ? userSelection.name : `${$localize`:@@person:Person`} ${userSelection.personNumber}`);
   }
 
   getValidationMessageForRate(userSelection: UserSelection): string {
-    return `Type how much ${(userSelection.personNumber > 1 ? "they" : "you")} earn`;
+
+    return (userSelection.personNumber > 1 ? $localize`:@@user-validation.type-how-much-they-earn:Type how much they earn` : $localize`:@@user-validation.type-how-much-you-earn:Type how much you earn`);
+
   }
 
   onClose(): void {

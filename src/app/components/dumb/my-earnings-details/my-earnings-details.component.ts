@@ -16,12 +16,12 @@ export class MyEarningsDetailsComponent implements OnInit, OnDestroy {
   timeElapsedSinceCalculated = "00:00";
 
   readonly tiles: any[] = [
-    { codeName: "stopwatch", title: 'Stopwatch', amountProperty: 'stopwatchAmount', totalAmountProperty: null },
-    { codeName: "hour", title: 'This Hour', amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
-    { codeName: "today", title: 'Today', amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount' },
-    { codeName: "week", title: 'This Week', amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount' },
-    { codeName: "month", title: 'This Month', amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount' },
-    { codeName: "year", title: 'This Year', amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
+    { codeName: "stopwatch", title: $localize`:@@tiles.stopwatch:Stopwatch`, amountProperty: 'stopwatchAmount', totalAmountProperty: null },
+    { codeName: "hour", title: $localize`:@@tiles.this-hour:This hour`, amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
+    { codeName: "today", title: $localize`:@@tiles.today:today`, amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount' },
+    { codeName: "week", title: $localize`:@@tiles.this-week:This week`, amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount' },
+    { codeName: "month", title: $localize`:@@tiles.this-month:This month`, amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount' },
+    { codeName: "year", title: $localize`:@@tiles.this-year:This year`, amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
   ];
 
   constructor() {

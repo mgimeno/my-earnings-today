@@ -122,9 +122,9 @@ export class CompareToolComponent implements OnDestroy {
 
     let dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: <IConfirmDialog>{
-        body: "Do you want to remove this person?",
-        cancelButtonText: "Cancel",
-        confirmButtonText: "Remove"
+        body: $localize`:@@compare-tool.remove-person-confirmation-text:Do you want to remove this person?`,
+        cancelButtonText: $localize`:@@compare-tool.cancel:Cancel`,
+        confirmButtonText: $localize`:@@compare-tool.remove:Remove`
       }
     });
 
@@ -164,8 +164,8 @@ export class CompareToolComponent implements OnDestroy {
 
       if (userSelection.personNumber != personNumber) {
 
-        if (userSelection.name === `Person ${userSelection.personNumber}`) {
-          userSelection.name = `Person ${personNumber}`;
+        if (userSelection.name === `${$localize`:@@compare-tool.person:Person`} ${userSelection.personNumber}`) {
+          userSelection.name = `${$localize`:@@compare-tool.person:Person`} ${personNumber}`;
         }
 
         userSelection.personNumber = personNumber;

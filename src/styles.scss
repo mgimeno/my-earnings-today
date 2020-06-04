@@ -43,6 +43,8 @@ input::-webkit-inner-spin-button {
 
 .mat-checkbox-layout .mat-checkbox-inner-container {
   margin-right: 5px;
+  width: 18px;
+  height: 18px;
 
   .mat-checkbox-label {
     font-size: 15px;
@@ -111,11 +113,11 @@ span.decimal {
 }
 
 .chart-expected-select {
-  width: 115px;
+  width: 118px;
 }
 
 .chart-hours-select {
-  width: 80px;
+  width: 81px;
 }
 
 .highlight-select {

@@ -4,8 +4,6 @@
 
 export const environment = {
   production: false,
-  appTitle: "My Earnings Today",
-  appDescription: "Calculate how much you have already earned today and compare with others",
   logoUrl: "http://www.myearningstoday.com/assets/images/logo.png",
   localStoragePrefix: "my-earnings-today_dev_",
   compareToolMaxPersons: 5,

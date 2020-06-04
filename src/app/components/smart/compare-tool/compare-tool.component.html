@@ -1,6 +1,6 @@
 <div *ngIf="userSelections && userSelections.length && !showResults" class="text-center">
 
-  <h1>Compare earnings with others</h1>
+  <h1 i18n="@@compare-tool.title">Compare earnings with others</h1>
 
   <mat-tab-group [selectedIndex]="activeTabIndex">
 
@@ -21,10 +21,10 @@
   <div class="buttons m-t-20">
     <button class="add-person-button text-center" mat-raised-button [disabled]="!canAddMorePersons()"
       (click)="addPerson()">
-      <mat-icon class="add-icon">person_add</mat-icon> Add person
+      <mat-icon class="add-icon">person_add</mat-icon>&nbsp;<span i18n="@@compare-tool.add-person">Add person</span>
     </button>
-    <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()"
-      cdkFocusInitial>Calculate</button>
+    <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()" cdkFocusInitial
+      i18n="@@compare-tool.calculate">Calculate</button>
   </div>
 
 </div>
@@ -36,10 +36,10 @@
 
   <div class="buttons m-t-35">
     <button mat-raised-button (click)="goBack()">
-      <mat-icon>reply</mat-icon> Back
+      <mat-icon>reply</mat-icon>&nbsp;<span i18n="@@compare-tool.back">Back</span>
     </button>
     <button mat-raised-button (click)="openShareBottomSheet()">
-      <mat-icon>share</mat-icon>Share this
+      <mat-icon>share</mat-icon>&nbsp;<span i18n="@@compare-tool.share-this">Share this</span>
     </button>
   </div>
 

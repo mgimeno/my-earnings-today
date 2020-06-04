@@ -60,9 +60,8 @@
           <span appCurrency [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></span>
         </div>
         <div class="details">
-          <span i18n="@@my-earnings-details.out-of">out of</span>
-          <span appCurrency [amount]=userSelection[tile.totalAmountProperty]
-            [symbol]=userSelection.currencySymbol></span>
+          <span i18n="@@my-earnings-details.out-of">out of</span>&nbsp;<span appCurrency
+            [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></span>
         </div>
       </ng-container>
 

@@ -5,12 +5,11 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss']
 })
-export class AboutComponent{
+export class AboutComponent {
 
-  creatorProfileLink: string = null;
+  creatorProfileLink: string = environment.creatorProfileLink;
 
   constructor() {
-    this.creatorProfileLink = environment.creatorProfileLink;
   }
 
 }

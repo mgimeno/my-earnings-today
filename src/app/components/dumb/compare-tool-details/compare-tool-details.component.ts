@@ -26,28 +26,28 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   //todo ?
   chartAllExpectedPeriods: INameValue[] = [
-    { name: "this hour", value: PeriodEnum.CurrentHour },
-    { name: "today", value: PeriodEnum.CurrentDay },
-    { name: "this week", value: PeriodEnum.CurrentWeek },
-    { name: "this month", value: PeriodEnum.CurrentMonth },
-    { name: "this year", value: PeriodEnum.CurrentYear }
+    { name: $localize`:@@compare-tool-details.this-hour:this hour`, value: PeriodEnum.CurrentHour },
+    { name: $localize`:@@compare-tool-details.today:today`, value: PeriodEnum.CurrentDay },
+    { name: $localize`:@@compare-tool-details.this-week:this week`, value: PeriodEnum.CurrentWeek },
+    { name: $localize`:@@compare-tool-details.this-month:this month`, value: PeriodEnum.CurrentMonth },
+    { name: $localize`:@@compare-tool-details.this-year:this year`, value: PeriodEnum.CurrentYear }
   ];
 
   chartSelectedExpectedPeriod: INameValue = this.chartAllExpectedPeriods[3];
 
   //todo ?
   chartAllHoursPeriods: INameValue[] = [
-    { name: "day", value: PeriodEnum.CurrentDay },
-    { name: "week", value: PeriodEnum.CurrentWeek },
-    { name: "month", value: PeriodEnum.CurrentMonth },
-    { name: "year", value: PeriodEnum.CurrentYear }
+    { name: $localize`:@@compare-tool-details.day:day`, value: PeriodEnum.CurrentDay },
+    { name: $localize`:@@compare-tool-details.week:week`, value: PeriodEnum.CurrentWeek },
+    { name: $localize`:@@compare-tool-details.month:month`, value: PeriodEnum.CurrentMonth },
+    { name: $localize`:@@compare-tool-details.year:year`, value: PeriodEnum.CurrentYear }
   ];
 
   chartSelectedHoursPeriod: INameValue = this.chartAllHoursPeriods[1];
 
   detailsAllTypes: INameValue[] = [ //todo constanst?
-    { name: "Already earned", value: "already-earned" },
-    { name: "Total expected", value: "total-expected" }
+    { name: $localize`:@@compare-tool-details.already-earned:Already earned`, value: "already-earned" },
+    { name: $localize`:@@compare-tool-details.total-expected:Total expected`, value: "total-expected" }
   ];
 
   detailsSelectedType: INameValue = this.detailsAllTypes[0];
@@ -62,12 +62,12 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   ];
 
   readonly tiles: any[] = [
-    { codeName: "stopwatch", title: 'Stopwatch', amountProperty: 'stopwatchAmount', totalAmountProperty: null },
-    { codeName: "hour", title: 'This Hour', amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
-    { codeName: "today", title: 'Today', amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount' },
-    { codeName: "week", title: 'This Week', amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount' },
-    { codeName: "month", title: 'This Month', amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount' },
-    { codeName: "year", title: 'This Year', amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
+    { codeName: "stopwatch", title: $localize`:@@tiles.stopwatch:Stopwatch`, amountProperty: 'stopwatchAmount', totalAmountProperty: null },
+    { codeName: "hour", title: $localize`:@@tiles.this-hour:This hour`, amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
+    { codeName: "today", title: $localize`:@@tiles.today:Today`, amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount' },
+    { codeName: "week", title: $localize`:@@tiles.this-week:This week`, amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount' },
+    { codeName: "month", title: $localize`:@@tiles.this-month:This month`, amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount' },
+    { codeName: "year", title: $localize`:@@tiles.this-year:This year`, amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
   ];
 
   private readonly decimalsSeparator = '.'; //TODO this has to be locale, depending on the browser lang. Investigate how (related to toLocaleString())

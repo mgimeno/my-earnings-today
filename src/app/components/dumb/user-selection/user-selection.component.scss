@@ -43,8 +43,23 @@ $smallFontSize: 14px;
   font-size: $smallFontSize;
   display: flex;
   justify-content: space-between;
+  margin-top: 5px;
 
   & > * {
     flex: 1 1 0px;
+  }
+
+  .show-on-big-screen {
+    display: none;
+  }
+
+  @media only screen and (min-width: 635px) {
+    .show-on-small-screen {
+      display: none;
+    }
+
+    .show-on-big-screen {
+      display: block;
+    }
   }
 }

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Missing details</h1>
+<h1 mat-dialog-title i18n="@@user-validation.title">Missing details</h1>
 <mat-dialog-content class="content">
 
   <ng-container *ngFor="let userSelection of data.userSelections; let index = index;">
@@ -8,40 +8,43 @@
       <div *ngIf="showName()">
         <b>{{getName(userSelection)}}</b>
       </div>
-      <p *ngIf="!userSelection.hasName()">
+      <p *ngIf="!userSelection.hasName()" i18n="@@user-validation.name">
         Type a name
       </p>
       <p *ngIf="!userSelection.hasRate()">
         {{getValidationMessageForRate(userSelection)}}
       </p>
-      <p *ngIf="!userSelection.currencySymbol">
+      <p *ngIf="!userSelection.currencySymbol" i18n="@@user-validation.currency">
         Select a currency symbol
       </p>
-      <p *ngIf="!userSelection.frequency">
+      <p *ngIf="!userSelection.frequency" i18n="@@user-validation.period">
         Select a period
       </p>
-      <p *ngIf="!userSelection.isAtLeastOneDayOfTheWeekSelected()">
+      <p *ngIf="!userSelection.isAtLeastOneDayOfTheWeekSelected()" i18n="@@user-validation.at-least-one-day">
         Select at least one day of the week
       </p>
-      <p *ngIf="!userSelection.startTime">
+      <p *ngIf="!userSelection.startTime" i18n="@@user-validation.from">
         Select a 'From' time
       </p>
-      <p *ngIf="!userSelection.endTime">
+      <p *ngIf="!userSelection.endTime" i18n="@@user-validation.to">
         Select a 'To' time
       </p>
-      <p *ngIf="userSelection.startTime && userSelection.endTime && !userSelection.areStartAndEndTimesValid()">
-        'From' time must be greater than 'To'
+      <p *ngIf="userSelection.startTime && userSelection.endTime && !userSelection.areStartAndEndTimesValid()"
+        i18n="@@user-validation.from-greater-than-to">
+        'From' time must be lower than 'To' time
       </p>
     </ng-container>
 
   </ng-container>
 
-  <p *ngIf="data.isCompareTool && (data.userSelections.length < getMinNumberOfUserSelectionsRequired())">
+  <p *ngIf="data.isCompareTool && (data.userSelections.length < getMinNumberOfUserSelectionsRequired())"
+    i18n="@@user-validation.at-least-add-one-more">
     Add at least one more person
   </p>
 
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="onClose()" cdkFocusInitial>Got it!</button>
+  <button mat-raised-button color="primary" (click)="onClose()" cdkFocusInitial i18n="@@user-validation.got-it">Got
+    it!</button>
 </mat-dialog-actions>
