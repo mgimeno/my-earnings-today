@@ -1,4 +1,4 @@
-<h1>Today you have already earned</h1>
+<h1 i18n="@@compare-tool-details.title">Today you have already earned</h1>
 
 <div class="today-earned-container">
 
@@ -18,16 +18,18 @@
 
 
 <div class="text-center">
-  <button mat-flat-button [color]="isShowCharts ? 'primary' : null" (click)="showCharts()">Charts</button>
-  <button mat-flat-button [color]="!isShowCharts ? 'primary' : null" (click)="showDetails()">Details</button>
+  <button mat-flat-button [color]="isShowCharts ? 'primary' : null" (click)="showCharts()"
+    i18n="@@compare-tool-details.charts">Charts</button>
+  <button mat-flat-button [color]="!isShowCharts ? 'primary' : null" (click)="showDetails()"
+    i18n="@@compare-tool-details.details">Details</button>
 </div>
 
 
 <div *ngIf="isShowCharts" class="charts-container">
 
   <h2>
-    <span>Total expected </span>
-    <mat-form-field class="chart-expected-select highlight-select">
+    <span i18n="@@compare-tool-details.total-expected">Total expected</span>&nbsp;<mat-form-field
+      class="chart-expected-select highlight-select">
       <mat-select [(ngModel)]="chartSelectedExpectedPeriod" (ngModelChange)="onChartExpectedPeriodChanged()">
         <mat-option *ngFor="let period of chartAllExpectedPeriods" [value]="period">{{period.name}}</mat-option>
       </mat-select>
@@ -40,8 +42,8 @@
   <br />
 
   <h2>
-    <span>Hours worked per </span>
-    <mat-form-field class="chart-hours-select highlight-select">
+    <span i18n="@@compare-tool-details.hours-worked-per">Hours worked per</span>&nbsp;<mat-form-field
+      class="chart-hours-select highlight-select">
       <mat-select [(ngModel)]="chartSelectedHoursPeriod" (ngModelChange)="onChartHoursPeriodChanged()">
         <mat-option *ngFor="let period of chartAllHoursPeriods" [value]="period">{{period.name}}</mat-option>
       </mat-select>

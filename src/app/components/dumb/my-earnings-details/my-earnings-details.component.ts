@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
-import { AppConstants } from 'src/app/shared/constants/app-constants';
+import { AppConstants } from 'src/app/shared/constants/app.constant';
 import { DateHelper } from 'src/app/shared/helpers/date-helper';
 
 @Component({
@@ -8,7 +8,7 @@ import { DateHelper } from 'src/app/shared/helpers/date-helper';
   templateUrl: './my-earnings-details.component.html',
   styleUrls: ['./my-earnings-details.component.scss']
 })
-export class MyEarningsDetailsComponent implements OnInit, OnDestroy{
+export class MyEarningsDetailsComponent implements OnInit, OnDestroy {
 
   @Input() userSelection: UserSelection;
 
@@ -18,10 +18,10 @@ export class MyEarningsDetailsComponent implements OnInit, OnDestroy{
   readonly tiles: any[] = [
     { codeName: "stopwatch", title: 'Stopwatch', amountProperty: 'stopwatchAmount', totalAmountProperty: null },
     { codeName: "hour", title: 'This Hour', amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
-    { codeName: "today", title: 'Today', amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount'},
-    { codeName: "week", title: 'This Week', amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount'},
-    { codeName: "month", title: 'This Month', amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount'},
-    { codeName: "year", title: 'This Year', amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount'}
+    { codeName: "today", title: 'Today', amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount' },
+    { codeName: "week", title: 'This Week', amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount' },
+    { codeName: "month", title: 'This Month', amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount' },
+    { codeName: "year", title: 'This Year', amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
   ];
 
   constructor() {

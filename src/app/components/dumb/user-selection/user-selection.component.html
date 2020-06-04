@@ -1,12 +1,12 @@
 <div class="user-selection">
 
   <mat-form-field *ngIf="showName()" class="full-width-form-field">
-    <input type="text" maxlength="10" matInput placeholder="{{getNamePlaceholder()}}" [(ngModel)]="userSelection.name"
+    <input type="text" maxlength="10" matInput [placeholder]=namePlaceholder [(ngModel)]="userSelection.name"
       autocomplete=”false” name=“searchName”>
   </mat-form-field>
 
   <mat-form-field class="rate-form-field">
-    <input type="number" inputmode="decimal" min="1" matInput placeholder="{{getRatePlaceholder()}}"
+    <input type="number" inputmode="decimal" min="1" matInput [placeholder]=ratePlaceholder
       [(ngModel)]="userSelection.rate" autocomplete=”false” name=“searchRate”>
   </mat-form-field>
 
@@ -28,18 +28,18 @@
     </mat-select>
   </mat-form-field>
 
-  <p class="section-description">{{getWorkingWeekText()}}</p>
+  <p class="section-description">{{workingWeekText}}</p>
 
   <section class="week-days">
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[1]">Mon</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[2]">Tue</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[3]">Wed</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[4]">Thu</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[5]">Fri</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[1]" i18n="@@user-selection">Mon</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[2]" i18n="@@user-selection.tue">Tue</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[3]" i18n="@@user-selection.wed">Wed</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[4]" i18n="@@user-selection.thu">Thu</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[5]" i18n="@@user-selection.fri">Fri</mat-checkbox>
   </section>
   <section class="week-days">
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[6]">Sat</mat-checkbox>
-    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[0]">Sun</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[6]" i18n="@@user-selection.sat">Sat</mat-checkbox>
+    <mat-checkbox [(ngModel)]="userSelection.weekWorkingDays[0]" i18n="@@user-selection.sun">Sun</mat-checkbox>
     <span class="empty-block"></span>
     <span class="empty-block"></span>
     <span class="empty-block"></span>
@@ -48,10 +48,10 @@
   <br />
 
   <mat-form-field class="time-form-field">
-    <input type="time" matInput placeholder="From" [(ngModel)]="userSelection.startTime">
+    <input type="time" matInput [placeholder]=fromPlaceholder [(ngModel)]="userSelection.startTime">
   </mat-form-field>
   <mat-form-field class="time-form-field">
-    <input type="time" matInput placeholder="To" [(ngModel)]="userSelection.endTime">
+    <input type="time" matInput [placeholder]=toPlaceholder [(ngModel)]="userSelection.endTime">
   </mat-form-field>
 
 </div>

@@ -1,5 +1,5 @@
 import { includes } from 'lodash';
-import { AppConstants } from '../constants/app-constants';
+import { AppConstants } from '../constants/app.constant';
 import { INameValue } from '../intefaces/name-value.interface';
 import { WeekDaysEnum } from '../enums/week-days.enum';
 import { DateHelper } from '../helpers/date-helper';

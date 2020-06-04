@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UserSelection } from '../models/user-selection.model';
-import { AppConstants } from '../constants/app-constants';
+import { AppConstants } from '../constants/app.constant';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { WeekDaysEnum } from '../enums/week-days.enum';
 import { StorageKeyEnum } from '../enums/storage-keys.enum';
@@ -23,7 +23,7 @@ export class StorageService {
   hasUserSelectionOnLocalStorage(personNumber: number): boolean {
 
     return (
-         (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)])
+      (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)])
       && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)])
       && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)])
       && (localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)])
@@ -104,14 +104,14 @@ export class StorageService {
     let queryParams: Params = this.activatedRoute.snapshot.queryParams;
 
     return (
-         queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)]
+      queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)]
       && queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)]
-      );
+    );
   }
 
   getUserSelectionFromURL(personNumber: number): UserSelection {

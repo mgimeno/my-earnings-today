@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { DateHelper } from 'src/app/shared/helpers/date-helper';
-import { AppConstants } from 'src/app/shared/constants/app-constants';
+import { AppConstants } from 'src/app/shared/constants/app.constant';
 import * as Chart from 'chart.js/dist/Chart.js';
 import { INameValue } from '../../../shared/intefaces/name-value.interface';
 import { PeriodEnum } from '../../../shared/enums/period.enum';

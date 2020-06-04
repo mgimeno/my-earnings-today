@@ -30,6 +30,7 @@ import { CompareToolDetailsComponent } from './components/dumb/compare-tool-deta
 import { UserSelectionValidationDialogComponent } from './components/dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
 import { ConfirmDialogComponent } from './components/dumb/confirm-dialog/confirm-dialog.component';
 import { CurrencyDirective } from './shared/directives/currency.directive';
+import { SelectLanguageComponent } from './components/dumb/select-language/select-language.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CurrencyDirective } from './shared/directives/currency.directive';
     CompareToolDetailsComponent,
     UserSelectionValidationDialogComponent,
     ConfirmDialogComponent,
-    CurrencyDirective
+    CurrencyDirective,
+    SelectLanguageComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,8 @@ import { CurrencyDirective } from './shared/directives/currency.directive';
   entryComponents: [
     ShareBottomSheetComponent,
     UserSelectionValidationDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    SelectLanguageComponent
   ],
   providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: 250, hasBackdrop: true } }],
   bootstrap: [AppComponent]

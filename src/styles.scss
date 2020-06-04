@@ -164,6 +164,23 @@ span.decimal {
   }
 }
 
+.big-button {
+  width: 150px;
+  height: 45px;
+  font-size: 1.05em !important;
+}
+
+.button-with-right-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 24px;
+    margin-left: 10px;
+  }
+}
+
 .tiles-container {
   display: flex;
   flex-wrap: wrap;
