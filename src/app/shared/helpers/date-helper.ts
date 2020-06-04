@@ -161,18 +161,18 @@ export class DateHelper {
 
     let timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
 
-    let hoursSeparator: string = ` ${$localize`:@@hours:hours}`} `;
-    let minutesSeparator: string = ` ${$localize`:@@minutes:minutes}`} `;
-    let secondsSuffix: string = ` ${$localize`:@@seconds:seconds}`} `;
+    let hoursSeparator: string = ` ${$localize`:@@hours:hours`} `;
+    let minutesSeparator: string = ` ${$localize`:@@minutes:minutes`} `;
+    let secondsSuffix: string = ` ${$localize`:@@seconds:seconds`} `;
 
     let hoursText = timeBetweenDates.hours.toString();
     let minutesText = timeBetweenDates.minutes.toString();
     let secondsText = "";
 
     if (timeBetweenDates.hours === 0) { hoursText = ''; hoursSeparator = ''; }
-    else if (timeBetweenDates.hours === 1) { hoursSeparator = ` ${$localize`:@@hour:hour}`} `; }
+    else if (timeBetweenDates.hours === 1) { hoursSeparator = ` ${$localize`:@@hour:hour`} `; }
     if (timeBetweenDates.minutes === 0) { minutesText = ""; minutesSeparator = ""; }
-    else if (timeBetweenDates.minutes === 1) { minutesSeparator = ` ${$localize`:@@minute:minute}`} `; }
+    else if (timeBetweenDates.minutes === 1) { minutesSeparator = ` ${$localize`:@@minute:minute`} `; }
 
     if (timeBetweenDates.hours === 0 && timeBetweenDates.minutes === 0) {
 
@@ -184,7 +184,7 @@ export class DateHelper {
 
       secondsText = seconds.toString();
 
-      if (seconds === 1) { secondsSuffix = ` ${$localize`:@@second:second}`} `; }
+      if (seconds === 1) { secondsSuffix = ` ${$localize`:@@second:second`} `; }
       secondsText += secondsSuffix;
 
     }

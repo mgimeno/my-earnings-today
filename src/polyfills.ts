@@ -90,9 +90,9 @@ if (language == "es") {
         'tiles.this-month': 'Este mes',
         'tiles.this-year': 'Este año',
 
-        'user-selection.what-is-their-name': 'Cuál es su nombre',
-        'user-selection.what-is-your-name': 'Cuál es tu nombre',
-        'user-selection.how-much-they-earn': 'Cuánto ganan',
+        'user-selection.what-is-their-name': 'Su nombre',
+        'user-selection.what-is-your-name': 'Tu nombre',
+        'user-selection.how-much-they-earn': 'Cuánto gana',
         'user-selection.how-much-you-earn': 'Cuánto ganas',
         'user-selection.their-working-week-is': 'Su semana de trabajo es',
         'user-selection.your-working-week-is': 'Tu semana de trabajo es',
@@ -125,8 +125,8 @@ if (language == "es") {
         'user-validation.currency': 'Selecciona la divisa',
         'user-validation.period': 'Selecciona el periodo de pago',
         'user-validation.at-least-one-day': 'Selecciona al menos un día de la semana',
-        'user-validation.from': 'Desde',
-        'user-validation.to': 'Hasta',
+        'user-validation.from': 'Selecciona la hora \'Desde\'',
+        'user-validation.to': 'Selecciona la hora \'Hasta\'',
         'user-validation.from-greater-than-to': '\'Desde\' debe ser antes que \'Hasta\'',
         'user-validation.at-least-add-one-more': 'Añade al menos una persona más',
         'user-validation.got-it': 'Entendido!',
@@ -166,6 +166,8 @@ if (language == "es") {
         'minutes': 'minutos',
         'hour': 'hora',
         'hours': 'horas',
+
+        'person': 'Persona',
 
         'user-selection-model.person': 'Persona',
         'user-selection-model.you-start-work-in': 'Empiezas a trabajar en',

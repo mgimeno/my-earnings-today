@@ -29,7 +29,7 @@ export class UserSelectionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.namePlaceholder = (this.isCompareTool && this.userSelection.personNumber > 1 ? $localize`:@@user-selection.what-is-their-name:What is their name?` : $localize`:@@user-selection.what-is-your-name:What is your name?`);
+    this.namePlaceholder = (this.isCompareTool && this.userSelection.personNumber > 1 ? $localize`:@@user-selection.what-is-their-name:Their name` : $localize`:@@user-selection.what-is-your-name:Your name`);
     this.ratePlaceholder = (this.isCompareTool && this.userSelection.personNumber > 1 ? $localize`:@@user-selection.how-much-they-earn:How much they earn?` : $localize`:@@user-selection.how-much-you-earn:How much you earn?`);
     this.workingWeekText = (this.isCompareTool && this.userSelection.personNumber > 1 ? $localize`:@@user-selection.their-working-week-is:Their working week is` : $localize`:@@user-selection.your-working-week-is:Your working week is`);
 
