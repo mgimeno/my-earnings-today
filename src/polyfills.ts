@@ -162,7 +162,7 @@ if (language == "es") {
 
         'second': 'segundo',
         'seconds': 'segundos',
-        'minute:': 'minuto',
+        'minute': 'minuto',
         'minutes': 'minutos',
         'hour': 'hora',
         'hours': 'horas',
@@ -171,7 +171,8 @@ if (language == "es") {
 
         'user-selection-model.person': 'Persona',
         'user-selection-model.you-start-work-in': 'Empiezas a trabajar en',
-        'user-selection-model.you-are-off-until-next': 'Libras hasta el siguiente',
+        'user-selection-model.you-are-off-until-next': 'Libras hasta el',
+        'user-selection-model.at': 'a las',
         'user-selection-model.you-start-work-tomorrow-at': 'Trabajas mañana a las',
 
         'select-language.select': 'Selecciona un idioma',

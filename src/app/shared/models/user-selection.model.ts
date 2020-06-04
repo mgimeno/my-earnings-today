@@ -4,6 +4,7 @@ import { INameValue } from '../intefaces/name-value.interface';
 import { WeekDaysEnum } from '../enums/week-days.enum';
 import { DateHelper } from '../helpers/date-helper';
 import { PeriodEnum } from '../enums/period.enum';
+import { TranslationHelper } from '../helpers/translation-helper';
 
 export class UserSelection {
   personNumber: number = null;
@@ -467,13 +468,15 @@ export class UserSelection {
     }
     else if ((!this.hasDayOff() && this.workTodayHasFinished()) || this.hasDayOff()) {
 
-      let tomorrow = DateHelper.addDays(now, 1);
-      let nextWorkingDayStartTime = this.getNextWorkingDay(now);
-      let nextWorkingDayName = WeekDaysEnum[nextWorkingDayStartTime.getDay()];
+      const tomorrow = DateHelper.addDays(now, 1);
+      const nextWorkingDayStartTime = this.getNextWorkingDay(now);
+      console.log(nextWorkingDayStartTime);
+      const nextWorkingDayNumber = nextWorkingDayStartTime.getDay();
+      console.log({ nextWorkingDayNumber });
+      const nextWorkingDayName = TranslationHelper.translateDayOfTheWeek(nextWorkingDayNumber);
 
       if (this.hasDayOff(tomorrow)) {
-        //todo translate nextWorkingDayName
-        return `${$localize`:@@user-selection-model.you-are-off-until-next:You're off until next`} ${nextWorkingDayName} at ${this.startTime}`;
+        return `${$localize`:@@user-selection-model.you-are-off-until-next:You're off until`} ${nextWorkingDayName} ${$localize`:@@user-selection-model.at:at`} ${this.startTime}`;
       }
       else {
 
