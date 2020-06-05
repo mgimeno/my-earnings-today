@@ -99,7 +99,7 @@ if (language == "es") {
         'user-selection.from': 'Desde',
         'user-selection.to': 'Hasta',
         'user-selection.mon': 'Lun',
-        'user-selection.tue': 'Tue',
+        'user-selection.tue': 'Mar',
         'user-selection.wed': 'Mie',
         'user-selection.thu': 'Jue',
         'user-selection.fri': 'Vie',
