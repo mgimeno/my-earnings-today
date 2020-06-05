@@ -532,6 +532,7 @@ export class UserSelection {
 
   setDefaultValues(): void {
 
+    this.rate = 1000;
     this.startTime = "09:00";
     this.endTime = "17:00";
     this.currencySymbol = AppConstants.Common.CURRENCY_SYMBOLS[0];

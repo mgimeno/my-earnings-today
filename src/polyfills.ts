@@ -92,8 +92,8 @@ if (language == "es") {
 
         'user-selection.what-is-their-name': 'Su nombre',
         'user-selection.what-is-your-name': 'Tu nombre',
-        'user-selection.how-much-they-earn': 'Cuánto gana',
-        'user-selection.how-much-you-earn': 'Cuánto ganas',
+        'user-selection.how-much-they-earn': 'Cuánto gana?',
+        'user-selection.how-much-you-earn': 'Cuánto ganas?',
         'user-selection.their-working-week-is': 'Su semana de trabajo es',
         'user-selection.your-working-week-is': 'Tu semana de trabajo es',
         'user-selection.from': 'Desde',
