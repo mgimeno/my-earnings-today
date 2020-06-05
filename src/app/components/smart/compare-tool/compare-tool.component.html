@@ -1,46 +1,51 @@
-<div *ngIf="userSelections && userSelections.length && !showResults" class="text-center">
+<form>
 
-  <h1 i18n="@@compare-tool.title">Compare earnings with others</h1>
+  <div *ngIf="userSelections && userSelections.length && !showResults" class="text-center">
 
-  <mat-tab-group [selectedIndex]="activeTabIndex">
+    <h1 i18n="@@compare-tool.title">Compare earnings with others</h1>
 
-    <mat-tab *ngFor="let userSelection of userSelections; let index = index;">
+    <mat-tab-group [selectedIndex]="activeTabIndex">
 
-      <ng-template mat-tab-label>
-        <section class="tab-label">
-          <span class="title">{{userSelection.name}}</span>
-          <mat-icon *ngIf="index > 0" class="close-icon clickable" (click)="removePerson($event,index)">clear</mat-icon>
-        </section>
-      </ng-template>
+      <mat-tab *ngFor="let userSelection of userSelections; let index = index;">
 
-      <app-user-selection [userSelection]=userSelection [isCompareTool]=true></app-user-selection>
+        <ng-template mat-tab-label>
+          <section class="tab-label">
+            <span class="title">{{userSelection.name}}</span>
+            <mat-icon *ngIf="index > 0" class="close-icon clickable" (click)="removePerson($event,index)">clear
+            </mat-icon>
+          </section>
+        </ng-template>
 
-    </mat-tab>
-  </mat-tab-group>
+        <app-user-selection [userSelection]=userSelection [isCompareTool]=true></app-user-selection>
 
-  <div class="buttons m-t-20">
-    <button class="add-person-button text-center" mat-raised-button [disabled]="!canAddMorePersons()"
-      (click)="addPerson()">
-      <mat-icon class="add-icon">person_add</mat-icon>&nbsp;<span i18n="@@compare-tool.add-person">Add person</span>
-    </button>
-    <button class="text-center" mat-raised-button color="primary" (click)="tryCalculate()" cdkFocusInitial
-      i18n="@@compare-tool.calculate">Calculate</button>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="buttons m-t-20">
+      <button type="button" class="add-person-button text-center" mat-raised-button [disabled]="!canAddMorePersons()"
+        (click)="addPerson()">
+        <mat-icon class="add-icon">person_add</mat-icon>&nbsp;<span i18n="@@compare-tool.add-person">Add person</span>
+      </button>
+      <button type="submit" class="text-center" mat-raised-button color="primary" (click)="tryCalculate()"
+        cdkFocusInitial i18n="@@compare-tool.calculate">Calculate</button>
+    </div>
+
   </div>
 
-</div>
 
+  <div *ngIf="showResults" class="text-center">
 
-<div *ngIf="showResults" class="text-center">
+    <app-compare-tool-details [userSelections]=userSelections></app-compare-tool-details>
 
-  <app-compare-tool-details [userSelections]=userSelections></app-compare-tool-details>
+    <div class="buttons m-t-35">
+      <button type="button" mat-raised-button (click)="goBack()">
+        <mat-icon>reply</mat-icon>&nbsp;<span i18n="@@compare-tool.back">Back</span>
+      </button>
+      <button type="button" mat-raised-button (click)="openShareBottomSheet()">
+        <mat-icon>share</mat-icon>&nbsp;<span i18n="@@compare-tool.share-this">Share this</span>
+      </button>
+    </div>
 
-  <div class="buttons m-t-35">
-    <button mat-raised-button (click)="goBack()">
-      <mat-icon>reply</mat-icon>&nbsp;<span i18n="@@compare-tool.back">Back</span>
-    </button>
-    <button mat-raised-button (click)="openShareBottomSheet()">
-      <mat-icon>share</mat-icon>&nbsp;<span i18n="@@compare-tool.share-this">Share this</span>
-    </button>
   </div>
 
-</div>
+</form>

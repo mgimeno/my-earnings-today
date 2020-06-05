@@ -1,34 +1,38 @@
-<div *ngIf="userSelection && !showResults" class="text-center">
+<form>
 
-  <h1 i18n="@@my-earnings.title">Let's see how much you've already earned today</h1>
+  <div *ngIf="userSelection && !showResults" class="text-center">
 
-  <app-user-selection [userSelection]=userSelection [isCompareTool]=false></app-user-selection>
+    <h1 i18n="@@my-earnings.title">Let's see how much you've already earned today</h1>
 
-  <div class="buttons m-t-20">
-    <button type="submit" class="text-center" mat-raised-button color="primary" (click)="tryCalculate()" cdkFocusInitial
-      i18n="@@my-earnings.calculate">Calculate</button>
-    <button mat-button (click)="openShareBottomSheet()">
-      <mat-icon>share</mat-icon>&nbsp;<span i18n="@@my-earnings.share-this">Share this</span>
-    </button>
+    <app-user-selection [userSelection]=userSelection [isCompareTool]=false></app-user-selection>
+
+    <div class="buttons m-t-20">
+      <button type="submit" class="text-center" mat-raised-button color="primary" (click)="tryCalculate()"
+        cdkFocusInitial i18n="@@my-earnings.calculate">Calculate</button>
+      <button mat-button (click)="openShareBottomSheet()">
+        <mat-icon>share</mat-icon>&nbsp;<span i18n="@@my-earnings.share-this">Share this</span>
+      </button>
+    </div>
+
   </div>
 
-</div>
 
+  <div *ngIf="showResults" class="text-center">
 
-<div *ngIf="showResults" class="text-center">
+    <app-my-earnings-details [userSelection]=userSelection></app-my-earnings-details>
 
-  <app-my-earnings-details [userSelection]=userSelection></app-my-earnings-details>
+    <div class="buttons m-t-40">
+      <button type="button" mat-raised-button (click)="goBack()">
+        <mat-icon>reply</mat-icon>&nbsp;<span i18n="@@my-earnings.back">Back</span>
+      </button>
+      <button type="button" mat-raised-button color="primary" (click)="goToCompare()">
+        <mat-icon>compare_arrows</mat-icon>&nbsp;<span i18n="@@my-earnings.compare">Compare</span>
+      </button>
+      <button type="button" mat-raised-button (click)="openShareBottomSheet()">
+        <mat-icon>share</mat-icon>&nbsp;<span i18n="@@my-earnings.share-this">Share this</span>
+      </button>
+    </div>
 
-  <div class="buttons m-t-40">
-    <button mat-raised-button (click)="goBack()">
-      <mat-icon>reply</mat-icon>&nbsp;<span i18n="@@my-earnings.back">Back</span>
-    </button>
-    <button mat-raised-button color="primary" (click)="goToCompare()">
-      <mat-icon>compare_arrows</mat-icon>&nbsp;<span i18n="@@my-earnings.compare">Compare</span>
-    </button>
-    <button mat-raised-button (click)="openShareBottomSheet()">
-      <mat-icon>share</mat-icon>&nbsp;<span i18n="@@my-earnings.share-this">Share this</span>
-    </button>
   </div>
 
-</div>
+</form>
