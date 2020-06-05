@@ -28,7 +28,7 @@ export class MyEarningsDetailsComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setupTimeElapsedInterval();
   }
 

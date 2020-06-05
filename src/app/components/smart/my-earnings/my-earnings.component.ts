@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,8 +29,6 @@ export class MyEarningsComponent implements OnDestroy {
     this.setupOnParamsChange();
 
     this.loadInitialUserSelection();
-
-
   }
 
   private loadInitialUserSelection(): void {

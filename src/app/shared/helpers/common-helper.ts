@@ -10,5 +10,10 @@ export class CommonHelper {
     return window.innerWidth >= 800;
   }
 
+  public static getLocaleDecimalSeparator() {
+    const n = 1.1;
+    return n.toLocaleString().substring(1, 2);
+  }
+
 };
 

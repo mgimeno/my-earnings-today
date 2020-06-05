@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import { CommonHelper } from '../helpers/common-helper';
 
 @Directive({
   selector: '[appCurrency]'
@@ -11,7 +12,8 @@ export class CurrencyDirective implements OnChanges {
 
   amountRoundedTo2Decimals: string = null;
 
-  private readonly decimalsSeparator = '.'; //TODO this has to be locale, depending on the browser lang. Investigate how (related to toLocaleString())
+  private readonly localeDecimalsSeparator = CommonHelper.getLocaleDecimalSeparator();
+
 
   constructor(private el: ElementRef) { }
 
@@ -22,15 +24,14 @@ export class CurrencyDirective implements OnChanges {
     }
 
     this.amountRoundedTo2Decimals = this.amount.toFixed(2);
-
-    let indexOfDecimalSeparator = this.amountRoundedTo2Decimals.indexOf("."); //TODO try if this works in spanish locale
-    let integerPart = Number(this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
+    const indexOfDecimalSeparator = this.amountRoundedTo2Decimals.lastIndexOf('.');
+    const integerPart = Number(this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
 
     if (this.showDecimalPlaces()) {
 
       let decimalPart = this.amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
 
-      this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}<span class='decimal'>${this.decimalsSeparator}${decimalPart}</span>`;
+      this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}<span class='decimal'>${this.localeDecimalsSeparator}${decimalPart}</span>`;
     }
     else {
       this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}`;

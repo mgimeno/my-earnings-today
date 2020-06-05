@@ -6,6 +6,7 @@ import * as Chart from 'chart.js/dist/Chart.js';
 import { INameValue } from '../../../shared/intefaces/name-value.interface';
 import { PeriodEnum } from '../../../shared/enums/period.enum';
 import * as ChartDataLabels from 'chartjs-plugin-datalabels';
+import { CommonHelper } from 'src/app/shared/helpers/common-helper';
 
 @Component({
   selector: 'app-compare-tool-details',
@@ -24,7 +25,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   hoursPerWeekChart: Chart;
   compareEarningsChart: Chart;
 
-  //todo ?
+  //todo constanst?
   chartAllExpectedPeriods: INameValue[] = [
     { name: $localize`:@@compare-tool-details.this-hour:this hour`, value: PeriodEnum.CurrentHour },
     { name: $localize`:@@compare-tool-details.today:today`, value: PeriodEnum.CurrentDay },
@@ -35,7 +36,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   chartSelectedExpectedPeriod: INameValue = this.chartAllExpectedPeriods[3];
 
-  //todo ?
+  //todo constanst?
   chartAllHoursPeriods: INameValue[] = [
     { name: $localize`:@@compare-tool-details.day:day`, value: PeriodEnum.CurrentDay },
     { name: $localize`:@@compare-tool-details.week:week`, value: PeriodEnum.CurrentWeek },
@@ -61,6 +62,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
     "#71cdcd"
   ];
 
+  //todo constanst?
   readonly tiles: any[] = [
     { codeName: "stopwatch", title: $localize`:@@tiles.stopwatch:Stopwatch`, amountProperty: 'stopwatchAmount', totalAmountProperty: null },
     { codeName: "hour", title: $localize`:@@tiles.this-hour:This hour`, amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
@@ -70,11 +72,11 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
     { codeName: "year", title: $localize`:@@tiles.this-year:This year`, amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
   ];
 
-  private readonly decimalsSeparator = '.'; //TODO this has to be locale, depending on the browser lang. Investigate how (related to toLocaleString())
+  private readonly localeDecimalsSeparator = CommonHelper.getLocaleDecimalSeparator();
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.setupTimeElapsedInterval();
     this.showCharts();
@@ -113,8 +115,8 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   private loadCompareEarningsChart(): void {
 
-    let canvas = <HTMLCanvasElement>document.getElementById("compare-earnings-chart");
-    let ctx = canvas.getContext('2d');
+    const canvas = <HTMLCanvasElement>document.getElementById("compare-earnings-chart");
+    const ctx = canvas.getContext('2d');
 
     let labels: string[] = [];
     let data: number[] = [];
@@ -176,19 +178,19 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
             anchor: 'end',
             formatter: (value: any, context: ChartDataLabels.Context) => {
 
-              let index = context.dataIndex;
-              let amount: number = Number(context.chart.data.datasets[0].data[index]);
+              const index = context.dataIndex;
+              const amount: number = Number(context.chart.data.datasets[0].data[index]);
 
               if (!amount) {
                 return null;
               }
 
-              let symbol = this.userSelections[index].currencySymbol;
+              const symbol = this.userSelections[index].currencySymbol;
 
-              let amountRoundedTo2Decimals = amount.toFixed(2);
+              const amountRoundedTo2Decimals = amount.toFixed(2);
 
-              let indexOfDecimalSeparator = amountRoundedTo2Decimals.indexOf("."); //TODO try if this works in spanish locale
-              let integerPart = Number(amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
+              const indexOfDecimalSeparator = amountRoundedTo2Decimals.indexOf("."); //TODO try if this works in spanish locale
+              const integerPart = Number(amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
 
               if (Number.isInteger(+amountRoundedTo2Decimals)) {
 
@@ -198,7 +200,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
               else {
                 let decimalPart = amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
                 //TODO do I need all this or I can just use the currency pipe? (langs?)
-                return `${symbol}${integerPart}${this.decimalsSeparator}${decimalPart}`;
+                return `${symbol}${integerPart}${this.localeDecimalsSeparator}${decimalPart}`;
               }
             }
           }
@@ -238,15 +240,14 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
     //todo create a helper/service that handles charts.
 
-    let canvas = <HTMLCanvasElement>document.getElementById("compare-hours-worked-chart");
-    let ctx = canvas.getContext('2d');
+    const canvas = <HTMLCanvasElement>document.getElementById("compare-hours-worked-chart");
+    const ctx = canvas.getContext('2d');
 
     let labels: string[] = [];
     let data: number[] = [];
 
     this.userSelections.forEach(us => {
       labels.push(us.name);
-
 
       switch (this.chartSelectedHoursPeriod.value) {
         case PeriodEnum.CurrentDay:
@@ -292,8 +293,8 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
             anchor: 'end',
             formatter: (value: any, context: ChartDataLabels.Context) => {
 
-              let index: number = context.dataIndex;
-              let hours: number = <number>context.chart.data.datasets[0].data[index];
+              const index: number = context.dataIndex;
+              const hours: number = <number>context.chart.data.datasets[0].data[index];
 
               return `${(Number.isInteger(hours) ? hours : hours.toFixed(2)).toLocaleString()} h`;
             }
