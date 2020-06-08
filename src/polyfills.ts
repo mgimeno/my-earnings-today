@@ -67,7 +67,7 @@ if (language == "es") {
         'my-earnings-details.elapsed': '',
         'my-earnings-details.out-of': 'de',
 
-        'compare-tool-details.title': 'Hoy han ganado',
+        'compare-tool-details.title': 'Hoy habeis ganado',
         'compare-tool-details.charts': 'Gráficas',
         'compare-tool-details.details': 'Detalles',
         'compare-tool-details.total-expected': 'Total esperado',
