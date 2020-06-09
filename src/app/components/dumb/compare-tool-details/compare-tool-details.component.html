@@ -68,7 +68,8 @@
     </mat-form-field>
   </h2>
 
-  <div class="tile tile-{{index + 1}}" *ngFor="let tile of getTiles(); let index = index">
+  <div class="tile tile-{{index + (isDetailsTypeAlreadyEarned() ? 1 : 2 )}}"
+    *ngFor="let tile of getTiles(); let index = index">
 
     <div class="header">
       {{tile.title}}
