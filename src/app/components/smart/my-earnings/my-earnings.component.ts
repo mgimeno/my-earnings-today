@@ -70,7 +70,8 @@ export class MyEarningsComponent implements OnDestroy {
     }
     else {
       this.dialog.open(UserSelectionValidationDialogComponent, {
-        data: { userSelections: [this.userSelection], isCompareTool: false }
+        data: { userSelections: [this.userSelection], isCompareTool: false },
+        minWidth: 320
       });
     }
   }

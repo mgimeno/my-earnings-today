@@ -87,7 +87,10 @@ export class CompareToolComponent implements OnDestroy {
       this.calculate();
     }
     else {
-      this.dialog.open(UserSelectionValidationDialogComponent, { data: { userSelections: this.userSelections, isCompareTool: true } });
+      this.dialog.open(UserSelectionValidationDialogComponent, {
+        data: { userSelections: this.userSelections, isCompareTool: true },
+        minWidth: 320
+      });
     }
   }
 
