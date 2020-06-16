@@ -103,7 +103,7 @@ export class CompareToolComponent implements OnDestroy {
 
     this.activeTabIndex = (personNumber - 1);
 
-    if (!(this.cdr as ViewRef).destroyed) {
+    if (this.userSelections.length > 1 && !(this.cdr as ViewRef).destroyed) {
       this.cdr.detectChanges();
     }
 
