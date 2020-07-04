@@ -15,14 +15,7 @@ export class MyEarningsDetailsComponent implements OnInit, OnDestroy {
   stopWatchIntervalId: number = null;
   timeElapsedSinceCalculated = "00:00";
 
-  readonly tiles: any[] = [
-    { codeName: "stopwatch", title: $localize`:@@tiles.stopwatch:Stopwatch`, amountProperty: 'stopwatchAmount', totalAmountProperty: null },
-    { codeName: "hour", title: $localize`:@@tiles.this-hour:This hour`, amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
-    { codeName: "today", title: $localize`:@@tiles.today:today`, amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount' },
-    { codeName: "week", title: $localize`:@@tiles.this-week:This week`, amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount' },
-    { codeName: "month", title: $localize`:@@tiles.this-month:This month`, amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount' },
-    { codeName: "year", title: $localize`:@@tiles.this-year:This year`, amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
-  ];
+  tiles = AppConstants.Common.TILES;
 
   constructor() {
 
@@ -40,8 +33,7 @@ export class MyEarningsDetailsComponent implements OnInit, OnDestroy {
     }, AppConstants.Common.UPDATE_STOPWATCH_FREQUENCY_IN_MS);
   }
 
-  ngOnDestroy() {
-    console.log("STOPWATCH CLEARED for single user");
+  ngOnDestroy(): void {
     clearInterval(this.stopWatchIntervalId);
   }
 

@@ -16,21 +16,23 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ClipboardModule } from 'ngx-clipboard';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MyEarningsComponent } from './components/smart/my-earnings/my-earnings.component';
-import { AboutComponent } from './components/smart/about/about.component';
-import { ShareBottomSheetComponent } from './components/dumb/share-bottom-sheet/share-bottom-sheet.component';
-import { PageNotFoundComponent } from './components/smart/page-not-found/page-not-found.component';
-import { UserSelectionComponent } from './components/dumb/user-selection/user-selection.component';
-import { CompareToolComponent } from './components/smart/compare-tool/compare-tool.component';
-import { MyEarningsDetailsComponent } from './components/dumb/my-earnings-details/my-earnings-details.component';
-import { CompareToolDetailsComponent } from './components/dumb/compare-tool-details/compare-tool-details.component';
-import { UserSelectionValidationDialogComponent } from './components/dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
-import { ConfirmDialogComponent } from './components/dumb/confirm-dialog/confirm-dialog.component';
 import { CurrencyDirective } from './shared/directives/currency.directive';
-import { SelectLanguageComponent } from './components/dumb/select-language/select-language.component';
+
+import { MyEarningsComponent } from './components/my-earnings/my-earnings.component';
+import { CompareToolComponent } from './components/compare-tool/compare-tool.component';
+import { AboutComponent } from './components/about/about.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ShareBottomSheetComponent } from './components/share-bottom-sheet/share-bottom-sheet.component';
+import { UserSelectionValidationDialogComponent } from './components/user-selection-validation-dialog/user-selection-validation-dialog.component';
+import { SelectLanguageComponent } from './components/select-language/select-language.component';
+
+import { UserSelectionComponent } from './components/user-selection/user-selection.component';
+
+import { MyEarningsDetailsComponent } from './components/my-earnings-details/my-earnings-details.component';
+import { CompareToolDetailsComponent } from './components/compare-tool-details/compare-tool-details.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -46,8 +48,8 @@ import { SelectLanguageComponent } from './components/dumb/select-language/selec
     CompareToolDetailsComponent,
     UserSelectionValidationDialogComponent,
     ConfirmDialogComponent,
-    CurrencyDirective,
-    SelectLanguageComponent
+    SelectLanguageComponent,
+    CurrencyDirective
   ],
   imports: [
     BrowserModule,

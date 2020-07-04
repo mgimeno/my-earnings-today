@@ -3,10 +3,10 @@ import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { DateHelper } from 'src/app/shared/helpers/date-helper';
 import { AppConstants } from 'src/app/shared/constants/app.constant';
 import * as Chart from 'chart.js/dist/Chart.js';
-import { INameValue } from '../../../shared/intefaces/name-value.interface';
-import { PeriodEnum } from '../../../shared/enums/period.enum';
 import * as ChartDataLabels from 'chartjs-plugin-datalabels';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
+import { INameValue } from 'src/app/shared/intefaces/name-value.interface';
+import { PeriodEnum } from 'src/app/shared/enums/period.enum';
 
 @Component({
   selector: 'app-compare-tool-details',
@@ -25,7 +25,6 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   hoursPerWeekChart: Chart;
   compareEarningsChart: Chart;
 
-  //todo constanst?
   chartAllExpectedPeriods: INameValue[] = [
     { name: $localize`:@@compare-tool-details.this-hour:this hour`, value: PeriodEnum.CurrentHour },
     { name: $localize`:@@compare-tool-details.today:today`, value: PeriodEnum.CurrentDay },
@@ -36,7 +35,6 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   chartSelectedExpectedPeriod: INameValue = this.chartAllExpectedPeriods[3];
 
-  //todo constanst?
   chartAllHoursPeriods: INameValue[] = [
     { name: $localize`:@@compare-tool-details.day:day`, value: PeriodEnum.CurrentDay },
     { name: $localize`:@@compare-tool-details.week:week`, value: PeriodEnum.CurrentWeek },
@@ -46,31 +44,16 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   chartSelectedHoursPeriod: INameValue = this.chartAllHoursPeriods[1];
 
-  detailsAllTypes: INameValue[] = [ //todo constanst?
+  detailsAllTypes: INameValue[] = [
     { name: $localize`:@@compare-tool-details.already-earned:Already earned`, value: "already-earned" },
     { name: $localize`:@@compare-tool-details.total-expected:Total expected`, value: "total-expected" }
   ];
 
   detailsSelectedType: INameValue = this.detailsAllTypes[0];
 
-  //TODO colours? prob use same than the tiles. also put this as constants or so
-  private readonly chartBackgroundColours: string[] = [
-    "rgb(255, 99, 132)",
-    "#3e95cd",
-    "rgb(255, 205, 86)",
-    "#8e5ea2",
-    "#71cdcd"
-  ];
 
-  //todo constanst?
-  readonly tiles: any[] = [
-    { codeName: "stopwatch", title: $localize`:@@tiles.stopwatch:Stopwatch`, amountProperty: 'stopwatchAmount', totalAmountProperty: null },
-    { codeName: "hour", title: $localize`:@@tiles.this-hour:This hour`, amountProperty: 'currentHourAmount', totalAmountProperty: 'totalHourAmount' },
-    { codeName: "today", title: $localize`:@@tiles.today:Today`, amountProperty: 'currentDayAmount', totalAmountProperty: 'totalDayAmount' },
-    { codeName: "week", title: $localize`:@@tiles.this-week:This week`, amountProperty: 'currentWeekAmount', totalAmountProperty: 'totalWeekAmount' },
-    { codeName: "month", title: $localize`:@@tiles.this-month:This month`, amountProperty: 'currentMonthAmount', totalAmountProperty: 'totalMonthAmount' },
-    { codeName: "year", title: $localize`:@@tiles.this-year:This year`, amountProperty: 'currentYearAmount', totalAmountProperty: 'totalYearAmount' }
-  ];
+
+  tiles = AppConstants.Common.TILES;
 
   private readonly localeDecimalsSeparator = CommonHelper.getLocaleDecimalSeparator();
 
@@ -160,7 +143,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: this.chartBackgroundColours,
+          backgroundColor: AppConstants.Common.CHART_BACKGROUND_COLOURS,
           borderWidth: 1,
         }]
       },
@@ -169,7 +152,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
         plugins: {
           datalabels: {
             color: (context: ChartDataLabels.Context) => {
-              return this.chartBackgroundColours[context.dataIndex];
+              return AppConstants.Common.CHART_BACKGROUND_COLOURS[context.dataIndex];
             },
             font: (context: ChartDataLabels.Context) => {
               return { size: 13, weight: "bold" };
@@ -198,7 +181,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
               }
               else {
-                let decimalPart = amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
+                const decimalPart = amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
                 //TODO do I need all this or I can just use the currency pipe? (langs?)
                 return `${symbol}${integerPart}${this.localeDecimalsSeparator}${decimalPart}`;
               }
@@ -238,8 +221,6 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   private loadHoursWorkedPerWeekChart(): void {
 
-    //todo create a helper/service that handles charts.
-
     const canvas = <HTMLCanvasElement>document.getElementById("compare-hours-worked-chart");
     const ctx = canvas.getContext('2d');
 
@@ -275,7 +256,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: this.chartBackgroundColours,
+          backgroundColor: AppConstants.Common.CHART_BACKGROUND_COLOURS,
           borderWidth: 1
         }]
       },
@@ -284,7 +265,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
         plugins: {
           datalabels: {
             color: (context: ChartDataLabels.Context) => {
-              return this.chartBackgroundColours[context.dataIndex];
+              return AppConstants.Common.CHART_BACKGROUND_COLOURS[context.dataIndex];
             },
             font: (context: ChartDataLabels.Context) => {
               return { size: 13, weight: "bold" };
@@ -351,9 +332,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("STOPWATCH CLEARED for compare tool");
     clearInterval(this.stopWatchIntervalId);
-
     this.destroyCharts();
   }
 

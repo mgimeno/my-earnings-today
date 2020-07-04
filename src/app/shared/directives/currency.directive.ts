@@ -29,7 +29,7 @@ export class CurrencyDirective implements OnChanges {
 
     if (this.showDecimalPlaces()) {
 
-      let decimalPart = this.amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
+      const decimalPart = this.amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
 
       this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}<span class='decimal'>${this.localeDecimalsSeparator}${decimalPart}</span>`;
     }

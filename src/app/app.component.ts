@@ -4,7 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Meta, Title, MetaDefinition } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { SelectLanguageComponent } from './components/dumb/select-language/select-language.component';
+import { SelectLanguageComponent } from './components/select-language/select-language.component';
 
 @Component({
   selector: 'app-root',

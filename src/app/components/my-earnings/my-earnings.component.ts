@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
-import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
 import { StorageService } from 'src/app/shared/services/storage-service';
-import { UserSelectionValidationDialogComponent } from '../../dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
+import { UserSelectionValidationDialogComponent } from '../user-selection-validation-dialog/user-selection-validation-dialog.component';
+import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
 
 
 @Component({
@@ -33,7 +33,7 @@ export class MyEarningsComponent implements OnDestroy {
 
   private loadInitialUserSelection(): void {
 
-    let personNumber = 1;
+    const personNumber = 1;
 
     if (this.storageService.hasUserSelectionOnURL(personNumber)) {
       this.userSelection = this.storageService.getUserSelectionFromURL(personNumber);
@@ -110,7 +110,6 @@ export class MyEarningsComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("Single User selection destroyed");
     this.userSelection.clearResults();
   }
 

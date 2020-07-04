@@ -3,7 +3,7 @@ import { ITimeBetweenDates } from '../intefaces/time-between-dates.interface';
 export class DateHelper {
 
   public static milisecondsBetweenDates(date1: Date, date2: Date): number {
-    let diff = date1.getTime() - date2.getTime();
+    const diff = date1.getTime() - date2.getTime();
 
     return Math.abs(diff);
   }
@@ -17,8 +17,8 @@ export class DateHelper {
   }
 
   public static buildDate(date: Date, time: string): Date {
-    let hours = +time.split(':')[0];
-    let minutes = +time.split(':')[1];
+    const hours = +time.split(':')[0];
+    const minutes = +time.split(':')[1];
 
     let result = new Date(date);
     result.setHours(hours, minutes, 0, 0);
@@ -30,7 +30,7 @@ export class DateHelper {
       return 0;
     }
 
-    let ndays = 1 + Math.round((endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000));
+    const ndays = 1 + Math.round((endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000));
     let sum = (a, b) => {
       return a + Math.floor((ndays + (startDate.getDay() + 6 - b) % 7) / 7);
     };
@@ -90,7 +90,7 @@ export class DateHelper {
 
   public static getMondayOfCurrentWeek(now: Date): Date {
     let date = new Date(now);
-    let lastMondayTime = date.setDate(now.getDate() - (now.getDay() + 6) % 7);
+    const lastMondayTime = date.setDate(now.getDate() - (now.getDay() + 6) % 7);
     return new Date(lastMondayTime);
 
   }
@@ -139,7 +139,7 @@ export class DateHelper {
 
   public static getFormattedTimeBetweenDates(fromDate: Date, toDate: Date = new Date()): string {
 
-    let timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
+    const timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
 
     let hoursSeparator: string = ":";
     let minutesSeparator: string = ":";
@@ -158,8 +158,7 @@ export class DateHelper {
   public static getFormattedTimeBetweenDatesVerbose(fromDate: Date, toDate: Date = new Date()): string {
 
     //todo refactor this method.
-
-    let timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
+    const timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
 
     let hoursSeparator: string = ` ${$localize`:@@hours:hours`} `;
     let minutesSeparator: string = ` ${$localize`:@@minutes:minutes`} `;
@@ -193,12 +192,12 @@ export class DateHelper {
   }
 
   private static getTimeBetweenDates(fromDate: Date, toDate: Date): any {
-    let secondsElapsed = this.secondsBetweenDates(fromDate, toDate);
+    const secondsElapsed = this.secondsBetweenDates(fromDate, toDate);
 
-    let sec_num = parseInt(secondsElapsed.toString(), 10);
-    let hours = Math.floor(sec_num / 3600);
-    let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    let seconds = sec_num - (hours * 3600) - (minutes * 60);
+    const sec_num = parseInt(secondsElapsed.toString(), 10);
+    const hours = Math.floor(sec_num / 3600);
+    const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    const seconds = sec_num - (hours * 3600) - (minutes * 60);
 
     return <ITimeBetweenDates>{
       hours: hours,

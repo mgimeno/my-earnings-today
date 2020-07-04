@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MyEarningsComponent } from './components/smart/my-earnings/my-earnings.component';
-import { CompareToolComponent } from './components/smart/compare-tool/compare-tool.component';
-import { AboutComponent } from './components/smart/about/about.component';
-import { PageNotFoundComponent } from './components/smart/page-not-found/page-not-found.component';
+
+import { MyEarningsComponent } from './components/my-earnings/my-earnings.component';
+import { CompareToolComponent } from './components/compare-tool/compare-tool.component';
+import { AboutComponent } from './components/about/about.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', component: MyEarningsComponent, pathMatch: 'full' },

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'src/environments/environment';
 
 declare var window: any;
 
@@ -17,7 +17,7 @@ export class ShareBottomSheetComponent implements OnInit {
     this.currentUrl = decodeURI(window.location.href);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     window.__sharethis__.load('inline-share-buttons', {
       alignment: 'center',
       id: 'sharethis-buttons',

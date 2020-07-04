@@ -5,11 +5,11 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from 'src/app/shared/services/storage-service';
 import { UserSelection } from 'src/app/shared/models/user-selection.model';
-import { ShareBottomSheetComponent } from '../../dumb/share-bottom-sheet/share-bottom-sheet.component';
 import { CommonHelper } from 'src/app/shared/helpers/common-helper';
-import { UserSelectionValidationDialogComponent } from '../../dumb/user-selection-validation-dialog/user-selection-validation-dialog.component';
 import { IConfirmDialog } from 'src/app/shared/intefaces/confirm-dialog.interface';
-import { ConfirmDialogComponent } from '../../dumb/confirm-dialog/confirm-dialog.component';
+import { UserSelectionValidationDialogComponent } from '../user-selection-validation-dialog/user-selection-validation-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
 
 @Component({
   templateUrl: './compare-tool.component.html',
@@ -41,12 +41,12 @@ export class CompareToolComponent implements OnDestroy {
     for (let personNumber = 1; personNumber <= environment.compareToolMaxPersons; personNumber++) {
 
       if (this.storageService.hasUserSelectionOnURL(personNumber)) {
-        let userSelection = this.storageService.getUserSelectionFromURL(personNumber);
+        const userSelection = this.storageService.getUserSelectionFromURL(personNumber);
         this.userSelections.push(userSelection);
 
       }
       else if (this.storageService.hasUserSelectionOnLocalStorage(personNumber)) {
-        let userSelection = this.storageService.getUserSelectionFromLocalStorage(personNumber);
+        const userSelection = this.storageService.getUserSelectionFromLocalStorage(personNumber);
         this.userSelections.push(userSelection);
       }
 
@@ -97,7 +97,7 @@ export class CompareToolComponent implements OnDestroy {
   addPerson(): void {
     window.scrollTo(0, 0);
 
-    let personNumber = (this.userSelections.length + 1);
+    const personNumber = (this.userSelections.length + 1);
 
     let newUserSelection = new UserSelection(personNumber);
     newUserSelection.setDefaultValues();
@@ -110,8 +110,6 @@ export class CompareToolComponent implements OnDestroy {
       this.cdr.detectChanges();
     }
 
-
-
     this.scrollTabHeadersToTheFarRight();
 
   }
@@ -123,7 +121,7 @@ export class CompareToolComponent implements OnDestroy {
   removePerson(event: MouseEvent, tabIndex: number): void {
     event.stopPropagation();
 
-    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: <IConfirmDialog>{
         body: $localize`:@@compare-tool.remove-person-confirmation-text:Do you want to remove this person?`,
         cancelButtonText: $localize`:@@compare-tool.cancel:Cancel`,
@@ -180,7 +178,6 @@ export class CompareToolComponent implements OnDestroy {
 
 
   private clearAllIntervals(): void {
-    console.log("Compare tool selections destroyed");
     if (this.userSelections && this.userSelections.length) {
       this.userSelections.forEach(us => { us.clearResults(); });
     }

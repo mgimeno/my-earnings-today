@@ -42,12 +42,12 @@ export class StorageService {
     userSelection.startTime = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)];
     userSelection.endTime = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)];
 
-    let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)]);
+    const indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)]);
     if (indexOnArray != -1) {
       userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
     }
 
-    let workDays = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)];
+    const workDays = localStorage[this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)];
     userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDays);
 
     return userSelection;
@@ -56,7 +56,7 @@ export class StorageService {
 
   saveUserSelectionOnLocalStorage(userSelection: UserSelection): void {
 
-    let personNumber = userSelection.personNumber;
+    const personNumber = userSelection.personNumber;
 
     localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)] = userSelection.name;
     localStorage[this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)] = userSelection.rate;
@@ -101,7 +101,7 @@ export class StorageService {
   }
 
   hasUserSelectionOnURL(personNumber: number): boolean {
-    let queryParams: Params = this.activatedRoute.snapshot.queryParams;
+    const queryParams: Params = this.activatedRoute.snapshot.queryParams;
 
     return (
       queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)]
@@ -116,17 +116,17 @@ export class StorageService {
 
   getUserSelectionFromURL(personNumber: number): UserSelection {
 
-    let queryParams = this.activatedRoute.snapshot.queryParams;
+    const queryParams = this.activatedRoute.snapshot.queryParams;
 
     let userSelection: UserSelection = new UserSelection(personNumber);
 
-    let nameQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)];
-    let rateQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)];
-    let frequencyQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)];
-    let currencyQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)];
-    let startQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)];
-    let endQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)];
-    let workDaysQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)];
+    const nameQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)];
+    const rateQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)];
+    const frequencyQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)];
+    const currencyQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)];
+    const startQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)];
+    const endQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)];
+    const workDaysQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)];
 
     if (nameQP) {
       userSelection.name = nameQP;
@@ -135,13 +135,13 @@ export class StorageService {
       userSelection.rate = rateQP;
     }
     if (frequencyQP) {
-      let indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(frequencyQP);
+      const indexOnArray = AppConstants.Common.FREQUENCIES.map(rf => rf.value).indexOf(frequencyQP);
       if (indexOnArray != -1) {
         userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
       }
     }
     if (currencyQP) {
-      let indexOnArray = AppConstants.Common.CURRENCY_SYMBOLS.map(cs => cs).indexOf(currencyQP);
+      const indexOnArray = AppConstants.Common.CURRENCY_SYMBOLS.map(cs => cs).indexOf(currencyQP);
       if (indexOnArray != -1) {
         userSelection.currencySymbol = currencyQP;
       }
@@ -160,14 +160,13 @@ export class StorageService {
       userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDaysQP);
     }
 
-
     return userSelection;
 
   }
 
   setUserSelectionOnURL(userSelection: UserSelection): void {
 
-    let personNumber = userSelection.personNumber;
+    const personNumber = userSelection.personNumber;
 
     let params: any = <any>{};
 
@@ -188,15 +187,13 @@ export class StorageService {
 
     userSelections.forEach((us: UserSelection) => {
 
-      let personNumber = us.personNumber;
-
-      params[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)] = us.name;
-      params[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)] = us.rate;
-      params[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)] = us.frequency.value;
-      params[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)] = us.currencySymbol;
-      params[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)] = us.startTime;
-      params[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)] = us.endTime;
-      params[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)] = this.getWorkingDaysFromArray(us.weekWorkingDays);
+      params[this.getURLFullParamKey(StorageKeyEnum.Name, us.personNumber)] = us.name;
+      params[this.getURLFullParamKey(StorageKeyEnum.Rate, us.personNumber)] = us.rate;
+      params[this.getURLFullParamKey(StorageKeyEnum.Frequency, us.personNumber)] = us.frequency.value;
+      params[this.getURLFullParamKey(StorageKeyEnum.Currency, us.personNumber)] = us.currencySymbol;
+      params[this.getURLFullParamKey(StorageKeyEnum.Start, us.personNumber)] = us.startTime;
+      params[this.getURLFullParamKey(StorageKeyEnum.End, us.personNumber)] = us.endTime;
+      params[this.getURLFullParamKey(StorageKeyEnum.WorkDays, us.personNumber)] = this.getWorkingDaysFromArray(us.weekWorkingDays);
 
     });
 
@@ -207,9 +204,9 @@ export class StorageService {
     let result = false;
 
     if (text.length === 5) {
-      let hours = +text.substring(0, 2);
-      let separator = text.substring(2, 3);
-      let minutes = +text.substring(3, 5);
+      const hours = +text.substring(0, 2);
+      const separator = text.substring(2, 3);
+      const minutes = +text.substring(3, 5);
 
       if (separator === ":" && !isNaN(hours) && !isNaN(minutes)) {
         if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
@@ -234,7 +231,7 @@ export class StorageService {
     result[WeekDaysEnum.Saturday] = false;
 
     workDaysText.split(',').forEach((wd) => {
-      let wdNumber: number = Number(wd);
+      const wdNumber: number = Number(wd);
       if (!isNaN(wdNumber) && wdNumber >= 0 && wdNumber <= 6) {
         result[wdNumber] = true;
       }
