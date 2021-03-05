@@ -16,4 +16,4 @@ Data is only stored in your device.
 
 ## Development
 
-This web app is built using Angular 10, responsive design (mobile first) and it's translated to spanish.
+This web app is built using Angular 11, responsive design (mobile first) and it's translated to spanish.
