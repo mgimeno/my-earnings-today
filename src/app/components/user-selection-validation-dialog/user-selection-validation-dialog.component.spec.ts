@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UserSelectionValidationDialogComponent } from './user-selection-validation-dialog.component';
 
@@ -6,7 +6,7 @@ describe('UserSelectionValidationDialogComponent', () => {
   let component: UserSelectionValidationDialogComponent;
   let fixture: ComponentFixture<UserSelectionValidationDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UserSelectionValidationDialogComponent ]
     })
