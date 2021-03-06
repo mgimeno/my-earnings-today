@@ -7,7 +7,7 @@ export const environment = {
   logoUrl: "http://www.myearningstoday.com/assets/images/logo.png",
   localStoragePrefix: "my-earnings-today_dev_",
   compareToolMaxPersons: 5,
-  creatorProfileLink: "https://www.linkedin.com/in/marcosgimeno/"
+  creatorProfileLink: "https://www.marcosgimeno.com"
 };
 
 /*
