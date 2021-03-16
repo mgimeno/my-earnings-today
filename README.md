@@ -1,4 +1,4 @@
-# My Earnings Today - Calculate how much you have already earned today and compare with others
+# My Earnings Today
 
 ## Demo URL
 
