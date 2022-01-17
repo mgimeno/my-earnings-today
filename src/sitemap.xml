@@ -6,12 +6,12 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
   <url>
-    <loc>http://myearningstoday.marcosgimeno.com/</loc>
+    <loc>http://my-earnings-today.marcosgimeno.com/</loc>
   </url>
   <url>
-    <loc>http://myearningstoday.marcosgimeno.com/compare</loc>
+    <loc>http://my-earnings-today.marcosgimeno.com/compare</loc>
   </url>
   <url>
-    <loc>http://myearningstoday.marcosgimeno.com/about</loc>
+    <loc>http://my-earnings-today.marcosgimeno.com/about</loc>
   </url>
 </urlset>

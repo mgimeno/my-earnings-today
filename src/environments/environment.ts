@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  logoUrl: "http://myearningstoday.marcosgimeno.com/assets/images/logo.png",
+  logoUrl: "http://my-earnings-today.marcosgimeno.com/assets/images/logo.png",
   localStoragePrefix: "my-earnings-today_dev_",
   compareToolMaxPersons: 5,
   creatorProfileLink: "https://www.marcosgimeno.com"
