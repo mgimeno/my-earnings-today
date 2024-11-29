@@ -31,7 +31,7 @@ jobs:
             ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
             ssh $SSH_USER@$SSH_HOST "rm -dRf /home/mgimeno/apps/my-earnings-today"
             ssh $SSH_USER@$SSH_HOST "mkdir -p /home/mgimeno/apps/my-earnings-today"
-            scp -rv ./dist/my-earnings-today/* $SSH_USER@$SSH_HOST:apps/my-earnings-today
+            scp -rv ./dist/* $SSH_USER@$SSH_HOST:apps/my-earnings-today
 workflows:
   build-and-deploy:
     jobs:
