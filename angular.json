@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "dist/my-earnings-today",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -61,6 +61,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/my-earnings-today/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
