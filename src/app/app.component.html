@@ -25,7 +25,7 @@
           [class.grayscale-image-when-not-hover]="alwaysShowSideNav">
           <div class="button-with-right-icon">
             <span i18n="@@menu.language">Language</span>
-            <img [src]="'/assets/images/flag-' + currentLanguageCode + '.png'" alt="language-flag" />
+            <img [src]="'assets/images/flag-' + currentLanguageCode + '.png'" alt="language-flag" />
           </div>
         </a>
         <a mat-list-item [routerLink]="['/about']" (click)="window.scrollTo(0, 0); !alwaysShowSideNav && snav.toggle();"
