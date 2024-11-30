@@ -2,7 +2,7 @@
 
 ## Demo URL
 
-[http://my-earnings-today.marcosgimeno.com](http://my-earnings-today.marcosgimeno.com)
+[https://marcosgimeno.com/my-earnings-today](https://marcosgimeno.com/my-earnings-today)
 
 ## What is this?
 
