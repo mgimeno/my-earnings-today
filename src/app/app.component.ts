@@ -4,6 +4,7 @@ import {
   DestroyRef,
   HostListener,
   inject,
+  OnDestroy,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -17,7 +18,9 @@ import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter, take } from 'rxjs';
 import { environment } from '../environments/environment';
+import { BrowserStorage } from './shared/utils/browser-storage';
 import { CommonHelper } from './shared/utils/common-helper';
+import { LANGUAGE_STORAGE_KEY, LanguageHelper } from './shared/utils/language-helper';
 
 @Component({
   selector: 'app-root',
@@ -34,19 +37,22 @@ import { CommonHelper } from './shared/utils/common-helper';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  private router = inject(Router);
-  private meta = inject(Meta);
-  private title = inject(Title);
-  private bottomSheet = inject(MatBottomSheet);
-  private destroyRef = inject(DestroyRef);
+export class AppComponent implements OnDestroy {
+  private readonly router = inject(Router);
+  private readonly meta = inject(Meta);
+  private readonly title = inject(Title);
+  private readonly bottomSheet = inject(MatBottomSheet);
+  private readonly destroyRef = inject(DestroyRef);
 
   private windowSizeChangeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private readonly languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
 
   readonly alwaysShowSideNav = signal(CommonHelper.isLargeScreen());
   readonly currentUrl = signal('/');
   readonly currentLanguageCode = signal(
-    localStorage.getItem(`${environment.localStoragePrefix}language`) ?? 'en',
+    LanguageHelper.normalizeLanguageCode(
+      BrowserStorage.getLocalStorageItem(this.languageStorageKey),
+    ),
   );
 
   constructor() {
@@ -70,10 +76,12 @@ export class AppComponent {
     bottomSheetRef
       .afterDismissed()
       .pipe(take(1))
-      .subscribe((newLanguageCode: string) => {
+      .subscribe((newLanguageCode: string | undefined) => {
         if (newLanguageCode) {
-          if (newLanguageCode !== this.currentLanguageCode()) {
-            localStorage.setItem(`${environment.localStoragePrefix}language`, newLanguageCode);
+          const normalizedLanguageCode = LanguageHelper.normalizeLanguageCode(newLanguageCode);
+
+          if (normalizedLanguageCode !== this.currentLanguageCode()) {
+            BrowserStorage.setLocalStorageItem(this.languageStorageKey, normalizedLanguageCode);
             window.location.reload();
           }
         }
@@ -110,14 +118,20 @@ export class AppComponent {
       content: $localize`:@@index.meta_og_description:Calculate how much you have already earned today and compare with others`,
     });
 
-    const languageCode = localStorage.getItem(`${environment.localStoragePrefix}language`);
+    const languageCode = this.currentLanguageCode();
     this.meta.updateTag(<MetaDefinition>{
       property: 'og:locale',
-      content: languageCode === 'en' ? 'en_GB' : 'es_ES',
+      content: LanguageHelper.getOpenGraphLocale(languageCode),
     });
     this.meta.updateTag(<MetaDefinition>{
       property: 'og:locale:alternate',
-      content: languageCode === 'en' ? 'es_ES' : 'en_GB',
+      content: LanguageHelper.getAlternateOpenGraphLocale(languageCode),
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.windowSizeChangeTimeout) {
+      clearTimeout(this.windowSizeChangeTimeout);
+    }
   }
 }

@@ -9,7 +9,7 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true
   },
-  "files": ["src/main.ts"],
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.json"],
+  "files": ["src/main.ts", "src/polyfills.ts"],
+  "include": ["src/**/*.d.ts"],
   "exclude": ["src/**/*.spec.ts", "src/test.ts"]
 }

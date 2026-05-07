@@ -58,9 +58,9 @@ export namespace AppConstants {
       { name: $localize`:@@frequencies.per-year:per year`, value: 'year' },
     ];
 
-    public static readonly UPDATE_AMOUNTS_FREQUENCY_IN_MS: number = 100;
+    public static readonly UPDATE_AMOUNTS_FREQUENCY_IN_MS: number = 1000;
 
-    public static readonly UPDATE_STOPWATCH_FREQUENCY_IN_MS: number = 100;
+    public static readonly UPDATE_STOPWATCH_FREQUENCY_IN_MS: number = 1000;
 
     public static readonly FIRST_USER_DEFAULT_NAME = $localize`:@@first-user-default-name:You`;
 

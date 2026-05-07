@@ -22,6 +22,7 @@
   <button
     mat-flat-button
     [color]="isShowCharts() ? 'primary' : null"
+    [attr.aria-pressed]="isShowCharts()"
     (click)="showCharts()"
     i18n="@@compare-tool-details.charts"
   >
@@ -30,6 +31,7 @@
   <button
     mat-flat-button
     [color]="!isShowCharts() ? 'primary' : null"
+    [attr.aria-pressed]="!isShowCharts()"
     (click)="showDetails()"
     i18n="@@compare-tool-details.details"
   >
@@ -55,7 +57,12 @@
       </mat-form-field>
     </h2>
     <div class="chart-container">
-      <canvas #compareEarningsChart></canvas>
+      <canvas
+        #compareEarningsChart
+        role="img"
+        aria-label="Total expected chart"
+        i18n-aria-label="@@compare-tool-details.total-expected-chart"
+      ></canvas>
     </div>
     <br />
     <h2>
@@ -73,7 +80,12 @@
       </mat-form-field>
     </h2>
     <div class="chart-container">
-      <canvas #compareHoursWorkedChart></canvas>
+      <canvas
+        #compareHoursWorkedChart
+        role="img"
+        aria-label="Hours worked chart"
+        i18n-aria-label="@@compare-tool-details.hours-worked-chart"
+      ></canvas>
     </div>
   </div>
 }

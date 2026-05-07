@@ -14,7 +14,9 @@ export class CurrencyDirective implements OnChanges {
   private amountRoundedTo2Decimals = '0.00';
 
   ngOnChanges(): void {
-    this.amountRoundedTo2Decimals = (this.amount() || 0).toFixed(2);
+    const amount = Number.isFinite(this.amount()) ? this.amount() : 0;
+
+    this.amountRoundedTo2Decimals = amount.toFixed(2);
     const indexOfDecimalSeparator = this.amountRoundedTo2Decimals.lastIndexOf('.');
     const integerPart = Number(
       this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator),
@@ -49,9 +51,6 @@ export class CurrencyDirective implements OnChanges {
   }
 
   private showDecimalPlaces(): boolean {
-    return (
-      this.amountRoundedTo2Decimals !== '0.00' &&
-      (this.forceShowDecimalPlaces() || !Number.isInteger(+this.amountRoundedTo2Decimals))
-    );
+    return this.forceShowDecimalPlaces() || !Number.isInteger(+this.amountRoundedTo2Decimals);
   }
 }

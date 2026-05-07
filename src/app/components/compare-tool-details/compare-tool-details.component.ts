@@ -81,6 +81,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   );
 
   private stopWatchIntervalId: number | null = null;
+  private showChartsTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private hoursPerWeekChart: Chart<'bar'> | null = null;
   private compareEarningsChart: Chart<'bar'> | null = null;
   private compareEarningsChartCanvas =
@@ -192,7 +193,6 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
           },
         ],
       },
-      plugins: [ChartDataLabels],
       options: {
         responsive: true,
         scales: {
@@ -215,27 +215,10 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
             anchor: 'end',
             formatter: (_value: unknown, context: ChartDataLabelsContext) => {
               const index = context.dataIndex;
-              const amount: number = Number(context.chart.data.datasets[0].data[index]);
-
-              if (!amount) {
-                return null;
-              }
-
+              const amount = Number(context.chart.data.datasets[0].data[index]);
               const symbol = this.userSelections()[index].currencySymbol;
 
-              const amountRoundedTo2Decimals = amount.toFixed(2);
-
-              const indexOfDecimalSeparator = amountRoundedTo2Decimals.indexOf('.');
-              const integerPart = Number(
-                amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator),
-              ).toLocaleString();
-
-              if (Number.isInteger(+amountRoundedTo2Decimals)) {
-                return `${symbol}${integerPart}`;
-              } else {
-                const decimalPart = amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
-                return `${symbol}${integerPart}${this.localeDecimalsSeparator}${decimalPart}`;
-              }
+              return this.formatCurrencyAmount(amount, symbol);
             },
           },
           legend: {
@@ -272,7 +255,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
           data.push(us.workingHoursThisWeek);
           break;
         case PeriodEnum.CurrentMonth:
-          data.push(us.workingHoursThisWeek * 4.34524);
+          data.push(us.workingHoursThisMonth);
           break;
         case PeriodEnum.CurrentYear:
           data.push(us.workingHoursThisYear);
@@ -318,7 +301,7 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
               const index: number = context.dataIndex;
               const hours = Number(context.chart.data.datasets[0].data[index]);
 
-              return `${(Number.isInteger(hours) ? hours : hours.toFixed(2)).toLocaleString()} h`;
+              return this.formatHours(hours);
             },
           },
           legend: {
@@ -337,7 +320,12 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   showCharts(): void {
     this.isShowCharts.set(true);
 
-    window.setTimeout(() => {
+    if (this.showChartsTimeoutId) {
+      clearTimeout(this.showChartsTimeoutId);
+    }
+
+    this.showChartsTimeoutId = window.setTimeout(() => {
+      this.showChartsTimeoutId = null;
       this.destroyCharts();
       this.loadCompareEarningsChart();
       this.loadHoursWorkedPerWeekChart();
@@ -357,7 +345,36 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.stopWatchIntervalId);
+    if (this.showChartsTimeoutId) {
+      clearTimeout(this.showChartsTimeoutId);
+    }
+
+    if (this.stopWatchIntervalId) {
+      clearInterval(this.stopWatchIntervalId);
+    }
     this.destroyCharts();
+  }
+
+  private formatCurrencyAmount(amount: number, symbol: string): string | null {
+    if (!amount) {
+      return null;
+    }
+
+    const amountRoundedTo2Decimals = amount.toFixed(2);
+    const indexOfDecimalSeparator = amountRoundedTo2Decimals.indexOf('.');
+    const integerPart = Number(
+      amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator),
+    ).toLocaleString();
+
+    if (Number.isInteger(+amountRoundedTo2Decimals)) {
+      return `${symbol}${integerPart}`;
+    }
+
+    const decimalPart = amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
+    return `${symbol}${integerPart}${this.localeDecimalsSeparator}${decimalPart}`;
+  }
+
+  private formatHours(hours: number): string {
+    return `${Number(hours.toFixed(2)).toLocaleString()} h`;
   }
 }

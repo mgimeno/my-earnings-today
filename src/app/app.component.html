@@ -4,7 +4,13 @@
 
   <mat-toolbar color="primary">
     @if (!largeScreen) {
-      <button mat-icon-button (click)="snav.toggle()">
+      <button
+        mat-icon-button
+        type="button"
+        (click)="snav.toggle()"
+        aria-label="Open navigation"
+        i18n-aria-label="@@menu.open-navigation"
+      >
         <mat-icon>menu</mat-icon>
       </button>
     }
@@ -51,7 +57,7 @@
               [src]="'assets/images/flag-' + currentLanguageCode() + '.png'"
               width="64"
               height="64"
-              alt="language-flag"
+              alt=""
             />
           </div>
         </button>

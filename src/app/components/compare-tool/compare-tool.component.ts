@@ -35,12 +35,12 @@ import { UserSelectionComponent } from '../user-selection/user-selection.compone
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompareToolComponent implements OnDestroy {
-  private activeRoute = inject(ActivatedRoute);
-  private bottomSheet = inject(MatBottomSheet);
-  private storageService = inject(StorageService);
-  private dialog = inject(MatDialog);
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private readonly activeRoute = inject(ActivatedRoute);
+  private readonly bottomSheet = inject(MatBottomSheet);
+  private readonly storageService = inject(StorageService);
+  private readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly userSelections = signal<UserSelection[]>([]);
   readonly showResults = signal(false);
@@ -53,7 +53,7 @@ export class CompareToolComponent implements OnDestroy {
   }
 
   private loadInitialUserSelections(): void {
-    const userSelections = new Array<UserSelection>();
+    const userSelections: UserSelection[] = [];
 
     for (let personNumber = 1; personNumber <= environment.compareToolMaxPersons; personNumber++) {
       if (this.storageService.hasUserSelectionOnURL(personNumber)) {
@@ -69,9 +69,7 @@ export class CompareToolComponent implements OnDestroy {
 
     if (this.canCalculate()) {
       this.calculate();
-    } else if (this.userSelections().length === 0) {
-      this.addPerson();
-    } else if (this.userSelections().length === 1) {
+    } else if (this.userSelections().length < 2) {
       this.addPerson();
     }
   }
@@ -81,10 +79,7 @@ export class CompareToolComponent implements OnDestroy {
 
     return (
       userSelections.length >= 2 &&
-      userSelections.length ===
-        userSelections.filter((us) => {
-          return us.canCalculate();
-        }).length
+      userSelections.every((userSelection) => userSelection.canCalculate())
     );
   }
 
@@ -136,11 +131,11 @@ export class CompareToolComponent implements OnDestroy {
     const { ConfirmDialogComponent } = await import('../confirm-dialog/confirm-dialog.component');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: <IConfirmDialog>{
+      data: {
         body: $localize`:@@compare-tool.remove-person-confirmation-text:Do you want to remove this person?`,
         cancelButtonText: $localize`:@@compare-tool.cancel:Cancel`,
         confirmButtonText: $localize`:@@compare-tool.remove:Remove`,
-      },
+      } as IConfirmDialog,
     });
 
     dialogRef
@@ -159,7 +154,7 @@ export class CompareToolComponent implements OnDestroy {
   }
 
   goBack(): void {
-    this.router.navigate(['/compare']);
+    void this.router.navigate(['/compare']);
 
     window.scrollTo(0, 0);
   }

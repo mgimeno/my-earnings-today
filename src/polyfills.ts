@@ -1,4 +1,6 @@
 import { loadTranslations } from '@angular/localize';
+import { BrowserStorage } from './app/shared/utils/browser-storage';
+import { LANGUAGE_STORAGE_KEY, LanguageHelper } from './app/shared/utils/language-helper';
 import { environment } from './environments/environment';
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
@@ -11,10 +13,12 @@ import { environment } from './environments/environment';
  * Learn more in https://angular.io/guide/browser-support
  */
 
-const storedLanguage = localStorage.getItem(`${environment.localStoragePrefix}language`);
-const language = (storedLanguage ?? navigator.language.substring(0, 2)).toLowerCase();
+const languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
+const storedLanguage = BrowserStorage.getLocalStorageItem(languageStorageKey);
+const language = LanguageHelper.normalizeLanguageCode(storedLanguage ?? navigator.language);
 
-localStorage.setItem(`${environment.localStoragePrefix}language`, language);
+document.documentElement.lang = language;
+BrowserStorage.setLocalStorageItem(languageStorageKey, language);
 
 if (language === 'es') {
   loadTranslations({
@@ -34,6 +38,7 @@ if (language === 'es') {
     'compare-tool.back': 'Atrás',
     'compare-tool.share-this': 'Compartir',
     'compare-tool.person': 'Persona',
+    'compare-tool.remove-person': 'Eliminar persona',
     'compare-tool.remove-person-confirmation-text': '¿Quieres eliminar esta persona?',
     'compare-tool.cancel': 'Cancelar',
     'compare-tool.remove': 'Eliminar',
@@ -62,6 +67,8 @@ if (language === 'es') {
     'compare-tool-details.this-week': 'esta semana',
     'compare-tool-details.this-month': 'este mes',
     'compare-tool-details.this-year': 'este año',
+    'compare-tool-details.total-expected-chart': 'Gráfica de total esperado',
+    'compare-tool-details.hours-worked-chart': 'Gráfica de horas trabajadas',
 
     'tiles.stopwatch': 'Cronómetro',
     'tiles.this-hour': 'Esta hora',
@@ -98,6 +105,7 @@ if (language === 'es') {
     'menu.my-earnings': 'Mis ganancias',
     'menu.compare': 'Comparar',
     'menu.language': 'Idioma',
+    'menu.open-navigation': 'Abrir navegación',
     'menu.about': 'Sobre la app',
 
     'user-validation.title': 'Faltan datos',

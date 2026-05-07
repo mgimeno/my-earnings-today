@@ -42,6 +42,8 @@ export class MyEarningsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.stopWatchIntervalId);
+    if (this.stopWatchIntervalId) {
+      clearInterval(this.stopWatchIntervalId);
+    }
   }
 }

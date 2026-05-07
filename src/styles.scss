@@ -36,36 +36,38 @@ input::-webkit-inner-spin-button {
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-//Form fields bottom border;
-.mat-form-field-appearance-legacy .mat-form-field-underline {
-  background-color: rgba(0, 0, 0, 0.12);
+// Form fields bottom border.
+.mat-mdc-form-field .mdc-line-ripple::before {
+  border-bottom-color: rgba(0, 0, 0, 0.12);
 }
 
-.mat-checkbox-layout .mat-checkbox-inner-container {
+.mat-mdc-checkbox .mdc-checkbox {
   margin-right: 5px;
   width: 18px;
   height: 18px;
-
-  .mat-checkbox-label {
-    font-size: 15px;
-  }
 }
 
-.mat-form-field .mat-form-field-label {
+.mat-mdc-checkbox .mdc-label {
+  font-size: 15px;
+}
+
+.mat-mdc-form-field .mdc-floating-label {
   color: var(--primary-color);
   font-weight: bolder;
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
   margin: 5px 0;
 }
 
-.mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+.mat-mdc-checkbox:not(.mat-mdc-checkbox-disabled).mat-accent
+  .mat-mdc-checkbox-ripple
+  .mat-ripple-element {
   background-color: var(--primary-color);
 }
 
-.mat-checkbox-checked .mat-checkbox-background {
-  background-color: var(--primary-color-light) !important;
+.mat-mdc-checkbox-checked {
+  --mat-checkbox-selected-icon-color: var(--primary-color-light);
 }
 
 input[type='number'] {
@@ -76,11 +78,11 @@ input[type='number'] {
   text-align: center;
 }
 
-.mat-select-arrow {
+.mat-mdc-select-arrow {
   color: rgba(0, 0, 0, 0.22);
 }
 
-.mat-tab-label {
+.mat-mdc-tab {
   height: 35px !important;
   min-width: 120px !important;
   padding: 0 0 0 16px !important;
@@ -90,7 +92,7 @@ input[type='number'] {
   }
 }
 
-.mat-tab-label-active .title {
+.mat-mdc-tab[aria-selected='true'] .title {
   font-weight: bold;
 }
 
@@ -107,8 +109,8 @@ span.decimal {
 .chart-hours-select {
   font-weight: bold;
 
-  .mat-form-field-underline {
-    top: 41px;
+  .mdc-line-ripple {
+    bottom: 0;
   }
 }
 
@@ -121,18 +123,17 @@ span.decimal {
 }
 
 .highlight-select {
-  .mat-select-arrow {
+  .mat-mdc-select-arrow {
     color: var(--primary-color-lighter) !important;
   }
 
-  .mat-form-field-ripple {
-    background-color: var(--primary-color-lightest) !important;
-    opacity: 1;
+  .mdc-line-ripple::after {
+    border-bottom-color: var(--primary-color-lightest) !important;
     transform: scaleX(1);
   }
 }
 
-.mat-dialog-actions {
+.mat-mdc-dialog-actions {
   justify-content: center;
   margin-top: 10px;
 }
@@ -189,7 +190,7 @@ span.decimal {
     margin-bottom: 40px;
   }
 
-  .mat-form-field {
+  .mat-mdc-form-field {
     margin: 10px 0;
   }
 }

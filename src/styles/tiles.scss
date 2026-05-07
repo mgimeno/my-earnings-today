@@ -25,12 +25,8 @@
         font-weight: bold;
         width: 150px;
 
-        .mat-form-field-wrapper {
-          padding-bottom: 0 !important;
-
-          .mat-form-field-underline {
-            top: 41px;
-          }
+        .mat-mdc-form-field-subscript-wrapper {
+          display: none;
         }
       }
     }

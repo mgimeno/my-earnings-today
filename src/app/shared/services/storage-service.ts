@@ -4,57 +4,47 @@ import { environment } from '../../../environments/environment';
 import { AppConstants } from '../constants/app.constant';
 import { StorageKeyEnum } from '../enums/storage-keys.enum';
 import { WeekDaysEnum } from '../enums/week-days.enum';
+import { INameValue } from '../intefaces/name-value.interface';
 import { UserSelection } from '../models/user-selection.model';
+import { BrowserStorage } from '../utils/browser-storage';
+
+const USER_SELECTION_KEYS = [
+  StorageKeyEnum.Name,
+  StorageKeyEnum.Rate,
+  StorageKeyEnum.Frequency,
+  StorageKeyEnum.Currency,
+  StorageKeyEnum.Start,
+  StorageKeyEnum.End,
+  StorageKeyEnum.WorkDays,
+];
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
-  private activatedRoute = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   private readonly localStoragePrefix = environment.localStoragePrefix;
 
   hasUserSelectionOnLocalStorage(personNumber: number): boolean {
-    return [
-      StorageKeyEnum.Name,
-      StorageKeyEnum.Rate,
-      StorageKeyEnum.Frequency,
-      StorageKeyEnum.Currency,
-      StorageKeyEnum.Start,
-      StorageKeyEnum.End,
-      StorageKeyEnum.WorkDays,
-    ].every((key) => Boolean(localStorage.getItem(this.getLocalStorageFullKey(key, personNumber))));
+    return USER_SELECTION_KEYS.every((key) =>
+      Boolean(BrowserStorage.getLocalStorageItem(this.getLocalStorageFullKey(key, personNumber))),
+    );
   }
 
   getUserSelectionFromLocalStorage(personNumber: number): UserSelection {
     const userSelection: UserSelection = new UserSelection(personNumber);
 
-    userSelection.name =
-      localStorage.getItem(this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber)) ?? '';
-    userSelection.rate = Number(
-      localStorage.getItem(this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber)),
-    );
-    userSelection.currencySymbol =
-      localStorage.getItem(this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber)) ??
-      '';
-    userSelection.startTime =
-      localStorage.getItem(this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber)) ?? '';
-    userSelection.endTime =
-      localStorage.getItem(this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber)) ?? '';
-
-    const indexOnArray = AppConstants.Common.FREQUENCIES.map((rf) => rf.value).indexOf(
-      localStorage.getItem(this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber)) ??
-        '',
-    );
-    if (indexOnArray !== -1) {
-      userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
-    }
-
-    const workDays =
-      localStorage.getItem(this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber)) ??
-      '';
-    userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDays);
+    this.applyStoredValues(userSelection, {
+      name: this.getLocalStorageValue(StorageKeyEnum.Name, personNumber),
+      rate: this.getLocalStorageValue(StorageKeyEnum.Rate, personNumber),
+      frequency: this.getLocalStorageValue(StorageKeyEnum.Frequency, personNumber),
+      currency: this.getLocalStorageValue(StorageKeyEnum.Currency, personNumber),
+      start: this.getLocalStorageValue(StorageKeyEnum.Start, personNumber),
+      end: this.getLocalStorageValue(StorageKeyEnum.End, personNumber),
+      workDays: this.getLocalStorageValue(StorageKeyEnum.WorkDays, personNumber),
+    });
 
     return userSelection;
   }
@@ -62,31 +52,31 @@ export class StorageService {
   saveUserSelectionOnLocalStorage(userSelection: UserSelection): void {
     const personNumber = userSelection.personNumber;
 
-    localStorage.setItem(
+    BrowserStorage.setLocalStorageItem(
       this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber),
       userSelection.name,
     );
-    localStorage.setItem(
+    BrowserStorage.setLocalStorageItem(
       this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber),
       userSelection.rate.toString(),
     );
-    localStorage.setItem(
+    BrowserStorage.setLocalStorageItem(
       this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber),
       userSelection.frequency.value.toString(),
     );
-    localStorage.setItem(
+    BrowserStorage.setLocalStorageItem(
       this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber),
       userSelection.currencySymbol,
     );
-    localStorage.setItem(
+    BrowserStorage.setLocalStorageItem(
       this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber),
       userSelection.startTime,
     );
-    localStorage.setItem(
+    BrowserStorage.setLocalStorageItem(
       this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber),
       userSelection.endTime,
     );
-    localStorage.setItem(
+    BrowserStorage.setLocalStorageItem(
       this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber),
       this.getWorkingDaysFromArray(userSelection.weekWorkingDays),
     );
@@ -104,34 +94,28 @@ export class StorageService {
     return `${this.localStoragePrefix}${key}${personNumber}`;
   }
 
+  private getLocalStorageValue(key: string, personNumber: number): string {
+    return BrowserStorage.getLocalStorageItem(this.getLocalStorageFullKey(key, personNumber)) ?? '';
+  }
+
   private getURLFullParamKey(key: string, personNumber: number): string {
     return `${key}${personNumber}`;
   }
 
   cleanUserSelectionsOnLocalStorage(): void {
     for (let personNumber = 1; personNumber <= environment.compareToolMaxPersons; personNumber++) {
-      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Name, personNumber));
-      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Rate, personNumber));
-      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Frequency, personNumber));
-      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Currency, personNumber));
-      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.Start, personNumber));
-      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.End, personNumber));
-      localStorage.removeItem(this.getLocalStorageFullKey(StorageKeyEnum.WorkDays, personNumber));
+      USER_SELECTION_KEYS.forEach((key) => {
+        BrowserStorage.removeLocalStorageItem(this.getLocalStorageFullKey(key, personNumber));
+      });
     }
   }
 
   hasUserSelectionOnURL(personNumber: number): boolean {
     const queryParams: Params = this.activatedRoute.snapshot.queryParams;
 
-    return [
-      StorageKeyEnum.Name,
-      StorageKeyEnum.Rate,
-      StorageKeyEnum.Frequency,
-      StorageKeyEnum.Currency,
-      StorageKeyEnum.Start,
-      StorageKeyEnum.End,
-      StorageKeyEnum.WorkDays,
-    ].every((key) => queryParams[this.getURLFullParamKey(key, personNumber)]);
+    return USER_SELECTION_KEYS.every(
+      (key) => queryParams[this.getURLFullParamKey(key, personNumber)],
+    );
   }
 
   getUserSelectionFromURL(personNumber: number): UserSelection {
@@ -139,49 +123,15 @@ export class StorageService {
 
     const userSelection: UserSelection = new UserSelection(personNumber);
 
-    const nameQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)];
-    const rateQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)];
-    const frequencyQP =
-      queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)];
-    const currencyQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)];
-    const startQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)];
-    const endQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)];
-    const workDaysQP = queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)];
-
-    if (nameQP) {
-      userSelection.name = nameQP;
-    }
-    const rate = Number(rateQP);
-    if (rateQP && !Number.isNaN(rate) && rate > 0) {
-      userSelection.rate = rate;
-    }
-    if (frequencyQP) {
-      const indexOnArray = AppConstants.Common.FREQUENCIES.map((rf) => rf.value).indexOf(
-        frequencyQP,
-      );
-      if (indexOnArray !== -1) {
-        userSelection.frequency = AppConstants.Common.FREQUENCIES[indexOnArray];
-      }
-    }
-    if (currencyQP) {
-      const indexOnArray = AppConstants.Common.CURRENCY_SYMBOLS.map((cs) => cs).indexOf(currencyQP);
-      if (indexOnArray !== -1) {
-        userSelection.currencySymbol = currencyQP;
-      }
-    }
-    if (startQP) {
-      if (this.isValidTime(startQP)) {
-        userSelection.startTime = startQP;
-      }
-    }
-    if (endQP) {
-      if (this.isValidTime(endQP)) {
-        userSelection.endTime = endQP;
-      }
-    }
-    if (workDaysQP) {
-      userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDaysQP);
-    }
+    this.applyStoredValues(userSelection, {
+      name: queryParams[this.getURLFullParamKey(StorageKeyEnum.Name, personNumber)],
+      rate: queryParams[this.getURLFullParamKey(StorageKeyEnum.Rate, personNumber)],
+      frequency: queryParams[this.getURLFullParamKey(StorageKeyEnum.Frequency, personNumber)],
+      currency: queryParams[this.getURLFullParamKey(StorageKeyEnum.Currency, personNumber)],
+      start: queryParams[this.getURLFullParamKey(StorageKeyEnum.Start, personNumber)],
+      end: queryParams[this.getURLFullParamKey(StorageKeyEnum.End, personNumber)],
+      workDays: queryParams[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)],
+    });
 
     return userSelection;
   }
@@ -202,7 +152,7 @@ export class StorageService {
     params[this.getURLFullParamKey(StorageKeyEnum.WorkDays, personNumber)] =
       this.getWorkingDaysFromArray(userSelection.weekWorkingDays);
 
-    this.router.navigate(['/'], { queryParams: params });
+    void this.router.navigate(['/'], { queryParams: params });
   }
 
   setUserSelectionsOnURL(userSelections: Array<UserSelection>): void {
@@ -220,7 +170,76 @@ export class StorageService {
         this.getWorkingDaysFromArray(us.weekWorkingDays);
     });
 
-    this.router.navigate(['/compare'], { queryParams: params });
+    void this.router.navigate(['/compare'], { queryParams: params });
+  }
+
+  private applyStoredValues(
+    userSelection: UserSelection,
+    values: {
+      name: unknown;
+      rate: unknown;
+      frequency: unknown;
+      currency: unknown;
+      start: unknown;
+      end: unknown;
+      workDays: unknown;
+    },
+  ): void {
+    const name = this.toTextValue(values.name);
+    if (name) {
+      userSelection.name = name;
+    }
+
+    const rateText = this.toTextValue(values.rate);
+    const rate = Number(rateText);
+    if (rateText && Number.isFinite(rate) && rate > 0) {
+      userSelection.rate = rate;
+    }
+
+    const frequency = this.getFrequencyByValue(this.toTextValue(values.frequency));
+    if (frequency) {
+      userSelection.frequency = frequency;
+    }
+
+    const currency = this.toTextValue(values.currency);
+    if (this.isValidCurrencySymbol(currency)) {
+      userSelection.currencySymbol = currency;
+    }
+
+    const start = this.toTextValue(values.start);
+    if (this.isValidTime(start)) {
+      userSelection.startTime = start;
+    }
+
+    const end = this.toTextValue(values.end);
+    if (this.isValidTime(end)) {
+      userSelection.endTime = end;
+    }
+
+    const workDays = this.toTextValue(values.workDays);
+    if (workDays) {
+      userSelection.weekWorkingDays = this.getWorkingDaysFromString(workDays);
+    }
+  }
+
+  private toTextValue(value: unknown): string {
+    if (Array.isArray(value)) {
+      return this.toTextValue(value[0]);
+    }
+
+    if (value === null || value === undefined) {
+      return '';
+    }
+
+    return String(value);
+  }
+
+  private getFrequencyByValue(value: string): INameValue | null {
+    return AppConstants.Common.FREQUENCIES.find((frequency) => frequency.value === value) ?? null;
+  }
+
+  private isValidCurrencySymbol(value: string): boolean {
+    return AppConstants.Common.CURRENCY_SYMBOLS.includes(value);
   }
 
   private isValidTime(text: string): boolean {
@@ -231,7 +250,7 @@ export class StorageService {
       const separator = text.substring(2, 3);
       const minutes = +text.substring(3, 5);
 
-      if (separator === ':' && !Number.isNaN(hours) && !Number.isNaN(minutes)) {
+      if (separator === ':' && Number.isFinite(hours) && Number.isFinite(minutes)) {
         if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
           result = true;
         }
@@ -241,19 +260,16 @@ export class StorageService {
     return result;
   }
 
-  private getWorkingDaysFromString(workDaysText: string): Array<boolean> {
-    const result: boolean[] = new Array<boolean>();
-    result[WeekDaysEnum.Sunday] = false;
-    result[WeekDaysEnum.Monday] = false;
-    result[WeekDaysEnum.Tuesday] = false;
-    result[WeekDaysEnum.Wednesday] = false;
-    result[WeekDaysEnum.Thursday] = false;
-    result[WeekDaysEnum.Friday] = false;
-    result[WeekDaysEnum.Saturday] = false;
+  private getWorkingDaysFromString(workDaysText: string): boolean[] {
+    const result = Array<boolean>(7).fill(false);
 
     workDaysText.split(',').forEach((wd) => {
       const wdNumber: number = Number(wd);
-      if (!Number.isNaN(wdNumber) && wdNumber >= 0 && wdNumber <= 6) {
+      if (
+        Number.isFinite(wdNumber) &&
+        wdNumber >= WeekDaysEnum.Sunday &&
+        wdNumber <= WeekDaysEnum.Saturday
+      ) {
         result[wdNumber] = true;
       }
     });
@@ -261,8 +277,8 @@ export class StorageService {
     return result;
   }
 
-  private getWorkingDaysFromArray(workDaysArray: Array<boolean>): string {
-    const workDaysIndexes: number[] = new Array<number>();
+  private getWorkingDaysFromArray(workDaysArray: boolean[]): string {
+    const workDaysIndexes: number[] = [];
     workDaysArray.forEach((wd, index) => {
       if (wd === true) {
         workDaysIndexes.push(index);

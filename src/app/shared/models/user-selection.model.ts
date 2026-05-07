@@ -1,6 +1,5 @@
 import { AppConstants } from '../constants/app.constant';
 import { PeriodEnum } from '../enums/period.enum';
-import { WeekDaysEnum } from '../enums/week-days.enum';
 import { INameValue } from '../intefaces/name-value.interface';
 import { DateHelper } from '../utils/date-helper';
 import { TranslationHelper } from '../utils/translation-helper';
@@ -11,6 +10,9 @@ interface DateRange {
 }
 
 export class UserSelection {
+  private static readonly NO_WORKING_DAYS = [false, false, false, false, false, false, false];
+  private static readonly DEFAULT_WORKING_DAYS = [false, true, true, true, true, true, false];
+
   personNumber: number = null;
   name: string = null;
   rate: number = null;
@@ -61,14 +63,7 @@ export class UserSelection {
       this.name = `${$localize`:@@user-selection-model.person:Person`} ${personNumber}`;
     }
 
-    this.weekWorkingDays = new Array<boolean>();
-    this.weekWorkingDays[WeekDaysEnum.Sunday] = false;
-    this.weekWorkingDays[WeekDaysEnum.Monday] = false;
-    this.weekWorkingDays[WeekDaysEnum.Tuesday] = false;
-    this.weekWorkingDays[WeekDaysEnum.Wednesday] = false;
-    this.weekWorkingDays[WeekDaysEnum.Thursday] = false;
-    this.weekWorkingDays[WeekDaysEnum.Friday] = false;
-    this.weekWorkingDays[WeekDaysEnum.Saturday] = false;
+    this.weekWorkingDays = [...UserSelection.NO_WORKING_DAYS];
   }
 
   private buildStartAndEndTimeDates(now: Date): void {
@@ -76,8 +71,8 @@ export class UserSelection {
     this.dayEndTime = DateHelper.buildDate(now, this.endTime);
 
     if (this.endTime < this.startTime && this.endTime === '00:00') {
-      this.dayStartTime = DateHelper.addMiliseconds(this.dayStartTime, -1);
-      this.dayEndTime = DateHelper.getDateAtOneMilisecondBeforeEndOfDay(now);
+      this.dayStartTime = DateHelper.addMilliseconds(this.dayStartTime, -1);
+      this.dayEndTime = DateHelper.getDateAtOneMillisecondBeforeEndOfDay(now);
     }
   }
 
@@ -88,7 +83,7 @@ export class UserSelection {
     const workingDaysArray = this.getWeekWorkingDaysArray();
 
     const updateAmounts = (): void => {
-      //This logic of now and dayStartTime, dayEndTime needs to be on the interval so if we pass to next day it still works
+      // Keep this inside the interval so dates stay correct when the day changes.
       const now: Date = new Date();
       this.buildStartAndEndTimeDates(now);
 
@@ -145,7 +140,7 @@ export class UserSelection {
         return 0;
       } else if (
         this.workingHoursToday < 1 &&
-        this.dayStartTime.getHours() === DateHelper.addMiliseconds(this.dayEndTime, -1).getHours()
+        this.dayStartTime.getHours() === DateHelper.addMilliseconds(this.dayEndTime, -1).getHours()
       ) {
         return this.totalDayAmountWhenNotOff;
       } else {
@@ -246,7 +241,7 @@ export class UserSelection {
     let hoursWorkedSinceClickedCalculate = 0;
     if (
       !this.hasDayOff(now) &&
-      this.workTodayHasStarted() &&
+      this.workTodayHasStarted(now) &&
       this.dateTimeWhenClickedCalculate < this.dayEndTime
     ) {
       hoursWorkedSinceClickedCalculate = DateHelper.hoursBetweenDates(
@@ -308,7 +303,7 @@ export class UserSelection {
     return (
       !this.hasDayOff(now) &&
       this.dayStartTime.getHours() <= now.getHours() &&
-      DateHelper.addMiliseconds(this.dayEndTime, -1).getHours() >= now.getHours()
+      DateHelper.addMilliseconds(this.dayEndTime, -1).getHours() >= now.getHours()
     );
   }
 
@@ -337,7 +332,7 @@ export class UserSelection {
   private getAmountEarnedThisHour(now: Date): number {
     let earnedThisHour: number = 0;
 
-    if (this.workTodayHasStarted() && this.isWorkingAtSomePointDuringCurrentHour(now)) {
+    if (this.workTodayHasStarted(now) && this.isWorkingAtSomePointDuringCurrentHour(now)) {
       const currentHourStartAndEndDates = this.getCurrentHourStartAndEndDates(now);
 
       const timeWorkedDuringCurrentHourInHours = DateHelper.hoursBetweenDates(
@@ -362,7 +357,7 @@ export class UserSelection {
   private getAmountEarnedToday(now: Date): number {
     let earnedToday: number = 0;
 
-    if (this.workTodayHasStarted()) {
+    if (this.workTodayHasStarted(now)) {
       const hoursWorkedToday = this.getNumberOfHoursWorkedToday(now);
       const percentageCompleted = (hoursWorkedToday / this.workingHoursToday) * 100;
       earnedToday = (percentageCompleted * this.totalDayAmountWhenNotOff) / 100;
@@ -453,7 +448,7 @@ export class UserSelection {
   private getNumberOfHoursWorkedToday(now: Date): number {
     let hoursWorkedToday = 0;
 
-    if (!this.hasDayOff(now) && this.workTodayHasStarted()) {
+    if (!this.hasDayOff(now) && this.workTodayHasStarted(now)) {
       hoursWorkedToday = DateHelper.hoursBetweenDates(
         this.dayStartTime,
         DateHelper.minDate(now, this.dayEndTime),
@@ -463,20 +458,20 @@ export class UserSelection {
     return hoursWorkedToday;
   }
 
-  hasDayOff(date: Date = null): boolean {
-    if (!date) {
-      date = new Date();
-    }
-    return !this.getWeekWorkingDaysArray().includes(date.getDay());
+  hasDayOff(date: Date = new Date()): boolean {
+    return !this.weekWorkingDays[date.getDay()];
   }
 
   private getWeekWorkingDaysArray(): number[] {
-    return this.weekWorkingDays.reduce<number[]>((a, e, i) => {
-      if (e) {
-        a.push(i);
+    const result: number[] = [];
+
+    for (let index = 0; index < this.weekWorkingDays.length; index++) {
+      if (this.weekWorkingDays[index]) {
+        result.push(index);
       }
-      return a;
-    }, []);
+    }
+
+    return result;
   }
 
   canCalculate(): boolean {
@@ -495,7 +490,7 @@ export class UserSelection {
   }
 
   hasRate(): boolean {
-    return Boolean(this.rate && this.rate > 0);
+    return Number.isFinite(this.rate) && this.rate > 0;
   }
 
   isAtLeastOneDayOfTheWeekSelected(): boolean {
@@ -514,9 +509,13 @@ export class UserSelection {
   getRemainingTimeToStartWork(): string {
     const now = new Date();
 
-    if (!this.hasDayOff() && !this.workTodayHasStarted()) {
+    const hasDayOffToday = this.hasDayOff(now);
+    const workTodayHasStarted = this.workTodayHasStarted(now);
+    const workTodayHasFinished = this.workTodayHasFinished(now);
+
+    if (!hasDayOffToday && !workTodayHasStarted) {
       return `${$localize`:@@user-selection-model.you-start-work-in:You start work in`} ${DateHelper.getFormattedTimeBetweenDatesVerbose(now, this.dayStartTime)}`;
-    } else if ((!this.hasDayOff() && this.workTodayHasFinished()) || this.hasDayOff()) {
+    } else if ((!hasDayOffToday && workTodayHasFinished) || hasDayOffToday) {
       const tomorrow = DateHelper.addDays(now, 1);
       const nextWorkingDayStartTime = this.getNextWorkingDay(now);
       const nextWorkingDayNumber = nextWorkingDayStartTime.getDay();
@@ -538,7 +537,7 @@ export class UserSelection {
         }
       }
     } else {
-      //Should not ever reach this point
+      // Should not ever reach this point.
       return '';
     }
   }
@@ -558,19 +557,17 @@ export class UserSelection {
     return DateHelper.getFormattedTimeBetweenDatesVerbose(new Date(), this.dayEndTime);
   }
 
-  workTodayHasStarted(): boolean {
-    const now = new Date();
+  workTodayHasStarted(now: Date = new Date()): boolean {
     return !this.hasDayOff(now) && now > this.dayStartTime;
   }
 
-  workTodayHasFinished(): boolean {
-    const now = new Date();
+  workTodayHasFinished(now: Date = new Date()): boolean {
     return !this.hasDayOff(now) && now > this.dayEndTime;
   }
 
   isCurrentlyWorking(): boolean {
     const now = new Date();
-    return !this.hasDayOff(now) && this.workTodayHasStarted() && !this.workTodayHasFinished();
+    return !this.hasDayOff(now) && this.workTodayHasStarted(now) && !this.workTodayHasFinished(now);
   }
 
   setDefaultValues(): void {
@@ -579,14 +576,7 @@ export class UserSelection {
     this.currencySymbol = AppConstants.Common.CURRENCY_SYMBOLS[0];
     this.frequency = AppConstants.Common.FREQUENCIES[3];
 
-    this.weekWorkingDays = new Array<boolean>();
-    this.weekWorkingDays[WeekDaysEnum.Sunday] = false;
-    this.weekWorkingDays[WeekDaysEnum.Monday] = true;
-    this.weekWorkingDays[WeekDaysEnum.Tuesday] = true;
-    this.weekWorkingDays[WeekDaysEnum.Wednesday] = true;
-    this.weekWorkingDays[WeekDaysEnum.Thursday] = true;
-    this.weekWorkingDays[WeekDaysEnum.Friday] = true;
-    this.weekWorkingDays[WeekDaysEnum.Saturday] = false;
+    this.weekWorkingDays = [...UserSelection.DEFAULT_WORKING_DAYS];
   }
 
   clearResults(): void {

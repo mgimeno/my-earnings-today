@@ -16,11 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
-    provideAppInitializer(async () => {
-      const appInitService = inject(AppInitService);
-
-      await appInitService.init();
-    }),
+    provideAppInitializer(() => inject(AppInitService).init()),
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: { minWidth: 250, hasBackdrop: true },

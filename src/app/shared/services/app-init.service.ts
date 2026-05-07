@@ -7,11 +7,7 @@ import { IconService } from './icon.service';
 export class AppInitService {
   private readonly iconService = inject(IconService);
 
-  init = async (): Promise<void> => {
-    return new Promise<void>((resolve) => {
-      this.iconService.registerIcons();
-
-      resolve();
-    });
-  };
+  init(): void {
+    this.iconService.registerIcons();
+  }
 }

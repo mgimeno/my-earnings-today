@@ -1,23 +1,33 @@
 import { ITimeBetweenDates } from '../intefaces/time-between-dates.interface';
 
+const MILLISECONDS_PER_SECOND = 1000;
+const SECONDS_PER_HOUR = 3600;
+const SECONDS_PER_MINUTE = 60;
+const HOURS_PER_DAY = 24;
+const DAYS_PER_WEEK = 7;
+
 export class DateHelper {
-  public static milisecondsBetweenDates(date1: Date, date2: Date): number {
+  public static millisecondsBetweenDates(date1: Date, date2: Date): number {
     const diff = date1.getTime() - date2.getTime();
 
     return Math.abs(diff);
   }
 
   public static secondsBetweenDates(date1: Date, date2: Date): number {
-    return this.milisecondsBetweenDates(date1, date2) / 1000;
+    return this.millisecondsBetweenDates(date1, date2) / MILLISECONDS_PER_SECOND;
   }
 
   public static hoursBetweenDates(date1: Date, date2: Date): number {
-    return this.milisecondsBetweenDates(date1, date2) / 1000 / 60 / 60;
+    return (
+      this.millisecondsBetweenDates(date1, date2) /
+      MILLISECONDS_PER_SECOND /
+      SECONDS_PER_MINUTE /
+      SECONDS_PER_MINUTE
+    );
   }
 
   public static buildDate(date: Date, time: string): Date {
-    const hours = +time.split(':')[0];
-    const minutes = +time.split(':')[1];
+    const [hours, minutes] = time.split(':').map(Number);
 
     const result = new Date(date);
     result.setHours(hours, minutes, 0, 0);
@@ -25,19 +35,32 @@ export class DateHelper {
   }
 
   public static getDaysWorkedInPeriod(
-    workingDaysOfTheWeek: Array<number>,
+    workingDaysOfTheWeek: number[],
     startDate: Date,
     endDate: Date,
   ): number {
-    if (startDate > endDate) {
+    const start = this.getDateOnly(startDate);
+    const end = this.getDateOnly(endDate);
+    const workingDays = this.getValidWorkingDaysSet(workingDaysOfTheWeek);
+
+    if (start > end || workingDays.size === 0) {
       return 0;
     }
 
-    const ndays = 1 + Math.round((endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000));
-    const sum = (a: number, b: number): number => {
-      return a + Math.floor((ndays + ((startDate.getDay() + 6 - b) % 7)) / 7);
-    };
-    return workingDaysOfTheWeek.reduce(sum, 0);
+    const totalDays = this.daysBetweenCalendarDates(start, end) + 1;
+    const fullWeeks = Math.floor(totalDays / DAYS_PER_WEEK);
+    const remainingDays = totalDays % DAYS_PER_WEEK;
+    let daysWorked = fullWeeks * workingDays.size;
+
+    for (let index = 0; index < remainingDays; index++) {
+      const dayOfWeek = (start.getDay() + index) % DAYS_PER_WEEK;
+
+      if (workingDays.has(dayOfWeek)) {
+        daysWorked++;
+      }
+    }
+
+    return daysWorked;
   }
 
   public static addDays(date: Date, days: number): Date {
@@ -52,7 +75,7 @@ export class DateHelper {
     );
   }
 
-  public static addMiliseconds(date: Date, miliseconds: number): Date {
+  public static addMilliseconds(date: Date, milliseconds: number): Date {
     return new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -60,15 +83,19 @@ export class DateHelper {
       date.getHours(),
       date.getMinutes(),
       date.getSeconds(),
-      date.getMilliseconds() + miliseconds,
+      date.getMilliseconds() + milliseconds,
     );
   }
 
-  public static getDateAtOneMilisecondBeforeEndOfDay(date: Date): Date {
+  public static getDateAtOneMillisecondBeforeEndOfDay(date: Date): Date {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
   }
 
   public static getNextDayOfWeek(date: Date, dayOfTheWeek: number): Date {
+    if (!this.isValidDayOfWeek(dayOfTheWeek)) {
+      return new Date(date);
+    }
+
     let resultDate = date;
 
     if (resultDate.getDay() === dayOfTheWeek) {
@@ -157,37 +184,31 @@ export class DateHelper {
   ): string {
     const timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate, true);
 
-    let hoursSeparator: string = ` ${$localize`:@@hours:hours`} `;
-    let minutesSeparator: string = ` ${$localize`:@@minutes:minutes`} `;
-    let secondsSuffix: string = ` ${$localize`:@@seconds:seconds`} `;
+    const parts: string[] = [];
 
-    let hoursText = timeBetweenDates.hours.toString();
-    let minutesText = timeBetweenDates.minutes.toString();
-    let secondsText = '';
-
-    if (timeBetweenDates.hours === 0) {
-      hoursText = '';
-      hoursSeparator = '';
-    } else if (timeBetweenDates.hours === 1) {
-      hoursSeparator = ` ${$localize`:@@hour:hour`} `;
-    }
-    if (timeBetweenDates.minutes === 0) {
-      minutesText = '';
-      minutesSeparator = '';
-    } else if (timeBetweenDates.minutes === 1) {
-      minutesSeparator = ` ${$localize`:@@minute:minute`} `;
+    if (timeBetweenDates.hours > 0) {
+      const hoursText =
+        timeBetweenDates.hours === 1 ? $localize`:@@hour:hour` : $localize`:@@hours:hours`;
+      parts.push(`${timeBetweenDates.hours} ${hoursText}`);
     }
 
-    if (timeBetweenDates.hours === 0 && timeBetweenDates.minutes === 0) {
-      secondsText = timeBetweenDates.seconds.toString();
-
-      if (timeBetweenDates.seconds === 1) {
-        secondsSuffix = ` ${$localize`:@@second:second`} `;
-      }
-      secondsText += secondsSuffix;
+    if (timeBetweenDates.minutes > 0) {
+      const minutesText =
+        timeBetweenDates.minutes === 1
+          ? $localize`:@@minute:minute`
+          : $localize`:@@minutes:minutes`;
+      parts.push(`${timeBetweenDates.minutes} ${minutesText}`);
     }
 
-    return hoursText + hoursSeparator + minutesText + minutesSeparator + secondsText;
+    if (parts.length === 0) {
+      const secondsText =
+        timeBetweenDates.seconds === 1
+          ? $localize`:@@second:second`
+          : $localize`:@@seconds:seconds`;
+      parts.push(`${timeBetweenDates.seconds} ${secondsText}`);
+    }
+
+    return parts.join(' ');
   }
 
   private static getTimeBetweenDates(
@@ -198,14 +219,39 @@ export class DateHelper {
     const secondsElapsed = roundSecondsUp
       ? Math.ceil(this.secondsBetweenDates(fromDate, toDate))
       : Math.floor(this.secondsBetweenDates(fromDate, toDate));
-    const hours = Math.floor(secondsElapsed / 3600);
-    const minutes = Math.floor((secondsElapsed - hours * 3600) / 60);
-    const seconds = secondsElapsed - hours * 3600 - minutes * 60;
+    const hours = Math.floor(secondsElapsed / SECONDS_PER_HOUR);
+    const minutes = Math.floor((secondsElapsed - hours * SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+    const seconds = secondsElapsed - hours * SECONDS_PER_HOUR - minutes * SECONDS_PER_MINUTE;
 
     return {
       hours,
       minutes,
       seconds,
     };
+  }
+
+  private static getDateOnly(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+
+  private static getValidWorkingDaysSet(workingDaysOfTheWeek: number[]): Set<number> {
+    return new Set(workingDaysOfTheWeek.filter((dayOfWeek) => this.isValidDayOfWeek(dayOfWeek)));
+  }
+
+  private static isValidDayOfWeek(dayOfWeek: number): boolean {
+    return Number.isInteger(dayOfWeek) && dayOfWeek >= 0 && dayOfWeek < DAYS_PER_WEEK;
+  }
+
+  private static daysBetweenCalendarDates(startDate: Date, endDate: Date): number {
+    const startUtc = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const endUtc = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+
+    return Math.round(
+      (endUtc - startUtc) /
+        MILLISECONDS_PER_SECOND /
+        SECONDS_PER_MINUTE /
+        SECONDS_PER_MINUTE /
+        HOURS_PER_DAY,
+    );
   }
 }

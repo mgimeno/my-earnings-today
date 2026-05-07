@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -8,12 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./share-bottom-sheet.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShareBottomSheetComponent {
+export class ShareBottomSheetComponent implements OnDestroy {
   private bottomSheetRef = inject<MatBottomSheetRef<ShareBottomSheetComponent>>(MatBottomSheetRef);
+  private copyStatusTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   readonly isLinkCopiedToClipboard = signal(false);
   readonly canShare = typeof navigator.share === 'function';
-  readonly currentUrl = decodeURI(window.location.href);
+  readonly canCopyLink = typeof navigator.clipboard?.writeText === 'function';
+  readonly currentUrl = window.location.href;
 
   async share(): Promise<void> {
     if (!this.canShare) {
@@ -34,15 +36,36 @@ export class ShareBottomSheetComponent {
   }
 
   async copyLink(): Promise<void> {
-    await navigator.clipboard.writeText(this.currentUrl);
+    if (!this.canCopyLink) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(this.currentUrl);
+    } catch {
+      this.isLinkCopiedToClipboard.set(false);
+      return;
+    }
+
     this.isLinkCopiedToClipboard.set(true);
 
-    window.setTimeout(() => {
+    if (this.copyStatusTimeoutId) {
+      clearTimeout(this.copyStatusTimeoutId);
+    }
+
+    this.copyStatusTimeoutId = window.setTimeout(() => {
+      this.copyStatusTimeoutId = null;
       this.isLinkCopiedToClipboard.set(false);
     }, 1800);
   }
 
   close(): void {
     this.bottomSheetRef.dismiss();
+  }
+
+  ngOnDestroy(): void {
+    if (this.copyStatusTimeoutId) {
+      clearTimeout(this.copyStatusTimeoutId);
+    }
   }
 }

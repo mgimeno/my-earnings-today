@@ -1,4 +1,4 @@
-<form>
+<form (submit)="$event.preventDefault(); tryCalculate()">
   @if (userSelection(); as currentUserSelection) {
     @if (!showResults()) {
       <div class="text-center">
@@ -9,11 +9,10 @@
         ></app-user-selection>
         <div class="buttons m-t-20">
           <button
-            type="button"
+            type="submit"
             class="text-center"
             mat-raised-button
             color="primary"
-            (click)="tryCalculate()"
             cdkFocusInitial
             i18n="@@my-earnings.calculate"
           >

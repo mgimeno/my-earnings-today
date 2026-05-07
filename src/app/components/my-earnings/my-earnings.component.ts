@@ -25,12 +25,12 @@ import { UserSelectionComponent } from '../user-selection/user-selection.compone
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyEarningsComponent implements OnDestroy {
-  private activeRoute = inject(ActivatedRoute);
-  private router = inject(Router);
-  private bottomSheet = inject(MatBottomSheet);
-  private storageService = inject(StorageService);
-  private dialog = inject(MatDialog);
-  private destroyRef = inject(DestroyRef);
+  private readonly activeRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly bottomSheet = inject(MatBottomSheet);
+  private readonly storageService = inject(StorageService);
+  private readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly showResults = signal(false);
   readonly userSelection = signal<UserSelection | null>(null);
@@ -103,13 +103,13 @@ export class MyEarningsComponent implements OnDestroy {
       this.storageService.saveUserSelectionOnLocalStorage(userSelection);
     }
 
-    this.router.navigate(['/compare']);
+    void this.router.navigate(['/compare']);
 
     window.scrollTo(0, 0);
   }
 
   goBack(): void {
-    this.router.navigate(['/']);
+    void this.router.navigate(['/']);
 
     window.scrollTo(0, 0);
   }
