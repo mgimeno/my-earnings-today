@@ -1,39 +1,64 @@
 h1 {
-  font-size: 20px;
+  margin-bottom: 18px;
 }
 
 h2 {
-  margin: 40px 0 30px 0;
+  margin: 36px 0 14px;
+  font-weight: 800;
+}
+
+p {
+  margin: 0 0 18px;
+  color: var(--ink-color);
+  font-size: 15px;
+  line-height: 1.7;
+
+  b {
+    color: var(--primary-color-dark);
+  }
 }
 
 .profile-link-container {
-  margin: 50px 0 20px 0;
+  margin: 42px 0 20px;
   justify-content: center;
   display: flex;
-  line-height: 60px;
 
   .profile-link {
-    text-decoration: none;
-    padding-left: 55px;
-    background: url('/assets/images/profile-picture.gif') 0 center no-repeat;
+    display: inline-flex;
+    align-items: center;
+    min-height: 60px;
+    padding: 8px 14px 8px 68px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background:
+      url('/assets/images/profile-picture.gif') 12px center / 44px 44px no-repeat,
+      var(--surface-color);
+    box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
+    color: var(--ink-color);
     font-size: 14px;
-    height: 60px;
-    background-size: 50px 50px;
-    color: #444;
+    text-decoration: none;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
 
     &:hover {
+      border-color: var(--primary-color-light);
+      box-shadow: var(--soft-shadow);
+      transform: translateY(-2px);
+
       .heart {
         color: #c44736;
       }
 
       .underline {
-        -webkit-transform: scaleX(1);
         transform: scaleX(1);
       }
     }
 
     .heart {
       color: var(--primary-color);
+      transition: color 160ms ease;
     }
 
     .underline {
@@ -44,11 +69,10 @@ h2 {
       height: 2px;
       bottom: 30%;
       right: 0;
-      background-color: var(--primary-color);
-      -webkit-transition: all 0.25s ease-in-out 0s;
-      transition: all 0.25s ease-in-out 0s;
-      -webkit-transform: scaleX(0);
+      background-color: var(--primary-color-light);
       transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms ease;
     }
   }
 }

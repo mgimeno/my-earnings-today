@@ -1,7 +1,12 @@
 .mat-mdc-dialog-title {
+  margin-bottom: 4px;
+  color: var(--ink-color);
   font-size: 18px;
+  font-weight: 800;
 }
 
 .content {
+  color: var(--muted-color);
   font-size: 16px;
+  line-height: 1.5;
 }

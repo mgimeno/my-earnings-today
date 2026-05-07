@@ -1,48 +1,78 @@
 .user-selection {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 12px;
   width: 100%;
-  margin: 20px auto 0 auto;
-
-  overflow: hidden; //this is a fix for Microsoft Edge.
+  margin: 22px auto 0;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--surface-color);
+  box-shadow: var(--soft-shadow);
+  overflow: hidden;
 }
 
 .rate-form-field {
-  width: calc(100% - 40px);
-  margin-bottom: 0;
+  grid-column: span 9;
+  width: 100%;
 }
 
 .currency-form-field {
-  width: 40px;
-  margin-bottom: 0;
+  grid-column: span 3;
+  width: 100%;
 }
 
 .frequency-form-field {
-  margin-top: 0;
+  grid-column: 1 / -1;
 }
 
 .full-width-form-field {
+  grid-column: 1 / -1;
   width: 100%;
 }
 
 .time-form-field {
-  width: 50%;
+  grid-column: span 6;
+  width: 100%;
 }
 
 .section-description {
+  grid-column: 1 / -1;
+  margin: 2px 0 -2px;
   text-align: left;
   font-size: 14px;
   color: var(--primary-color);
-  font-weight: bolder;
+  font-weight: 800;
 }
 
 .week-days {
+  grid-column: 1 / -1;
   text-align: left;
   font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 0;
 
   & > * {
-    flex: 1 1 0px;
+    min-width: 0;
+  }
+
+  .mat-mdc-checkbox {
+    min-height: 42px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--surface-muted-color);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease;
+
+    &:hover {
+      border-color: var(--primary-color-light);
+      background: #fff;
+      box-shadow: var(--focus-ring);
+    }
   }
 
   .show-on-big-screen {
@@ -56,6 +86,30 @@
 
     .show-on-big-screen {
       display: block;
+    }
+  }
+}
+
+br {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .user-selection {
+    padding: 14px;
+  }
+
+  .rate-form-field,
+  .currency-form-field,
+  .time-form-field {
+    grid-column: 1 / -1;
+  }
+
+  .week-days {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .empty-block {
+      display: none;
     }
   }
 }

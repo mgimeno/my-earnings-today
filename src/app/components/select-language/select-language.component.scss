@@ -1,0 +1,19 @@
+.buttons {
+  margin-top: 18px;
+}
+
+.big-button {
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--ink-color);
+  box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
+
+  &:hover {
+    border-color: var(--primary-color-light);
+  }
+
+  img {
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--surface-color);
+  }
+}

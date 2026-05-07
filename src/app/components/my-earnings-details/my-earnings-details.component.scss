@@ -1,8 +1,23 @@
 .amount-earned {
-  font-size: 50px;
-  margin: 20px 0;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  min-width: min(100%, 320px);
+  margin: 8px 0 12px;
+  padding: 18px 24px;
+  border: 1px solid color-mix(in srgb, var(--success-color) 22%, var(--border-color));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--success-color) 9%, var(--surface-color));
+  color: var(--success-color);
+  box-shadow: var(--soft-shadow);
+  font-size: clamp(38px, 9vw, 58px);
+  font-weight: 900;
+  line-height: 1;
 }
 
 .note {
+  margin: 0 0 20px;
+  color: var(--muted-color);
   font-size: 15px;
+  font-weight: 700;
 }

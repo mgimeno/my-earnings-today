@@ -26,6 +26,9 @@ jobs:
           name: Install dependencies
           command: npm ci
       - run:
+          name: Run unit tests
+          command: npm test
+      - run:
           name: Build
           command: npm run ng build -c production
       - persist_to_workspace:
