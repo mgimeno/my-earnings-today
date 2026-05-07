@@ -1,50 +1,59 @@
 <h1 mat-dialog-title i18n="@@user-validation.title">Missing details</h1>
 <mat-dialog-content class="content">
+  @for (userSelection of data.userSelections; track userSelection.personNumber) {
+    @if (!userSelection.canCalculate()) {
+      @if (showName) {
+        <div>
+          <b>{{ getName(userSelection) }}</b>
+        </div>
+      }
+      @if (!userSelection.hasName()) {
+        <p i18n="@@user-validation.name">Type a name</p>
+      }
+      @if (!userSelection.hasRate()) {
+        <p>
+          {{ getValidationMessageForRate(userSelection) }}
+        </p>
+      }
+      @if (!userSelection.currencySymbol) {
+        <p i18n="@@user-validation.currency">Select a currency symbol</p>
+      }
+      @if (!userSelection.frequency) {
+        <p i18n="@@user-validation.period">Select a period</p>
+      }
+      @if (!userSelection.isAtLeastOneDayOfTheWeekSelected()) {
+        <p i18n="@@user-validation.at-least-one-day">Select at least one day of the week</p>
+      }
+      @if (!userSelection.startTime) {
+        <p i18n="@@user-validation.from">Select a 'From' time</p>
+      }
+      @if (!userSelection.endTime) {
+        <p i18n="@@user-validation.to">Select a 'To' time</p>
+      }
+      @if (
+        userSelection.startTime &&
+        userSelection.endTime &&
+        !userSelection.areStartAndEndTimesValid()
+      ) {
+        <p i18n="@@user-validation.from-greater-than-to">
+          'From' time must be lower than 'To' time
+        </p>
+      }
+    }
+  }
 
-  <ng-container *ngFor="let userSelection of data.userSelections; let index = index;">
-
-    <ng-container *ngIf="!userSelection.canCalculate()">
-
-      <div *ngIf="showName()">
-        <b>{{getName(userSelection)}}</b>
-      </div>
-      <p *ngIf="!userSelection.hasName()" i18n="@@user-validation.name">
-        Type a name
-      </p>
-      <p *ngIf="!userSelection.hasRate()">
-        {{getValidationMessageForRate(userSelection)}}
-      </p>
-      <p *ngIf="!userSelection.currencySymbol" i18n="@@user-validation.currency">
-        Select a currency symbol
-      </p>
-      <p *ngIf="!userSelection.frequency" i18n="@@user-validation.period">
-        Select a period
-      </p>
-      <p *ngIf="!userSelection.isAtLeastOneDayOfTheWeekSelected()" i18n="@@user-validation.at-least-one-day">
-        Select at least one day of the week
-      </p>
-      <p *ngIf="!userSelection.startTime" i18n="@@user-validation.from">
-        Select a 'From' time
-      </p>
-      <p *ngIf="!userSelection.endTime" i18n="@@user-validation.to">
-        Select a 'To' time
-      </p>
-      <p *ngIf="userSelection.startTime && userSelection.endTime && !userSelection.areStartAndEndTimesValid()"
-        i18n="@@user-validation.from-greater-than-to">
-        'From' time must be lower than 'To' time
-      </p>
-    </ng-container>
-
-  </ng-container>
-
-  <p *ngIf="data.isCompareTool && (data.userSelections.length < getMinNumberOfUserSelectionsRequired())"
-    i18n="@@user-validation.at-least-add-one-more">
-    Add at least one more person
-  </p>
-
-
+  @if (data.isCompareTool && data.userSelections.length < minNumberOfUserSelectionsRequired) {
+    <p i18n="@@user-validation.at-least-add-one-more">Add at least one more person</p>
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="onClose()" cdkFocusInitial i18n="@@user-validation.got-it">Got
-    it!</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onClose()"
+    cdkFocusInitial
+    i18n="@@user-validation.got-it"
+  >
+    Got it!
+  </button>
 </mat-dialog-actions>

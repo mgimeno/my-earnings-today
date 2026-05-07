@@ -1,44 +1,57 @@
-import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
-import { CommonHelper } from '../helpers/common-helper';
+import { Directive, ElementRef, inject, input, OnChanges, Renderer2 } from '@angular/core';
+import { CommonHelper } from '../utils/common-helper';
 
-@Directive({
-  selector: '[appCurrency]'
-})
+@Directive({ selector: '[appCurrency]' })
 export class CurrencyDirective implements OnChanges {
+  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private renderer = inject(Renderer2);
 
-  @Input() amount: number;
-  @Input() symbol: string;
-  @Input() forceShowDecimalPlaces: boolean = false;
-
-  amountRoundedTo2Decimals: string = null;
+  readonly amount = input(0);
+  readonly symbol = input('');
+  readonly forceShowDecimalPlaces = input(false);
 
   private readonly localeDecimalsSeparator = CommonHelper.getLocaleDecimalSeparator();
+  private amountRoundedTo2Decimals = '0.00';
 
-
-  constructor(private el: ElementRef) { }
-
-  ngOnChanges() {
-
-    if (!this.amount) {
-      this.amount = 0;
-    }
-
-    this.amountRoundedTo2Decimals = this.amount.toFixed(2);
+  ngOnChanges(): void {
+    this.amountRoundedTo2Decimals = (this.amount() || 0).toFixed(2);
     const indexOfDecimalSeparator = this.amountRoundedTo2Decimals.lastIndexOf('.');
-    const integerPart = Number(this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator)).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
+    const integerPart = Number(
+      this.amountRoundedTo2Decimals.substring(0, indexOfDecimalSeparator),
+    ).toLocaleString(); //toLocaleString applies rounding, do only to integer part.
+
+    this.clearHost();
+    this.renderer.appendChild(
+      this.el.nativeElement,
+      this.renderer.createText(`${this.symbol()}${integerPart}`),
+    );
 
     if (this.showDecimalPlaces()) {
-
       const decimalPart = this.amountRoundedTo2Decimals.substring(indexOfDecimalSeparator + 1);
+      const decimalElement = this.renderer.createElement('span') as HTMLSpanElement;
 
-      this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}<span class='decimal'>${this.localeDecimalsSeparator}${decimalPart}</span>`;
-    }
-    else {
-      this.el.nativeElement.innerHTML = `${this.symbol}${integerPart}`;
+      this.renderer.addClass(decimalElement, 'decimal');
+      this.renderer.setProperty(
+        decimalElement,
+        'textContent',
+        `${this.localeDecimalsSeparator}${decimalPart}`,
+      );
+      this.renderer.appendChild(this.el.nativeElement, decimalElement);
     }
   }
 
-  showDecimalPlaces(): boolean {
-    return (this.amountRoundedTo2Decimals !== "0.00") && (this.forceShowDecimalPlaces || !Number.isInteger(+this.amountRoundedTo2Decimals)) ? true : false;
+  private clearHost(): void {
+    const host = this.el.nativeElement;
+
+    while (host.firstChild) {
+      this.renderer.removeChild(host, host.firstChild);
+    }
+  }
+
+  private showDecimalPlaces(): boolean {
+    return (
+      this.amountRoundedTo2Decimals !== '0.00' &&
+      (this.forceShowDecimalPlaces() || !Number.isInteger(+this.amountRoundedTo2Decimals))
+    );
   }
 }

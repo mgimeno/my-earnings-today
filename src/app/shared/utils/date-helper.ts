@@ -1,7 +1,6 @@
 import { ITimeBetweenDates } from '../intefaces/time-between-dates.interface';
 
 export class DateHelper {
-
   public static milisecondsBetweenDates(date1: Date, date2: Date): number {
     const diff = date1.getTime() - date2.getTime();
 
@@ -9,30 +8,34 @@ export class DateHelper {
   }
 
   public static secondsBetweenDates(date1: Date, date2: Date): number {
-    return (this.milisecondsBetweenDates(date1, date2) / 1000);
+    return this.milisecondsBetweenDates(date1, date2) / 1000;
   }
 
   public static hoursBetweenDates(date1: Date, date2: Date): number {
-    return (this.milisecondsBetweenDates(date1, date2) / 1000 / 60 / 60);
+    return this.milisecondsBetweenDates(date1, date2) / 1000 / 60 / 60;
   }
 
   public static buildDate(date: Date, time: string): Date {
     const hours = +time.split(':')[0];
     const minutes = +time.split(':')[1];
 
-    let result = new Date(date);
+    const result = new Date(date);
     result.setHours(hours, minutes, 0, 0);
     return result;
   }
 
-  public static getDaysWorkedInPeriod(workingDaysOfTheWeek: Array<number>, startDate: Date, endDate: Date) {
+  public static getDaysWorkedInPeriod(
+    workingDaysOfTheWeek: Array<number>,
+    startDate: Date,
+    endDate: Date,
+  ): number {
     if (startDate > endDate) {
       return 0;
     }
 
     const ndays = 1 + Math.round((endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000));
-    let sum = (a, b) => {
-      return a + Math.floor((ndays + (startDate.getDay() + 6 - b) % 7) / 7);
+    const sum = (a: number, b: number): number => {
+      return a + Math.floor((ndays + ((startDate.getDay() + 6 - b) % 7)) / 7);
     };
     return workingDaysOfTheWeek.reduce(sum, 0);
   }
@@ -45,7 +48,7 @@ export class DateHelper {
       date.getHours(),
       date.getMinutes(),
       date.getSeconds(),
-      date.getMilliseconds()
+      date.getMilliseconds(),
     );
   }
 
@@ -57,24 +60,15 @@ export class DateHelper {
       date.getHours(),
       date.getMinutes(),
       date.getSeconds(),
-      date.getMilliseconds() + miliseconds
+      date.getMilliseconds() + miliseconds,
     );
   }
 
   public static getDateAtOneMilisecondBeforeEndOfDay(date: Date): Date {
-    return new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      23,
-      59,
-      59,
-      999
-    );
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
   }
 
   public static getNextDayOfWeek(date: Date, dayOfTheWeek: number): Date {
-
     let resultDate = date;
 
     if (resultDate.getDay() === dayOfTheWeek) {
@@ -83,16 +77,15 @@ export class DateHelper {
 
     resultDate = new Date(resultDate.getTime());
 
-    resultDate.setDate(resultDate.getDate() + (7 + dayOfTheWeek - resultDate.getDay()) % 7);
+    resultDate.setDate(resultDate.getDate() + ((7 + dayOfTheWeek - resultDate.getDay()) % 7));
 
     return resultDate;
   }
 
   public static getMondayOfCurrentWeek(now: Date): Date {
-    let date = new Date(now);
-    const lastMondayTime = date.setDate(now.getDate() - (now.getDay() + 6) % 7);
+    const date = new Date(now);
+    const lastMondayTime = date.setDate(now.getDate() - ((now.getDay() + 6) % 7));
     return new Date(lastMondayTime);
-
   }
 
   public static getFirstDayOfCurrentMonth(now: Date): Date {
@@ -100,7 +93,7 @@ export class DateHelper {
   }
 
   public static getLastDayOfCurrentMonth(now: Date): Date {
-    return new Date(now.getFullYear(), (now.getMonth() + 1), 0, 0, 0, 0, 0);
+    return new Date(now.getFullYear(), now.getMonth() + 1, 0, 0, 0, 0, 0);
   }
 
   public static getFirstDayOfCurrentYear(now: Date): Date {
@@ -120,7 +113,7 @@ export class DateHelper {
   }
 
   public static isFirstDayOfTheYear(date: Date): boolean {
-    return (date.getMonth() === 0 && date.getDate() === 1);
+    return date.getMonth() === 0 && date.getDate() === 1;
   }
 
   public static minDate(date1: Date, date2: Date): Date {
@@ -138,27 +131,31 @@ export class DateHelper {
   }
 
   public static getFormattedTimeBetweenDates(fromDate: Date, toDate: Date = new Date()): string {
-
     const timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
 
-    let hoursSeparator: string = ":";
-    let minutesSeparator: string = ":";
-
+    let hoursSeparator = ':';
+    const minutesSeparator = ':';
     let hoursText = timeBetweenDates.hours.toString();
-    let minutesText = timeBetweenDates.minutes.toString();
-    let secondsText = timeBetweenDates.seconds.toString();
 
-    if (timeBetweenDates.hours == 0) { hoursText = ''; hoursSeparator = ''; }
-    if (timeBetweenDates.minutes < 10) { minutesText = "0" + timeBetweenDates.minutes; }
-    if (timeBetweenDates.seconds < 10) { secondsText = "0" + timeBetweenDates.seconds; }
+    if (timeBetweenDates.hours === 0) {
+      hoursText = '';
+      hoursSeparator = '';
+    }
 
-    return hoursText + hoursSeparator + minutesText + minutesSeparator + secondsText;
+    return (
+      hoursText +
+      hoursSeparator +
+      timeBetweenDates.minutes.toString().padStart(2, '0') +
+      minutesSeparator +
+      timeBetweenDates.seconds.toString().padStart(2, '0')
+    );
   }
 
-  public static getFormattedTimeBetweenDatesVerbose(fromDate: Date, toDate: Date = new Date()): string {
-
-    //todo refactor this method.
-    const timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate);
+  public static getFormattedTimeBetweenDatesVerbose(
+    fromDate: Date,
+    toDate: Date = new Date(),
+  ): string {
+    const timeBetweenDates = this.getTimeBetweenDates(fromDate, toDate, true);
 
     let hoursSeparator: string = ` ${$localize`:@@hours:hours`} `;
     let minutesSeparator: string = ` ${$localize`:@@minutes:minutes`} `;
@@ -166,46 +163,49 @@ export class DateHelper {
 
     let hoursText = timeBetweenDates.hours.toString();
     let minutesText = timeBetweenDates.minutes.toString();
-    let secondsText = "";
+    let secondsText = '';
 
-    if (timeBetweenDates.hours === 0) { hoursText = ''; hoursSeparator = ''; }
-    else if (timeBetweenDates.hours === 1) { hoursSeparator = ` ${$localize`:@@hour:hour`} `; }
-    if (timeBetweenDates.minutes === 0) { minutesText = ""; minutesSeparator = ""; }
-    else if (timeBetweenDates.minutes === 1) { minutesSeparator = ` ${$localize`:@@minute:minute`} `; }
+    if (timeBetweenDates.hours === 0) {
+      hoursText = '';
+      hoursSeparator = '';
+    } else if (timeBetweenDates.hours === 1) {
+      hoursSeparator = ` ${$localize`:@@hour:hour`} `;
+    }
+    if (timeBetweenDates.minutes === 0) {
+      minutesText = '';
+      minutesSeparator = '';
+    } else if (timeBetweenDates.minutes === 1) {
+      minutesSeparator = ` ${$localize`:@@minute:minute`} `;
+    }
 
     if (timeBetweenDates.hours === 0 && timeBetweenDates.minutes === 0) {
+      secondsText = timeBetweenDates.seconds.toString();
 
-      let seconds = timeBetweenDates.seconds;
-      //todo hack
-      if (seconds < 59) {
-        seconds++;
+      if (timeBetweenDates.seconds === 1) {
+        secondsSuffix = ` ${$localize`:@@second:second`} `;
       }
-
-      secondsText = seconds.toString();
-
-      if (seconds === 1) { secondsSuffix = ` ${$localize`:@@second:second`} `; }
       secondsText += secondsSuffix;
-
     }
 
     return hoursText + hoursSeparator + minutesText + minutesSeparator + secondsText;
   }
 
-  private static getTimeBetweenDates(fromDate: Date, toDate: Date): any {
-    const secondsElapsed = this.secondsBetweenDates(fromDate, toDate);
+  private static getTimeBetweenDates(
+    fromDate: Date,
+    toDate: Date,
+    roundSecondsUp = false,
+  ): ITimeBetweenDates {
+    const secondsElapsed = roundSecondsUp
+      ? Math.ceil(this.secondsBetweenDates(fromDate, toDate))
+      : Math.floor(this.secondsBetweenDates(fromDate, toDate));
+    const hours = Math.floor(secondsElapsed / 3600);
+    const minutes = Math.floor((secondsElapsed - hours * 3600) / 60);
+    const seconds = secondsElapsed - hours * 3600 - minutes * 60;
 
-    const sec_num = parseInt(secondsElapsed.toString(), 10);
-    const hours = Math.floor(sec_num / 3600);
-    const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    const seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-    return <ITimeBetweenDates>{
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds
+    return {
+      hours,
+      minutes,
+      seconds,
     };
-
-
   }
 }
-

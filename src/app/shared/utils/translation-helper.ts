@@ -1,10 +1,8 @@
 export class TranslationHelper {
-
   public static translateDayOfTheWeek(dayNumber: number): string {
-
     // This is needed because
     // Angular does not provide any mechanism to generate dynamic translations as they are generated at compile time.
-    let result = "";
+    let result = '';
 
     switch (dayNumber) {
       case 0:
@@ -28,12 +26,8 @@ export class TranslationHelper {
       case 6:
         result = $localize`:@@Saturday:Saturday`;
         break;
-
     }
 
     return result;
-
   }
-
-};
-
+}

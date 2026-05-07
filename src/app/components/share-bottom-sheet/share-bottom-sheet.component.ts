@@ -1,47 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { environment } from 'src/environments/environment';
-
-declare var window: any;
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
+  imports: [MatButtonModule],
   templateUrl: './share-bottom-sheet.component.html',
-  styleUrls: ['./share-bottom-sheet.component.scss']
+  styleUrls: ['./share-bottom-sheet.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShareBottomSheetComponent implements OnInit {
+export class ShareBottomSheetComponent {
+  private bottomSheetRef = inject<MatBottomSheetRef<ShareBottomSheetComponent>>(MatBottomSheetRef);
 
-  isLinkCopiedToClipboard: boolean = false;
-  currentUrl: string;
+  readonly isLinkCopiedToClipboard = signal(false);
+  readonly canShare = typeof navigator.share === 'function';
+  readonly currentUrl = decodeURI(window.location.href);
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<ShareBottomSheetComponent>) {
-    this.currentUrl = decodeURI(window.location.href);
+  async share(): Promise<void> {
+    if (!this.canShare) {
+      await this.copyLink();
+      return;
+    }
+
+    try {
+      await navigator.share({
+        title: $localize`:@@index.title:My Earnings Today`,
+        text: $localize`:@@index.meta_description:Calculate how much you have already earned today and compare with others`,
+        url: this.currentUrl,
+      });
+      this.close();
+    } catch {
+      // User cancelled. Keep sheet open.
+    }
   }
 
-  ngOnInit(): void {
-    window.__sharethis__.load('inline-share-buttons', {
-      alignment: 'center',
-      id: 'sharethis-buttons',
-      enabled: true,
-      font_size: 11,
-      padding: 8,
-      radius: 3,
-      networks: ['facebook', 'messenger', 'twitter', 'whatsapp', 'email', 'sharethis'],
-      size: 32,
-      show_mobile_buttons: true,
-      spacing: 7,
-      url: this.currentUrl,
-      title: $localize`:@@index.title:My Earnings Today`,
-      image: environment.logoUrl,
-      description: $localize`:@@index.meta_description:Calculate how much you have already earned today and compare with others`
-    });
-  }
+  async copyLink(): Promise<void> {
+    await navigator.clipboard.writeText(this.currentUrl);
+    this.isLinkCopiedToClipboard.set(true);
 
-  onCopyLinkClick(): void {
-    this.isLinkCopiedToClipboard = true;
+    window.setTimeout(() => {
+      this.isLinkCopiedToClipboard.set(false);
+    }, 1800);
   }
 
   close(): void {
     this.bottomSheetRef.dismiss();
   }
-
 }

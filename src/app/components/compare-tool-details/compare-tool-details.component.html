@@ -1,107 +1,138 @@
 <h1 i18n="@@compare-tool-details.title">Today you have already earned</h1>
+@let selections = userSelections();
+@let detailsTypeAlreadyEarned = isDetailsTypeAlreadyEarned();
 
 <div class="today-earned-container">
-
-  <ng-container *ngFor="let userSelection of userSelections">
-
+  @for (userSelection of selections; track userSelection.personNumber) {
     <div class="person">
-      <div class="name">{{userSelection.name}}</div>
+      <div class="name">{{ userSelection.name }}</div>
       <div class="amount">
-        <span appCurrency [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol
-          [forceShowDecimalPlaces]=true></span>
+        <span
+          appCurrency
+          [amount]="userSelection.currentDayAmount"
+          [symbol]="userSelection.currencySymbol"
+          [forceShowDecimalPlaces]="true"
+        ></span>
       </div>
     </div>
-
-  </ng-container>
-
+  }
 </div>
-
 
 <div class="text-center">
-  <button mat-flat-button [color]="isShowCharts ? 'primary' : null" (click)="showCharts()"
-    i18n="@@compare-tool-details.charts">Charts</button>
-  <button mat-flat-button [color]="!isShowCharts ? 'primary' : null" (click)="showDetails()"
-    i18n="@@compare-tool-details.details">Details</button>
+  <button
+    mat-flat-button
+    [color]="isShowCharts() ? 'primary' : null"
+    (click)="showCharts()"
+    i18n="@@compare-tool-details.charts"
+  >
+    Charts
+  </button>
+  <button
+    mat-flat-button
+    [color]="!isShowCharts() ? 'primary' : null"
+    (click)="showDetails()"
+    i18n="@@compare-tool-details.details"
+  >
+    Details
+  </button>
 </div>
 
-
-<div *ngIf="isShowCharts" class="charts-container">
-
-  <h2>
-    <span i18n="@@compare-tool-details.total-expected">Total expected</span>&nbsp;<mat-form-field
-      class="chart-expected-select highlight-select">
-      <mat-select [(ngModel)]="chartSelectedExpectedPeriod" (ngModelChange)="onChartExpectedPeriodChanged()">
-        <mat-option *ngFor="let period of chartAllExpectedPeriods" [value]="period">{{period.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </h2>
-  <div class="chart-container">
-    <canvas id="compare-earnings-chart"></canvas>
-  </div>
-
-  <br />
-
-  <h2>
-    <span i18n="@@compare-tool-details.hours-worked-per">Hours worked per</span>&nbsp;<mat-form-field
-      class="chart-hours-select highlight-select">
-      <mat-select [(ngModel)]="chartSelectedHoursPeriod" (ngModelChange)="onChartHoursPeriodChanged()">
-        <mat-option *ngFor="let period of chartAllHoursPeriods" [value]="period">{{period.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </h2>
-  <div class="chart-container">
-    <canvas id="compare-hours-worked-chart"></canvas>
-  </div>
-
-</div>
-
-
-<div *ngIf="!isShowCharts" class="tiles-container one-tile-per-row">
-
-  <h2>
-    <mat-form-field class="details-type-select highlight-select">
-      <mat-select [(ngModel)]="detailsSelectedType">
-        <mat-option *ngFor="let type of detailsAllTypes" [value]="type">
-          {{type.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </h2>
-
-  <div class="tile tile-{{index + (isDetailsTypeAlreadyEarned() ? 1 : 2 )}}"
-    *ngFor="let tile of getTiles(); let index = index">
-
-    <div class="header">
-      {{tile.title}}
-      <span *ngIf="index === 0 && isDetailsTypeAlreadyEarned()"> ({{timeElapsedSinceCalculated}})</span>
+@if (isShowCharts()) {
+  <div class="charts-container">
+    <h2>
+      <span i18n="@@compare-tool-details.total-expected">Total expected</span>&nbsp;<mat-form-field
+        class="chart-expected-select highlight-select"
+      >
+        <mat-select
+          [(ngModel)]="chartSelectedExpectedPeriod"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onChartExpectedPeriodChanged()"
+        >
+          @for (period of chartAllExpectedPeriods; track period) {
+            <mat-option [value]="period">{{ period.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </h2>
+    <div class="chart-container">
+      <canvas #compareEarningsChart></canvas>
     </div>
+    <br />
+    <h2>
+      <span i18n="@@compare-tool-details.hours-worked-per">Hours worked per</span
+      >&nbsp;<mat-form-field class="chart-hours-select highlight-select">
+        <mat-select
+          [(ngModel)]="chartSelectedHoursPeriod"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onChartHoursPeriodChanged()"
+        >
+          @for (period of chartAllHoursPeriods; track period) {
+            <mat-option [value]="period">{{ period.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </h2>
+    <div class="chart-container">
+      <canvas #compareHoursWorkedChart></canvas>
+    </div>
+  </div>
+}
 
-    <div class="body">
-
-      <div class="multiple-persons-container">
-
-        <ng-container *ngFor="let userSelection of userSelections">
-
-          <div class="person">
-
-            <span class="name">
-              {{userSelection.name}}
-            </span>
-
-            <span class="amount">
-
-              <span *ngIf="isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.amountProperty]
-                [symbol]=userSelection.currencySymbol [forceShowDecimalPlaces]=true></span>
-              <span *ngIf="!isDetailsTypeAlreadyEarned()" appCurrency [amount]=userSelection[tile.totalAmountProperty]
-                [symbol]=userSelection.currencySymbol [forceShowDecimalPlaces]=true></span>
-            </span>
-
+@if (!isShowCharts()) {
+  <div class="tiles-container one-tile-per-row">
+    <h2>
+      <mat-form-field class="details-type-select highlight-select">
+        <mat-select
+          [ngModel]="detailsSelectedType()"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="detailsSelectedType.set($event)"
+        >
+          @for (type of detailsAllTypes; track type) {
+            <mat-option [value]="type">
+              {{ type.name }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </h2>
+    @for (tile of visibleTiles(); track tile.codeName; let index = $index) {
+      <div class="tile tile-{{ index + (detailsTypeAlreadyEarned ? 1 : 2) }}">
+        <div class="header">
+          {{ tile.title }}
+          @if (index === 0 && detailsTypeAlreadyEarned) {
+            <span> ({{ timeElapsedSinceCalculated() }})</span>
+          }
+        </div>
+        <div class="body">
+          <div class="multiple-persons-container">
+            @for (userSelection of selections; track userSelection.personNumber) {
+              <div class="person">
+                <span class="name">
+                  {{ userSelection.name }}
+                </span>
+                <span class="amount">
+                  @if (detailsTypeAlreadyEarned) {
+                    <span
+                      appCurrency
+                      [amount]="userSelection[tile.amountProperty]"
+                      [symbol]="userSelection.currencySymbol"
+                      [forceShowDecimalPlaces]="true"
+                    ></span>
+                  }
+                  @if (!detailsTypeAlreadyEarned && tile.totalAmountProperty) {
+                    <span
+                      appCurrency
+                      [amount]="userSelection[tile.totalAmountProperty]"
+                      [symbol]="userSelection.currencySymbol"
+                      [forceShowDecimalPlaces]="true"
+                    ></span>
+                  }
+                </span>
+              </div>
+            }
           </div>
-
-        </ng-container>
+        </div>
       </div>
-    </div>
-
+    }
   </div>
-
-</div>
+}

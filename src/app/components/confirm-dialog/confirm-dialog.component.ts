@@ -1,15 +1,23 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IConfirmDialog } from 'src/app/shared/intefaces/confirm-dialog.interface';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { IConfirmDialog } from '../../shared/intefaces/confirm-dialog.interface';
 
 @Component({
+  imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle],
   templateUrl: './confirm-dialog.component.html',
-  styleUrls: ['./confirm-dialog.component.scss']
+  styleUrls: ['./confirm-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmDialogComponent {
-
-  constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IConfirmDialog) { }
+  private readonly dialogRef = inject<MatDialogRef<ConfirmDialogComponent>>(MatDialogRef);
+  readonly data = inject<IConfirmDialog>(MAT_DIALOG_DATA);
 
   onConfirm(): void {
     this.dialogRef.close(true);

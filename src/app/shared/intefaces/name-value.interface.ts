@@ -1,4 +1,4 @@
-export interface INameValue  {
+export interface INameValue {
   name: string;
-  value: any;
+  value: string | number;
 }

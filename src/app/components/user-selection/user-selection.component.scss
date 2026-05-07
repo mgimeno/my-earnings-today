@@ -1,7 +1,3 @@
-@import "variables";
-
-$smallFontSize: 14px;
-
 .user-selection {
   width: 100%;
   margin: 20px auto 0 auto;
@@ -33,14 +29,14 @@ $smallFontSize: 14px;
 
 .section-description {
   text-align: left;
-  font-size: $smallFontSize;
-  color: $primaryColor;
+  font-size: 14px;
+  color: var(--primary-color);
   font-weight: bolder;
 }
 
 .week-days {
   text-align: left;
-  font-size: $smallFontSize;
+  font-size: 14px;
   display: flex;
   justify-content: space-between;
   margin-top: 5px;

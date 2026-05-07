@@ -1,46 +1,76 @@
 <div class="main-container">
+  @let largeScreen = alwaysShowSideNav();
+  @let url = currentUrl();
 
   <mat-toolbar color="primary">
-
-
-    <button *ngIf="!alwaysShowSideNav" mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
+    @if (!largeScreen) {
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    }
     <a class="title" [routerLink]="['/']" i18n="@@menu.title">My earnings today</a>
-
   </mat-toolbar>
 
-  <mat-sidenav-container class="sidenav-container" [hasBackdrop]="!alwaysShowSideNav">
-    <mat-sidenav #snav fixedTopGap="56" role="navigation" [mode]="(alwaysShowSideNav ? 'side' : 'over')"
-      [opened]=alwaysShowSideNav fixedInViewport="true">
+  <mat-sidenav-container class="sidenav-container" [hasBackdrop]="!largeScreen">
+    <mat-sidenav
+      #snav
+      fixedTopGap="56"
+      role="navigation"
+      [mode]="largeScreen ? 'side' : 'over'"
+      [opened]="largeScreen"
+      [fixedInViewport]="true"
+    >
       <mat-nav-list>
-        <a mat-list-item [routerLink]="['/']" (click)="window.scrollTo(0, 0); !alwaysShowSideNav && snav.toggle();"
-          [class.active]="currentUrl === '/' || doesUrlStartWith('/?')" i18n="@@menu.my-earnings">
-          My earnings</a>
-        <a mat-list-item [routerLink]="['/compare']"
-          (click)="window.scrollTo(0, 0); !alwaysShowSideNav && snav.toggle();"
-          [class.active]="doesUrlStartWith('/compare')" i18n="@@menu.compare">
-          Compare</a>
-        <a mat-list-item (click)="openSelectLanguage(); !alwaysShowSideNav && snav.toggle();"
-          [class.grayscale-image-when-not-hover]="alwaysShowSideNav">
+        <a
+          mat-list-item
+          [routerLink]="['/']"
+          (click)="scrollToTop(); !largeScreen && snav.toggle()"
+          [class.active]="url === '/' || url.startsWith('/?')"
+          i18n="@@menu.my-earnings"
+        >
+          My earnings</a
+        >
+        <a
+          mat-list-item
+          [routerLink]="['/compare']"
+          (click)="scrollToTop(); !largeScreen && snav.toggle()"
+          [class.active]="url.startsWith('/compare')"
+          i18n="@@menu.compare"
+        >
+          Compare</a
+        >
+        <button
+          mat-list-item
+          type="button"
+          (click)="openSelectLanguage(); !largeScreen && snav.toggle()"
+          [class.grayscale-image-when-not-hover]="largeScreen"
+        >
           <div class="button-with-right-icon">
             <span i18n="@@menu.language">Language</span>
-            <img [src]="'assets/images/flag-' + currentLanguageCode + '.png'" alt="language-flag" />
+            <img
+              [src]="'assets/images/flag-' + currentLanguageCode() + '.png'"
+              width="64"
+              height="64"
+              alt="language-flag"
+            />
           </div>
-        </a>
-        <a mat-list-item [routerLink]="['/about']" (click)="window.scrollTo(0, 0); !alwaysShowSideNav && snav.toggle();"
-          [class.active]="doesUrlStartWith('/about')" i18n="@@menu.about">
-          About</a>
+        </button>
+        <a
+          mat-list-item
+          [routerLink]="['/about']"
+          (click)="scrollToTop(); !largeScreen && snav.toggle()"
+          [class.active]="url.startsWith('/about')"
+          i18n="@@menu.about"
+        >
+          About</a
+        >
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-
       <div class="router-outlet-container">
         <router-outlet></router-outlet>
       </div>
-
     </mat-sidenav-content>
-
   </mat-sidenav-container>
 </div>

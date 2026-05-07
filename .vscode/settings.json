@@ -6,7 +6,7 @@
     "source.organizeImports": "explicit"
   },
   "editor.formatOnSave": true,
-  
+
   // disable for specific file patterns
   "[json]": {
     "editor.formatOnSave": false

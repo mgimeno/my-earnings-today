@@ -1,4 +1,4 @@
-export interface IConfirmDialog  {
+export interface IConfirmDialog {
   title: string;
   body: string;
   cancelButtonText: string;

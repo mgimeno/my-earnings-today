@@ -1,72 +1,88 @@
-<ng-container *ngIf="userSelection.hasDayOff()">
+@let selection = userSelection();
+
+@if (selection.hasDayOff()) {
   <h1 i18n="@@my-earnings-details.you-are-off">You are off today!</h1>
   <div class="amount-earned">
-    <span appCurrency [amount]="0" [symbol]=userSelection.currencySymbol></span>
+    <span appCurrency [amount]="0" [symbol]="selection.currencySymbol"></span>
   </div>
-  <p class="note">{{userSelection.getRemainingTimeToStartWork()}}</p>
-</ng-container>
+  <p class="note">{{ selection.getRemainingTimeToStartWork() }}</p>
+}
 
-<ng-container *ngIf="!userSelection.hasDayOff() && !userSelection.workTodayHasStarted()">
-
+@if (!selection.hasDayOff() && !selection.workTodayHasStarted()) {
   <h1 i18n="@@my-earnings-details.nothing-yet">Nothing yet!</h1>
   <div class="amount-earned">
-    <span appCurrency [amount]="0" [symbol]=userSelection.currencySymbol></span>
+    <span appCurrency [amount]="0" [symbol]="selection.currencySymbol"></span>
   </div>
-  <p class="note">{{userSelection.getRemainingTimeToStartWork()}}</p>
+  <p class="note">{{ selection.getRemainingTimeToStartWork() }}</p>
+}
 
-</ng-container>
-
-<ng-container *ngIf="userSelection.isCurrentlyWorking()">
-
+@if (selection.isCurrentlyWorking()) {
   <h1 i18n="@@my-earnings-details.you-have-already-earned">Today you have already earned</h1>
   <div class="amount-earned">
-    <span appCurrency [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></span>
+    <span
+      appCurrency
+      [amount]="selection.currentDayAmount"
+      [symbol]="selection.currencySymbol"
+    ></span>
   </div>
-  <p class="note">{{userSelection.getRemainingTimeToFinishWork()}} <span i18n="@@my-earnings-details.more-to-go">more to
-      go</span></p>
+  <p class="note">
+    {{ selection.getRemainingTimeToFinishWork() }}
+    <span i18n="@@my-earnings-details.more-to-go">more to go</span>
+  </p>
+}
 
-</ng-container>
-
-<ng-container *ngIf="userSelection.workTodayHasFinished()">
-
+@if (selection.workTodayHasFinished()) {
   <h1 i18n="@@my-earnings-details.you-earned">Today you earned</h1>
   <div class="amount-earned">
-    <span appCurrency [amount]=userSelection.currentDayAmount [symbol]=userSelection.currencySymbol></span>
+    <span
+      appCurrency
+      [amount]="selection.currentDayAmount"
+      [symbol]="selection.currencySymbol"
+    ></span>
   </div>
   <p class="note" i18n="@@my-earnings-details.done-for-today">You are done for today!</p>
-
-</ng-container>
+}
 
 <div class="tiles-container two-tiles-per-row">
-
-  <div class="tile tile-{{index + 1}}" *ngFor="let tile of tiles; let index = index">
-
-    <div class="header">
-      {{tile.title}}
+  @for (tile of tiles; track tile.codeName; let index = $index) {
+    <div class="tile tile-{{ index + 1 }}">
+      <div class="header">
+        {{ tile.title }}
+      </div>
+      <div class="body">
+        @if (tile.codeName === 'stopwatch') {
+          <div class="current-amount">
+            <span
+              appCurrency
+              [amount]="selection.stopwatchAmount"
+              [symbol]="selection.currencySymbol"
+            ></span>
+          </div>
+          <div class="details">
+            {{ timeElapsedSinceCalculated() }}
+            <span i18n="@@my-earnings-details.elapsed">elapsed</span>
+          </div>
+        }
+        @if (tile.codeName !== 'stopwatch') {
+          <div class="current-amount">
+            <span
+              appCurrency
+              [amount]="selection[tile.amountProperty]"
+              [symbol]="selection.currencySymbol"
+            ></span>
+          </div>
+          <div class="details">
+            <span i18n="@@my-earnings-details.out-of">out of</span>&nbsp;
+            @if (tile.totalAmountProperty) {
+              <span
+                appCurrency
+                [amount]="selection[tile.totalAmountProperty]"
+                [symbol]="selection.currencySymbol"
+              ></span>
+            }
+          </div>
+        }
+      </div>
     </div>
-
-    <div class="body">
-
-      <ng-container *ngIf="tile.codeName === 'stopwatch'">
-        <div class="current-amount">
-          <span appCurrency [amount]=userSelection.stopwatchAmount [symbol]=userSelection.currencySymbol></span>
-        </div>
-        <div class="details">
-          {{timeElapsedSinceCalculated}} <span i18n="@@my-earnings-details.elapsed">elapsed</span>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="tile.codeName !== 'stopwatch'">
-        <div class="current-amount">
-          <span appCurrency [amount]=userSelection[tile.amountProperty] [symbol]=userSelection.currencySymbol></span>
-        </div>
-        <div class="details">
-          <span i18n="@@my-earnings-details.out-of">out of</span>&nbsp;<span appCurrency
-            [amount]=userSelection[tile.totalAmountProperty] [symbol]=userSelection.currencySymbol></span>
-        </div>
-      </ng-container>
-
-    </div>
-
-  </div>
-
+  }
 </div>

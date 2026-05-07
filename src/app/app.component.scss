@@ -1,7 +1,5 @@
-@import "variables";
-
 .mat-toolbar {
-  height: $headerHeight;
+  height: var(--header-height);
 }
 
 .main-container {
@@ -45,7 +43,7 @@
       padding: 25px 34px 30px 34px;
 
       .router-outlet-container {
-        max-width: $maxWidth;
+        max-width: var(--max-content-width);
         margin: 0 auto;
       }
     }

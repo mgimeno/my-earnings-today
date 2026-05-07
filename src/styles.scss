@@ -1,6 +1,6 @@
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import "variables";
-@import "space-helpers";
+@use 'variables';
+@use 'space-helpers';
+@use 'tiles';
 
 html,
 body {
@@ -16,7 +16,7 @@ body {
 }
 
 * {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -52,7 +52,7 @@ input::-webkit-inner-spin-button {
 }
 
 .mat-form-field .mat-form-field-label {
-  color: $primaryColor;
+  color: var(--primary-color);
   font-weight: bolder;
 }
 
@@ -61,14 +61,14 @@ input::-webkit-inner-spin-button {
 }
 
 .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
-  background-color: $primaryColor;
+  background-color: var(--primary-color);
 }
 
 .mat-checkbox-checked .mat-checkbox-background {
-  background-color: lighten($primaryColor, 20%) !important;
+  background-color: var(--primary-color-light) !important;
 }
 
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield; /* Firefox */
 }
 
@@ -122,11 +122,11 @@ span.decimal {
 
 .highlight-select {
   .mat-select-arrow {
-    color: lighten($primaryColor, 30%) !important;
+    color: var(--primary-color-lighter) !important;
   }
 
   .mat-form-field-ripple {
-    background-color: lighten($primaryColor, 40%) !important;
+    background-color: var(--primary-color-lightest) !important;
     opacity: 1;
     transform: scaleX(1);
   }
@@ -144,7 +144,7 @@ span.decimal {
   align-items: center;
 
   button {
-    width: $buttonWidth;
+    width: var(--button-width);
     text-align: left;
 
     &:not(:last-child) {

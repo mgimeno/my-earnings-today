@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
+  imports: [MatButtonModule],
   templateUrl: './select-language.component.html',
-  styleUrls: ['./select-language.component.scss']
+  styleUrls: ['./select-language.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectLanguageComponent {
-
-  constructor(private bottomSheetRef: MatBottomSheetRef<SelectLanguageComponent>) { }
+  private readonly bottomSheetRef =
+    inject<MatBottomSheetRef<SelectLanguageComponent>>(MatBottomSheetRef);
 
   selectLanguage(languageCode: string): void {
     this.bottomSheetRef.dismiss(languageCode);

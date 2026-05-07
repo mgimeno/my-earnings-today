@@ -1,116 +1,140 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnDestroy,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { CommonHelper } from 'src/app/shared/helpers/common-helper';
-import { UserSelection } from 'src/app/shared/models/user-selection.model';
-import { StorageService } from 'src/app/shared/services/storage-service';
-import { UserSelectionValidationDialogComponent } from '../user-selection-validation-dialog/user-selection-validation-dialog.component';
-import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
-
+import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserSelection } from '../../shared/models/user-selection.model';
+import { StorageService } from '../../shared/services/storage-service';
+import { CommonHelper } from '../../shared/utils/common-helper';
+import { MyEarningsDetailsComponent } from '../my-earnings-details/my-earnings-details.component';
+import { UserSelectionComponent } from '../user-selection/user-selection.component';
 
 @Component({
+  imports: [MatButtonModule, MatIconModule, MyEarningsDetailsComponent, UserSelectionComponent],
   templateUrl: './my-earnings.component.html',
-  styleUrls: ['./my-earnings.component.scss']
+  styleUrls: ['./my-earnings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyEarningsComponent implements OnDestroy {
+  private activeRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private bottomSheet = inject(MatBottomSheet);
+  private storageService = inject(StorageService);
+  private dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
-  showResults: boolean = false;
+  readonly showResults = signal(false);
+  readonly userSelection = signal<UserSelection | null>(null);
 
-  userSelection: UserSelection = null;
-
-  constructor(
-    private activeRoute: ActivatedRoute,
-    private router: Router,
-    private bottomSheet: MatBottomSheet,
-    private storageService: StorageService,
-    private dialog: MatDialog) {
-
+  constructor() {
     this.setupOnParamsChange();
 
     this.loadInitialUserSelection();
   }
 
   private loadInitialUserSelection(): void {
-
     const personNumber = 1;
 
     if (this.storageService.hasUserSelectionOnURL(personNumber)) {
-      this.userSelection = this.storageService.getUserSelectionFromURL(personNumber);
-    }
-    else if (this.storageService.hasUserSelectionOnLocalStorage(personNumber)) {
-      this.userSelection = this.storageService.getUserSelectionFromLocalStorage(personNumber);
-    }
-    else {
-      this.userSelection = new UserSelection(personNumber);
-      this.userSelection.setDefaultValues();
+      this.userSelection.set(this.storageService.getUserSelectionFromURL(personNumber));
+    } else if (this.storageService.hasUserSelectionOnLocalStorage(personNumber)) {
+      this.userSelection.set(this.storageService.getUserSelectionFromLocalStorage(personNumber));
+    } else {
+      const userSelection = new UserSelection(personNumber);
+      userSelection.setDefaultValues();
+      this.userSelection.set(userSelection);
     }
 
-    if (this.userSelection.canCalculate()) {
+    if (this.userSelection()?.canCalculate()) {
       this.calculate();
     }
-
   }
 
   private calculate(): void {
+    const userSelection = this.userSelection();
 
-    this.storageService.saveUserSelectionOnLocalStorage(this.userSelection);
-    this.storageService.setUserSelectionOnURL(this.userSelection);
+    if (!userSelection) {
+      return;
+    }
 
-    this.userSelection.calculate();
+    this.storageService.saveUserSelectionOnLocalStorage(userSelection);
+    this.storageService.setUserSelectionOnURL(userSelection);
 
-    this.showResults = true;
+    userSelection.calculate();
+
+    this.showResults.set(true);
 
     window.scrollTo(0, 0);
   }
 
-  tryCalculate(): void {
-    if (this.userSelection.canCalculate()) {
-      this.calculate();
+  async tryCalculate(): Promise<void> {
+    const userSelection = this.userSelection();
+
+    if (!userSelection) {
+      return;
     }
-    else {
+
+    if (userSelection.canCalculate()) {
+      this.calculate();
+    } else {
+      const { UserSelectionValidationDialogComponent } =
+        await import('../user-selection-validation-dialog/user-selection-validation-dialog.component');
+
       this.dialog.open(UserSelectionValidationDialogComponent, {
-        data: { userSelections: [this.userSelection], isCompareTool: false },
-        minWidth: 320
+        data: { userSelections: [userSelection], isCompareTool: false },
+        minWidth: 320,
       });
     }
   }
 
   goToCompare(): void {
+    const userSelection = this.userSelection();
 
-    this.storageService.saveUserSelectionOnLocalStorage(this.userSelection);
+    if (userSelection) {
+      this.storageService.saveUserSelectionOnLocalStorage(userSelection);
+    }
 
     this.router.navigate(['/compare']);
 
     window.scrollTo(0, 0);
-
   }
 
   goBack(): void {
-
     this.router.navigate(['/']);
 
     window.scrollTo(0, 0);
-
   }
 
-  openShareBottomSheet(): void {
+  async openShareBottomSheet(): Promise<void> {
+    const { ShareBottomSheetComponent } =
+      await import('../share-bottom-sheet/share-bottom-sheet.component');
+
     this.bottomSheet.open(ShareBottomSheetComponent);
   }
 
   private setupOnParamsChange(): void {
-    this.activeRoute.queryParams.subscribe(queryParams => {
-      if (CommonHelper.isEmptyObject(queryParams)) {
-        if (this.userSelection) {
-          this.userSelection.clearResults();
+    this.activeRoute.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((queryParams) => {
+        if (!CommonHelper.isEmptyObject(queryParams)) {
+          return;
         }
-        this.showResults = false;
-      }
-    });
+
+        this.userSelection()?.clearResults();
+        this.showResults.set(false);
+      });
   }
 
   ngOnDestroy(): void {
-    this.userSelection.clearResults();
+    this.userSelection()?.clearResults();
   }
-
 }
