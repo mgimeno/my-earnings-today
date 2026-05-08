@@ -4,8 +4,34 @@ export const DEFAULT_LANGUAGE_CODE: SupportedLanguageCode = 'en';
 export const LANGUAGE_STORAGE_KEY = 'language';
 
 export class LanguageHelper {
+  static getSupportedLanguageCode(
+    languageCode: string | null | undefined,
+  ): SupportedLanguageCode | null {
+    const normalizedLanguageCode = languageCode?.slice(0, 2).toLowerCase();
+
+    if (normalizedLanguageCode === 'en' || normalizedLanguageCode === 'es') {
+      return normalizedLanguageCode;
+    }
+
+    return null;
+  }
+
   static normalizeLanguageCode(languageCode: string | null | undefined): SupportedLanguageCode {
-    return languageCode?.slice(0, 2).toLowerCase() === 'es' ? 'es' : DEFAULT_LANGUAGE_CODE;
+    return this.getSupportedLanguageCode(languageCode) ?? DEFAULT_LANGUAGE_CODE;
+  }
+
+  static getPreferredLanguageCode(
+    languageCodes: readonly (string | null | undefined)[],
+  ): SupportedLanguageCode {
+    for (const languageCode of languageCodes) {
+      const supportedLanguageCode = this.getSupportedLanguageCode(languageCode);
+
+      if (supportedLanguageCode) {
+        return supportedLanguageCode;
+      }
+    }
+
+    return DEFAULT_LANGUAGE_CODE;
   }
 
   static getOpenGraphLocale(languageCode: SupportedLanguageCode): string {

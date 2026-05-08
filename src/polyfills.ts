@@ -2,20 +2,13 @@ import { loadTranslations } from '@angular/localize';
 import { BrowserStorage } from './app/shared/utils/browser-storage';
 import { LANGUAGE_STORAGE_KEY, LanguageHelper } from './app/shared/utils/language-helper';
 import { environment } from './environments/environment';
-/**
- * This file includes polyfills needed by Angular and is loaded before the app.
- * You can add your own extra polyfills to this file.
- *
- * The current setup is for so-called "evergreen" browsers; the last versions of browsers that
- * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),
- * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.
- *
- * Learn more in https://angular.io/guide/browser-support
- */
 
 const languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
 const storedLanguage = BrowserStorage.getLocalStorageItem(languageStorageKey);
-const language = LanguageHelper.normalizeLanguageCode(storedLanguage ?? navigator.language);
+const browserLanguages = navigator.languages.length ? navigator.languages : [navigator.language];
+const language = storedLanguage
+  ? LanguageHelper.normalizeLanguageCode(storedLanguage)
+  : LanguageHelper.getPreferredLanguageCode(browserLanguages);
 
 document.documentElement.lang = language;
 BrowserStorage.setLocalStorageItem(languageStorageKey, language);
@@ -173,7 +166,3 @@ if (language === 'es') {
     'select-language.select': 'Selecciona un idioma',
   });
 }
-
-/***************************************************************************************************
- * APPLICATION IMPORTS
- */

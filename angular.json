@@ -5,15 +5,6 @@
   "projects": {
     "my-earnings-today": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss",
-          "changeDetection": "OnPush"
-        },
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -23,34 +14,21 @@
           "options": {
             "outputPath": "dist",
             "index": "src/index.html",
+            "main": "src/main.ts",
             "polyfills": ["@angular/localize/init", "src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/favicon-114.png",
-              "src/favicon-120.png",
-              "src/favicon-144.png",
-              "src/favicon-150.png",
-              "src/favicon-152.png",
-              "src/favicon-16.png",
-              "src/favicon-160.png",
-              "src/favicon-180.png",
-              "src/favicon-192.png",
-              "src/favicon-310.png",
-              "src/favicon-32.png",
-              "src/favicon-57.png",
-              "src/favicon-60.png",
-              "src/favicon-64.png",
-              "src/favicon-70.png",
-              "src/favicon-72.png",
-              "src/favicon-76.png",
-              "src/favicon-96.png",
-              "src/browserconfig.xml",
-              "src/humans.txt",
-              "src/robots.txt",
-              "src/sitemap.xml",
-              "src/assets"
+              {
+                "glob": "*.{ico,png,webmanifest,txt,xml}",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              }
             ],
             "styles": [
               "node_modules/@fontsource/montserrat/latin-400.css",
@@ -61,18 +39,22 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
-            },
-            "scripts": [],
-            "main": "src/main.ts"
+            }
           },
           "configurations": {
             "production": {
               "baseHref": "/my-earnings-today/",
+              "sourceMap": false,
+              "optimization": true,
+              "aot": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "outputHashing": "all",
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "800kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -85,14 +67,15 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "development": {
+             "sourceMap": true,
               "optimization": false,
+              "aot": true,
+              "namedChunks": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "outputHashing": "none"
             }
           },
           "defaultConfiguration": "production"
@@ -119,11 +102,19 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "cache": {
+      "enabled": true,
+      "environment": "all"
+    }
   },
   "schematics": {
+    "@schematics/angular:application": {
+      "strict": true
+    },
     "@schematics/angular:component": {
       "type": "component",
+      "style": "scss",
       "changeDetection": "OnPush"
     },
     "@schematics/angular:directive": {
