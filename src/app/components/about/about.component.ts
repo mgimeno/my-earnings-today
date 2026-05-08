@@ -7,5 +7,5 @@ import { environment } from '../../../environments/environment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent {
-  readonly creatorProfileLink = environment.creatorProfileLink;
+  readonly profileLink = environment.profileLink;
 }

@@ -5,5 +5,5 @@
 export const environment = {
   production: false,
   localStoragePrefix: 'my-earnings-today_dev_',
-  creatorProfileLink: 'https://www.marcosgimeno.com',
+  profileLink: 'https://www.marcosgimeno.com',
 };
