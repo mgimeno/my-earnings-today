@@ -1,0 +1,91 @@
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+html {
+  background:
+    linear-gradient(180deg, rgba(216, 227, 236, 0.7) 0, transparent 260px), var(--page-bg);
+  color: var(--ink-color);
+  color-scheme: light;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--ink-color);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+h1 {
+  margin: 0 0 28px;
+  color: var(--ink-color);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+h2 {
+  color: var(--ink-color);
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+p {
+  color: var(--muted-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

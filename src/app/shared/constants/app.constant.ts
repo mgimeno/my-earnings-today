@@ -62,6 +62,8 @@ export namespace AppConstants {
 
     public static readonly UPDATE_STOPWATCH_FREQUENCY_IN_MS: number = 1000;
 
+    public static readonly COMPARE_TOOL_MAX_PERSONS: number = 5;
+
     public static readonly FIRST_USER_DEFAULT_NAME = $localize`:@@first-user-default-name:You`;
 
     public static readonly TILES: EarningTile[] = [

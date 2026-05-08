@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { AppConstants } from '../../shared/constants/app.constant';
 import { IConfirmDialog } from '../../shared/intefaces/confirm-dialog.interface';
 import { UserSelection } from '../../shared/models/user-selection.model';
 import { StorageService } from '../../shared/services/storage-service';
@@ -55,7 +55,11 @@ export class CompareToolComponent implements OnDestroy {
   private loadInitialUserSelections(): void {
     const userSelections: UserSelection[] = [];
 
-    for (let personNumber = 1; personNumber <= environment.compareToolMaxPersons; personNumber++) {
+    for (
+      let personNumber = 1;
+      personNumber <= AppConstants.Common.COMPARE_TOOL_MAX_PERSONS;
+      personNumber++
+    ) {
       if (this.storageService.hasUserSelectionOnURL(personNumber)) {
         const userSelection = this.storageService.getUserSelectionFromURL(personNumber);
         userSelections.push(userSelection);
@@ -122,7 +126,7 @@ export class CompareToolComponent implements OnDestroy {
   }
 
   canAddMorePersons(): boolean {
-    return this.userSelections().length < environment.compareToolMaxPersons;
+    return this.userSelections().length < AppConstants.Common.COMPARE_TOOL_MAX_PERSONS;
   }
 
   async removePerson(event: MouseEvent, tabIndex: number): Promise<void> {

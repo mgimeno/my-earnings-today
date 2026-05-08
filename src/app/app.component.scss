@@ -40,12 +40,6 @@
       border-right: 1px solid var(--border-color);
       background:
         linear-gradient(180deg, rgba(34, 87, 122, 0.07), transparent 180px), var(--surface-color);
-
-      &:hover {
-        .grayscale-image-when-not-hover img {
-          filter: none;
-        }
-      }
     }
 
     .mat-sidenav-content {
@@ -63,24 +57,18 @@
       background-color: var(--primary-color-lightest);
       color: var(--primary-color-dark);
       font-weight: 800;
+      box-shadow: inset 3px 0 0 var(--primary-color-light);
     }
 
     .mat-mdc-list-item {
       margin: 4px 10px;
       border-radius: 8px;
       color: var(--ink-color);
-      transition: 160ms ease;
-
-      &:hover {
-        background-color: var(--surface-muted-color);
-        transform: translateX(2px);
-      }
     }
 
     .grayscale-image-when-not-hover {
       img {
         filter: grayscale(100%);
-        transition: filter 160ms ease;
       }
     }
   }

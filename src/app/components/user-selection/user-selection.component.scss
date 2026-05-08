@@ -10,6 +10,14 @@
   background: var(--surface-color);
   box-shadow: var(--soft-shadow);
   overflow: hidden;
+  transition:
+    border-color var(--motion-standard) var(--motion-ease),
+    box-shadow var(--motion-standard) var(--motion-ease);
+
+  &:focus-within {
+    border-color: var(--primary-border-hover);
+    box-shadow: var(--lifted-shadow);
+  }
 }
 
 .rate-form-field {
@@ -64,15 +72,10 @@
     border-radius: 8px;
     background: var(--surface-muted-color);
     transition:
-      border-color 160ms ease,
-      background-color 160ms ease,
-      box-shadow 160ms ease;
-
-    &:hover {
-      border-color: var(--primary-color-light);
-      background: #fff;
-      box-shadow: var(--focus-ring);
-    }
+      border-color var(--motion-standard) var(--motion-ease),
+      background-color var(--motion-standard) var(--motion-ease),
+      box-shadow var(--motion-standard) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
   }
 
   .show-on-big-screen {
@@ -87,6 +90,15 @@
     .show-on-big-screen {
       display: block;
     }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .week-days .mat-mdc-checkbox:hover {
+    border-color: var(--primary-color-light);
+    background: #fff;
+    box-shadow: var(--focus-ring);
+    transform: translateY(-1px);
   }
 }
 

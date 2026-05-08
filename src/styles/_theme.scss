@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+
+$earnings-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$cyan-palette,
+      tertiary: mat.$spring-green-palette,
+    ),
+    typography: (
+      plain-family: (
+        'Montserrat',
+        sans-serif,
+      ),
+      brand-family: (
+        'Montserrat',
+        sans-serif,
+      ),
+      regular-weight: 400,
+      medium-weight: 600,
+      bold-weight: 800,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+@include mat.app-background;
+@include mat.elevation-classes;
+
+html {
+  @include mat.core-theme($earnings-theme);
+  @include mat.bottom-sheet-theme($earnings-theme);
+  @include mat.button-theme($earnings-theme);
+  @include mat.checkbox-theme($earnings-theme);
+  @include mat.dialog-theme($earnings-theme);
+  @include mat.form-field-theme($earnings-theme);
+  @include mat.icon-button-theme($earnings-theme);
+  @include mat.icon-theme($earnings-theme);
+  @include mat.input-theme($earnings-theme);
+  @include mat.list-theme($earnings-theme);
+  @include mat.select-theme($earnings-theme);
+  @include mat.sidenav-theme($earnings-theme);
+  @include mat.tabs-theme($earnings-theme);
+  @include mat.toolbar-theme($earnings-theme);
+}

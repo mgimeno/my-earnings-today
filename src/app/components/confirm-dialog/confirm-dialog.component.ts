@@ -12,7 +12,6 @@ import { IConfirmDialog } from '../../shared/intefaces/confirm-dialog.interface'
 @Component({
   imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle],
   templateUrl: './confirm-dialog.component.html',
-  styleUrls: ['./confirm-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmDialogComponent {

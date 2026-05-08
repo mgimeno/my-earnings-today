@@ -7,13 +7,21 @@
   background: var(--surface-color);
   color: var(--ink-color);
   box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
-
-  &:hover {
-    border-color: var(--primary-color-light);
-  }
+  transition:
+    border-color var(--motion-standard) var(--motion-ease),
+    box-shadow var(--motion-standard) var(--motion-ease),
+    transform var(--motion-fast) var(--motion-ease);
 
   img {
     border-radius: 50%;
     box-shadow: 0 0 0 2px var(--surface-color);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .big-button:hover {
+    border-color: var(--primary-color-light);
+    box-shadow: var(--soft-shadow);
+    transform: translateY(-1px);
   }
 }

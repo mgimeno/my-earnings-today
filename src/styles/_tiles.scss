@@ -36,9 +36,9 @@
     background: var(--surface-color);
     box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
     transition:
-      border-color 160ms ease,
-      box-shadow 160ms ease,
-      transform 160ms ease;
+      border-color var(--motion-standard) var(--motion-ease),
+      box-shadow var(--motion-standard) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
 
     &.tile-1 {
       --tile-accent: var(--tile-color-1);
@@ -64,12 +64,6 @@
       --tile-accent: var(--tile-color-6);
     }
 
-    &:hover {
-      border-color: color-mix(in srgb, var(--tile-accent) 34%, var(--border-color));
-      box-shadow: var(--soft-shadow);
-      transform: translateY(-2px);
-    }
-
     .header {
       color: var(--muted-color);
       font-size: 14px;
@@ -87,6 +81,7 @@
         font-weight: 800;
         line-height: 1.1;
         margin-bottom: 6px;
+        overflow-wrap: anywhere;
       }
 
       .details {
@@ -103,7 +98,8 @@
           display: flex;
           align-items: center;
           min-height: 34px;
-          border-bottom: 1px solid color-mix(in srgb, var(--border-color) 72%, transparent);
+          border-bottom: 1px solid var(--soft-divider-color);
+          transition: border-color var(--motion-standard) var(--motion-ease);
         }
 
         .amount {
@@ -114,6 +110,26 @@
           font-weight: 800;
         }
       }
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tiles-container .tile:hover {
+    border-color: var(--primary-border-hover);
+    box-shadow: var(--soft-shadow);
+    transform: translateY(-2px);
+  }
+}
+
+@supports (color: color-mix(in srgb, white, black)) {
+  .tiles-container .tile .body .multiple-persons-container .person {
+    border-bottom-color: color-mix(in srgb, var(--border-color) 72%, transparent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tiles-container .tile:hover {
+      border-color: color-mix(in srgb, var(--tile-accent) 34%, var(--border-color));
     }
   }
 }

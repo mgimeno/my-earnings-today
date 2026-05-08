@@ -20,15 +20,9 @@
     padding: 0;
     color: var(--muted-color);
     transition:
-      background-color 160ms ease,
-      color 160ms ease,
-      transform 160ms ease;
-
-    &:hover {
-      background-color: color-mix(in srgb, var(--danger-color) 10%, transparent);
-      color: var(--danger-color);
-      transform: scale(1.04);
-    }
+      background-color var(--motion-standard) var(--motion-ease),
+      color var(--motion-standard) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
 
     .close-icon {
       font-size: 20px;
@@ -49,5 +43,19 @@
 
   .add-icon {
     color: #fff;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tab-label .close-button:hover {
+    background-color: rgba(194, 65, 12, 0.1);
+    color: var(--danger-color);
+    transform: scale(1.04);
+  }
+
+  @supports (color: color-mix(in srgb, white, black)) {
+    .tab-label .close-button:hover {
+      background-color: color-mix(in srgb, var(--danger-color) 10%, transparent);
+    }
   }
 }

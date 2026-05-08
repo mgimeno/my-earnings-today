@@ -1,0 +1,27 @@
+.chart-expected-select,
+.chart-hours-select {
+  font-weight: 700;
+
+  .mdc-line-ripple {
+    bottom: 0;
+  }
+}
+
+.chart-expected-select {
+  width: 125px;
+}
+
+.chart-hours-select {
+  width: 86px;
+}
+
+.highlight-select {
+  .mat-mdc-select-arrow {
+    color: var(--primary-color-light) !important;
+  }
+
+  .mdc-line-ripple::after {
+    border-bottom-color: var(--primary-color-light) !important;
+    transform: scaleX(1);
+  }
+}

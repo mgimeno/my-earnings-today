@@ -1,0 +1,79 @@
+@keyframes app-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.router-outlet-container > * {
+  display: block;
+  animation: app-content-enter var(--motion-slow) var(--motion-ease) both;
+}
+
+.main-container .mat-toolbar {
+  transition:
+    background-color var(--motion-standard) var(--motion-ease),
+    box-shadow var(--motion-standard) var(--motion-ease);
+}
+
+.main-container .mat-toolbar .mat-mdc-icon-button,
+.main-container a.title,
+.main-container .sidenav-container .mat-mdc-list-item,
+.main-container .grayscale-image-when-not-hover img {
+  transition:
+    background-color var(--motion-standard) var(--motion-ease),
+    box-shadow var(--motion-standard) var(--motion-ease),
+    color var(--motion-standard) var(--motion-ease),
+    filter var(--motion-standard) var(--motion-ease),
+    opacity var(--motion-standard) var(--motion-ease),
+    transform var(--motion-fast) var(--motion-ease);
+}
+
+.today-earned-container .person,
+.charts-container .chart-container,
+.view-toggle button {
+  transition:
+    border-color var(--motion-standard) var(--motion-ease),
+    background-color var(--motion-standard) var(--motion-ease),
+    box-shadow var(--motion-standard) var(--motion-ease),
+    transform var(--motion-fast) var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .main-container .mat-toolbar .mat-mdc-icon-button:hover,
+  .main-container a.title:hover,
+  .view-toggle button:not(:disabled):hover,
+  .charts-container .chart-container:hover {
+    transform: translateY(-1px);
+  }
+
+  .main-container a.title:hover {
+    opacity: 0.86;
+  }
+
+  .main-container .sidenav-container .mat-sidenav:hover .grayscale-image-when-not-hover img {
+    filter: none;
+    transform: scale(1.04);
+  }
+
+  .main-container .sidenav-container .mat-mdc-list-item:hover {
+    background-color: var(--surface-muted-color);
+    transform: translateX(2px);
+  }
+
+  .today-earned-container .person:hover {
+    border-color: var(--primary-color-light);
+    box-shadow: var(--soft-shadow);
+    transform: translateY(-2px);
+  }
+
+  .charts-container .chart-container:hover {
+    border-color: var(--primary-border-hover);
+    box-shadow: var(--lifted-shadow);
+  }
+}

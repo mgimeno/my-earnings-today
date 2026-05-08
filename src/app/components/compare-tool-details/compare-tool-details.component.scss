@@ -16,13 +16,6 @@
     background:
       linear-gradient(90deg, rgba(87, 204, 153, 0.14), transparent 52%), var(--surface-color);
     box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
-    transition: 160ms ease;
-
-    &:hover {
-      border-color: var(--primary-color-light);
-      box-shadow: var(--soft-shadow);
-      transform: translateY(-2px);
-    }
 
     .name {
       overflow: hidden;
@@ -57,11 +50,6 @@
   button {
     min-width: 108px;
     border-radius: 6px;
-    transition: transform 160ms ease;
-
-    &:not(:disabled):hover {
-      transform: translateY(-1px);
-    }
   }
 }
 

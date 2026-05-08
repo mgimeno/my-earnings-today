@@ -38,27 +38,15 @@ p {
     font-size: 14px;
     text-decoration: none;
     transition:
-      border-color 160ms ease,
-      box-shadow 160ms ease,
-      transform 160ms ease;
-
-    &:hover {
-      border-color: var(--primary-color-light);
-      box-shadow: var(--soft-shadow);
-      transform: translateY(-2px);
-
-      .heart {
-        color: #c44736;
-      }
-
-      .underline {
-        transform: scaleX(1);
-      }
-    }
+      border-color var(--motion-standard) var(--motion-ease),
+      box-shadow var(--motion-standard) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
 
     .heart {
       color: var(--primary-color);
-      transition: color 160ms ease;
+      transition:
+        color var(--motion-standard) var(--motion-ease),
+        transform var(--motion-fast) var(--motion-ease);
     }
 
     .underline {
@@ -72,7 +60,24 @@ p {
       background-color: var(--primary-color-light);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 180ms ease;
+      transition: transform var(--motion-standard) var(--motion-ease);
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .profile-link-container .profile-link:hover {
+    border-color: var(--primary-color-light);
+    box-shadow: var(--soft-shadow);
+    transform: translateY(-2px);
+
+    .heart {
+      color: #c44736;
+      transform: scale(1.08);
+    }
+
+    .underline {
+      transform: scaleX(1);
     }
   }
 }

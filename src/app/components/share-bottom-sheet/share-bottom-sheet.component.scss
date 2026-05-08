@@ -13,14 +13,9 @@
     min-width: 148px;
     border-radius: 8px;
     transition:
-      background-color 160ms ease,
-      box-shadow 160ms ease,
-      transform 160ms ease;
-
-    &:hover {
-      box-shadow: var(--soft-shadow);
-      transform: translateY(-1px);
-    }
+      background-color var(--motion-standard) var(--motion-ease),
+      box-shadow var(--motion-standard) var(--motion-ease),
+      transform var(--motion-fast) var(--motion-ease);
   }
 
   .copy-link-container {
@@ -30,5 +25,12 @@
     .link-copied {
       background-color: var(--success-color);
     }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .share-container button:hover {
+    box-shadow: var(--soft-shadow);
+    transform: translateY(-1px);
   }
 }

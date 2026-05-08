@@ -103,7 +103,11 @@ export class StorageService {
   }
 
   cleanUserSelectionsOnLocalStorage(): void {
-    for (let personNumber = 1; personNumber <= environment.compareToolMaxPersons; personNumber++) {
+    for (
+      let personNumber = 1;
+      personNumber <= AppConstants.Common.COMPARE_TOOL_MAX_PERSONS;
+      personNumber++
+    ) {
       USER_SELECTION_KEYS.forEach((key) => {
         BrowserStorage.removeLocalStorageItem(this.getLocalStorageFullKey(key, personNumber));
       });

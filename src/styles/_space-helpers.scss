@@ -1,23 +1,27 @@
-@mixin margin($position, $size) {
-  padding-#{$position}: $size;
+@mixin margin-top($size) {
+  margin-top: $size;
+}
+
+@mixin margin-bottom($size) {
+  margin-bottom: $size;
 }
 
 .m-t-20 {
-  @include margin(top, 20);
+  @include margin-top(20px);
 }
 
 .m-t-30 {
-  @include margin(top, 30);
+  @include margin-top(30px);
 }
 
 .m-b-30 {
-  @include margin(bottom, 30);
+  @include margin-bottom(30px);
 }
 
 .m-t-35 {
-  @include margin(top, 35);
+  @include margin-top(35px);
 }
 
 .m-t-40 {
-  @include margin(top, 40);
+  @include margin-top(40px);
 }
