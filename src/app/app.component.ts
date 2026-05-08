@@ -17,8 +17,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
-import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { filter, take } from 'rxjs';
+import { NavigationEnd, NavigationError, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { take } from 'rxjs';
 import { environment } from '../environments/environment';
 import { BrowserStorage } from './shared/utils/browser-storage';
 import { CommonHelper } from './shared/utils/common-helper';
@@ -66,14 +66,35 @@ export class AppComponent implements OnDestroy {
   readonly collapseNavigationLabel = $localize`:@@menu.collapse-navigation:Collapse navigation`;
   readonly expandNavigationLabel = $localize`:@@menu.expand-navigation:Expand navigation`;
 
+  private readonly CHUNK_ERROR_PATTERNS = [
+    /Loading chunk [\w.-]+ failed/i,
+    /ChunkLoadError/i,
+    /Failed to fetch dynamically imported module/i,
+    /error loading dynamically imported module/i,
+    /Importing a module script failed/i,
+  ];
+
+  private isStaleChunkError(event: NavigationError): boolean {
+    const msg = event.error?.message ?? String(event.error ?? '');
+    return this.CHUNK_ERROR_PATTERNS.some((pattern) => pattern.test(msg));
+  }
+
   constructor() {
     this.router.events
-      .pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-        takeUntilDestroyed(this.destroyRef),
-      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
-        this.currentUrl.set(event.urlAfterRedirects);
+        if (event instanceof NavigationEnd) {
+          this.currentUrl.set(event.urlAfterRedirects);
+          return;
+        }
+
+        if (event instanceof NavigationError && this.isStaleChunkError(event)) {
+          // A new deployment has produced new chunk filenames. The currently
+          // running app still references deleted chunks, so lazy-load
+          // navigations fail. Reload to fetch the new index.html.
+          console.error(`Stale chunk detected. Reloading: ${event.url}`, event);
+          window.location.assign(event.url || window.location.href);
+        }
       });
 
     this.addTitleAndMetaTags();
