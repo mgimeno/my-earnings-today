@@ -21,4 +21,20 @@ describe('UserSelection', () => {
     expect(userSelection.hasDayOff(monday)).toBe(false);
     expect(userSelection.hasDayOff(sunday)).toBe(true);
   });
+
+  it('uses the browser locale for the default currency symbol', () => {
+    const userSelection = new UserSelection(1);
+
+    userSelection.setDefaultValues(['en-GB']);
+
+    expect(userSelection.currencySymbol).toBe('£');
+  });
+
+  it('defaults currency symbol to dollars when browser locale is unsupported', () => {
+    const userSelection = new UserSelection(1);
+
+    userSelection.setDefaultValues(['ar-EG']);
+
+    expect(userSelection.currencySymbol).toBe('$');
+  });
 });

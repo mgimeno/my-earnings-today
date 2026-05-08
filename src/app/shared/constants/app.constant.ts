@@ -25,9 +25,9 @@ export interface EarningTile {
 export namespace AppConstants {
   export class Common {
     public static readonly CURRENCY_SYMBOLS: Array<string> = [
-      '£',
       '$',
       '€',
+      '£',
       '‎₽',
       'Fr.',
       'kr',
@@ -49,6 +49,8 @@ export namespace AppConstants {
       '₡',
       '৳',
     ];
+
+    public static readonly DEFAULT_CURRENCY_SYMBOL = '$';
 
     public static readonly FREQUENCIES: Array<INameValue> = [
       { name: $localize`:@@frequencies.per-hour:per hour`, value: 'hour' },

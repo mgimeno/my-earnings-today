@@ -6,9 +6,7 @@ import { environment } from './environments/environment';
 const languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
 const storedLanguage = BrowserStorage.getLocalStorageItem(languageStorageKey);
 const browserLanguages = navigator.languages.length ? navigator.languages : [navigator.language];
-const language = storedLanguage
-  ? LanguageHelper.normalizeLanguageCode(storedLanguage)
-  : LanguageHelper.getPreferredLanguageCode(browserLanguages);
+const language = LanguageHelper.getAppLanguageCode(storedLanguage, browserLanguages);
 
 document.documentElement.lang = language;
 BrowserStorage.setLocalStorageItem(languageStorageKey, language);

@@ -7,6 +7,7 @@ import { WeekDaysEnum } from '../enums/week-days.enum';
 import { INameValue } from '../intefaces/name-value.interface';
 import { UserSelection } from '../models/user-selection.model';
 import { BrowserStorage } from '../utils/browser-storage';
+import { CurrencyHelper } from '../utils/currency-helper';
 
 const USER_SELECTION_KEYS = [
   StorageKeyEnum.Name,
@@ -206,9 +207,9 @@ export class StorageService {
     }
 
     const currency = this.toTextValue(values.currency);
-    if (this.isValidCurrencySymbol(currency)) {
-      userSelection.currencySymbol = currency;
-    }
+    userSelection.currencySymbol =
+      CurrencyHelper.getSupportedCurrencySymbol(currency) ??
+      CurrencyHelper.getPreferredCurrencySymbol();
 
     const start = this.toTextValue(values.start);
     if (this.isValidTime(start)) {
@@ -240,10 +241,6 @@ export class StorageService {
 
   private getFrequencyByValue(value: string): INameValue | null {
     return AppConstants.Common.FREQUENCIES.find((frequency) => frequency.value === value) ?? null;
-  }
-
-  private isValidCurrencySymbol(value: string): boolean {
-    return AppConstants.Common.CURRENCY_SYMBOLS.includes(value);
   }
 
   private isValidTime(text: string): boolean {

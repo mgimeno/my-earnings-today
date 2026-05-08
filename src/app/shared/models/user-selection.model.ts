@@ -1,6 +1,7 @@
 import { AppConstants } from '../constants/app.constant';
 import { PeriodEnum } from '../enums/period.enum';
 import { INameValue } from '../intefaces/name-value.interface';
+import { CurrencyHelper } from '../utils/currency-helper';
 import { DateHelper } from '../utils/date-helper';
 import { TranslationHelper } from '../utils/translation-helper';
 
@@ -570,10 +571,13 @@ export class UserSelection {
     return !this.hasDayOff(now) && this.workTodayHasStarted(now) && !this.workTodayHasFinished(now);
   }
 
-  setDefaultValues(): void {
+  setDefaultValues(
+    browserLanguageCodes: readonly (string | null | undefined)[] =
+      CurrencyHelper.getBrowserLanguageCodes(),
+  ): void {
     this.startTime = '09:00';
     this.endTime = '17:00';
-    this.currencySymbol = AppConstants.Common.CURRENCY_SYMBOLS[0];
+    this.currencySymbol = CurrencyHelper.getPreferredCurrencySymbol(browserLanguageCodes);
     this.frequency = AppConstants.Common.FREQUENCIES[3];
 
     this.weekWorkingDays = [...UserSelection.DEFAULT_WORKING_DAYS];

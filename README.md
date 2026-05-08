@@ -14,6 +14,10 @@ Use the compare tool to compare your earnings with other people or yourself shou
 
 Data is only stored in your device.
 
+## Languages
+
+Available in English & Spanish.
+
 ## Development
 
-This web app is built using Angular 21, responsive design (mobile first) and it's available in English & Spanish.
+Built with Angular 21. Responsive design for mobile/tablet/desktop.

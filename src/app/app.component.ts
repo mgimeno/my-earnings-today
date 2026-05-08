@@ -50,8 +50,9 @@ export class AppComponent implements OnDestroy {
   readonly alwaysShowSideNav = signal(CommonHelper.isLargeScreen());
   readonly currentUrl = signal('/');
   readonly currentLanguageCode = signal(
-    LanguageHelper.normalizeLanguageCode(
+    LanguageHelper.getAppLanguageCode(
       BrowserStorage.getLocalStorageItem(this.languageStorageKey),
+      navigator.languages.length ? navigator.languages : [navigator.language],
     ),
   );
 
@@ -77,13 +78,11 @@ export class AppComponent implements OnDestroy {
       .afterDismissed()
       .pipe(take(1))
       .subscribe((newLanguageCode: string | undefined) => {
-        if (newLanguageCode) {
-          const normalizedLanguageCode = LanguageHelper.normalizeLanguageCode(newLanguageCode);
+        const selectedLanguageCode = LanguageHelper.getSupportedLanguageCode(newLanguageCode);
 
-          if (normalizedLanguageCode !== this.currentLanguageCode()) {
-            BrowserStorage.setLocalStorageItem(this.languageStorageKey, normalizedLanguageCode);
-            window.location.reload();
-          }
+        if (selectedLanguageCode && selectedLanguageCode !== this.currentLanguageCode()) {
+          BrowserStorage.setLocalStorageItem(this.languageStorageKey, selectedLanguageCode);
+          window.location.reload();
         }
       });
   }

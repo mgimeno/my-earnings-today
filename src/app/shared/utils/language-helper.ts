@@ -7,7 +7,11 @@ export class LanguageHelper {
   static getSupportedLanguageCode(
     languageCode: string | null | undefined,
   ): SupportedLanguageCode | null {
-    const normalizedLanguageCode = languageCode?.slice(0, 2).toLowerCase();
+    const normalizedLanguageCode = languageCode
+      ?.trim()
+      .replace('_', '-')
+      .split('-')[0]
+      ?.toLowerCase();
 
     if (normalizedLanguageCode === 'en' || normalizedLanguageCode === 'es') {
       return normalizedLanguageCode;
@@ -32,6 +36,16 @@ export class LanguageHelper {
     }
 
     return DEFAULT_LANGUAGE_CODE;
+  }
+
+  static getAppLanguageCode(
+    storedLanguageCode: string | null | undefined,
+    browserLanguageCodes: readonly (string | null | undefined)[],
+  ): SupportedLanguageCode {
+    return (
+      this.getSupportedLanguageCode(storedLanguageCode) ??
+      this.getPreferredLanguageCode(browserLanguageCodes)
+    );
   }
 
   static getOpenGraphLocale(languageCode: SupportedLanguageCode): string {
