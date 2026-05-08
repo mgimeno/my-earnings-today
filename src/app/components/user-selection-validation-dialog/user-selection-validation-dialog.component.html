@@ -1,4 +1,7 @@
-<h1 mat-dialog-title i18n="@@user-validation.title">Missing details</h1>
+<h1 mat-dialog-title>
+  <mat-icon class="dialog-title-icon" aria-hidden="true">error</mat-icon>
+  <span i18n="@@user-validation.title">Missing details</span>
+</h1>
 <mat-dialog-content class="content">
   @for (userSelection of data.userSelections; track userSelection.personNumber) {
     @if (!userSelection.canCalculate()) {
@@ -50,10 +53,10 @@
   <button
     mat-raised-button
     color="primary"
+    class="dialog-action-button"
     (click)="onClose()"
     cdkFocusInitial
-    i18n="@@user-validation.got-it"
   >
-    Got it!
+    <span i18n="@@user-validation.got-it">Got it!</span>
   </button>
 </mat-dialog-actions>

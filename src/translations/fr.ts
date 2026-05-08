@@ -1,0 +1,155 @@
+import type { AppTranslations } from './app-translations';
+
+export const FR_TRANSLATIONS: AppTranslations = {
+  'index.title': "Mes gains aujourd'hui",
+  'index.meta_description':
+    "Calculez combien vous avez déjà gagné aujourd'hui et comparez avec d'autres personnes",
+  'index.meta_og_description':
+    "Calculez combien vous avez déjà gagné aujourd'hui et comparez avec d'autres personnes",
+
+  'my-earnings.title': "Voyons combien vous avez déjà gagné aujourd'hui",
+  'my-earnings.calculate': 'Calculer',
+  'my-earnings.share-this': 'Partager',
+  'my-earnings.back': 'Modifier les paramètres',
+  'my-earnings.compare': 'Comparer',
+
+  'compare-tool.title': "Comparer les gains avec d'autres personnes",
+  'compare-tool.add-person': 'Ajouter une personne',
+  'compare-tool.calculate': 'Calculer',
+  'compare-tool.back': 'Modifier les paramètres',
+  'compare-tool.share-this': 'Partager',
+  'compare-tool.person': 'Personne',
+  'compare-tool.remove-person': 'Supprimer la personne',
+  'compare-tool.remove-person-confirmation-text': 'Voulez-vous supprimer cette personne ?',
+  'compare-tool.cancel': 'Annuler',
+  'compare-tool.remove': 'Supprimer',
+
+  'my-earnings-details.you-are-off': "Vous ne travaillez pas aujourd'hui",
+  'my-earnings-details.nothing-yet': 'Rien pour le moment',
+  'my-earnings-details.you-have-already-earned': "Aujourd'hui, vous avez déjà gagné",
+  'my-earnings-details.more-to-go': 'avant la fin',
+  'my-earnings-details.you-earned': "Aujourd'hui, vous avez gagné",
+  'my-earnings-details.done-for-today': "Vous avez terminé pour aujourd'hui",
+  'my-earnings-details.elapsed': 'écoulé',
+  'my-earnings-details.out-of': 'sur',
+
+  'compare-tool-details.title': "Aujourd'hui, vous avez déjà gagné",
+  'compare-tool-details.charts': 'Graphiques',
+  'compare-tool-details.details': 'Détails',
+  'compare-tool-details.total-expected': 'Total attendu',
+  'compare-tool-details.hours-worked-per': 'Heures travaillées par',
+  'compare-tool-details.already-earned': 'Déjà gagné',
+  'compare-tool-details.day': 'jour',
+  'compare-tool-details.week': 'semaine',
+  'compare-tool-details.month': 'mois',
+  'compare-tool-details.year': 'an',
+  'compare-tool-details.this-hour': 'cette heure',
+  'compare-tool-details.today': "aujourd'hui",
+  'compare-tool-details.this-week': 'cette semaine',
+  'compare-tool-details.this-month': 'ce mois-ci',
+  'compare-tool-details.this-year': 'cette année',
+  'compare-tool-details.total-expected-chart': 'Graphique du total attendu',
+  'compare-tool-details.hours-worked-chart': 'Graphique des heures travaillées',
+
+  'tiles.stopwatch': 'Chronomètre',
+  'tiles.this-hour': 'Cette heure',
+  'tiles.today': "Aujourd'hui",
+  'tiles.this-week': 'Cette semaine',
+  'tiles.this-month': 'Ce mois-ci',
+  'tiles.this-year': 'Cette année',
+
+  'user-selection.what-is-their-name': 'Son nom',
+  'user-selection.what-is-your-name': 'Votre nom',
+  'user-selection.how-much-they-earn': 'Combien gagne cette personne ?',
+  'user-selection.how-much-you-earn': 'Combien gagnez-vous ?',
+  'user-selection.their-working-week-is': 'Sa semaine de travail est',
+  'user-selection.your-working-week-is': 'Votre semaine de travail est',
+  'user-selection.from': 'De',
+  'user-selection.to': 'À',
+  'user-selection.mon': 'Lun',
+  'user-selection.tue': 'Mar',
+  'user-selection.wed': 'Mer',
+  'user-selection.thu': 'Jeu',
+  'user-selection.fri': 'Ven',
+  'user-selection.sat': 'Sam',
+  'user-selection.sun': 'Dim',
+
+  Monday: 'Lundi',
+  Tuesday: 'Mardi',
+  Wednesday: 'Mercredi',
+  Thursday: 'Jeudi',
+  Friday: 'Vendredi',
+  Saturday: 'Samedi',
+  Sunday: 'Dimanche',
+
+  'menu.title': "Mes gains aujourd'hui",
+  'menu.my-earnings': 'Mes gains',
+  'menu.compare': 'Comparer',
+  'menu.language': 'Langue',
+  'menu.open-navigation': 'Ouvrir la navigation',
+  'menu.collapse-navigation': 'Réduire la navigation',
+  'menu.expand-navigation': 'Développer la navigation',
+  'menu.help': 'Aide',
+
+  'user-validation.title': 'Informations manquantes',
+  'user-validation.name': 'Saisissez un nom',
+  'user-validation.currency': 'Sélectionnez un symbole monétaire',
+  'user-validation.period': 'Sélectionnez une période de paiement',
+  'user-validation.at-least-one-day': 'Sélectionnez au moins un jour de la semaine',
+  'user-validation.from': "Sélectionnez l'heure 'De'",
+  'user-validation.to': "Sélectionnez l'heure 'À'",
+  'user-validation.from-greater-than-to': "'De' doit être avant 'À'",
+  'user-validation.at-least-add-one-more': 'Ajoutez au moins une personne de plus',
+  'user-validation.got-it': 'Compris',
+  'user-validation.type-how-much-they-earn': 'Saisissez combien gagne cette personne',
+  'user-validation.type-how-much-you-earn': 'Saisissez combien vous gagnez',
+
+  'about.title': "À propos de l'app",
+  'about.calculations': 'Calculs',
+  'about.first-paragraph-line-1':
+    "Cette app vous permet de calculer combien vous avez déjà gagné aujourd'hui ou sur d'autres périodes.",
+  'about.first-paragraph-line-2':
+    "Utilisez l'outil de comparaison pour comparer vos gains avec ceux d'autres personnes ou avec vous-même si vous gagniez un montant différent.",
+  'about.first-paragraph-line-3': 'Nous ne stockons aucune donnée.',
+  'about.first-paragraph-line-4': 'Les données sont uniquement stockées sur votre appareil.',
+  'about.second-paragraph-line-1': 'Si votre salaire est mensuel ou annuel :',
+  'about.second-paragraph-line-2':
+    "Cela signifie que vous gagnez le même montant chaque mois et chaque année, quel que soit le nombre de jours ouvrés du mois ou de l'année en cours.",
+  'about.second-paragraph-line-3':
+    "Cependant, vous gagnez un montant différent par heure, par jour et par semaine selon le nombre de jours ouvrés dans le mois ou l'année en cours.",
+  'about.second-paragraph-line-4':
+    'Moins il y a de jours ouvrés dans un mois, plus vous gagnez par heure, par jour et par semaine pendant ce mois.',
+  'about.third-paragraph-line-1': 'Si votre salaire est horaire, journalier ou hebdomadaire :',
+  'about.third-paragraph-line-2':
+    'Cela signifie que vous gagnez en fonction des heures, des jours ou des semaines que vous travaillez.',
+  'about.third-paragraph-line-3':
+    "Par conséquent, le montant gagné chaque mois et chaque année varie selon le nombre de jours ouvrés du mois ou de l'année en cours.",
+
+  'share.link-copied': 'Lien copié',
+  'share.copy-failed': 'Impossible de copier le lien',
+
+  'frequencies.per-hour': "de l'heure",
+  'frequencies.per-day': 'par jour',
+  'frequencies.per-week': 'par semaine',
+  'frequencies.per-month': 'par mois',
+  'frequencies.per-year': 'par an',
+
+  'first-user-default-name': 'Vous',
+
+  second: 'seconde',
+  seconds: 'secondes',
+  minute: 'minute',
+  minutes: 'minutes',
+  hour: 'heure',
+  hours: 'heures',
+
+  person: 'Personne',
+
+  'user-selection-model.person': 'Personne',
+  'user-selection-model.you-start-work-in': 'Vous commencez le travail dans',
+  'user-selection-model.you-are-off-until-next': "Repos jusqu'à",
+  'user-selection-model.at': 'à',
+  'user-selection-model.you-start-work-tomorrow-at': 'Vous commencez demain à',
+
+  'select-language.select': 'Sélectionnez une langue',
+};

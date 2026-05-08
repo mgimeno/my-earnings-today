@@ -16,7 +16,7 @@
 
       .details-type-select {
         font-weight: bold;
-        width: 150px;
+        width: min(100%, 240px);
 
         .mat-mdc-form-field-subscript-wrapper {
           display: none;

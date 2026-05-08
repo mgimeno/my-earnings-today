@@ -19,7 +19,24 @@ export class IconService {
 
     // Check icon is not already part of the array, otherwise no icons will load.
     // No need to add icons sorted alphabetically -> we actively sort them.
-    const icons = ['clear', 'compare_arrows', 'menu', 'person_add', 'reply', 'share'].sort();
+    const icons = [
+      'bar_chart',
+      'calculate',
+      'check_circle',
+      'clear',
+      'compare_arrows',
+      'delete',
+      'edit',
+      'error',
+      'help',
+      'keyboard_double_arrow_left',
+      'keyboard_double_arrow_right',
+      'menu',
+      'payments',
+      'person_add',
+      'list_alt',
+      'share',
+    ].sort();
 
     const style = {
       href: `${url}${icons.join(',')}`,

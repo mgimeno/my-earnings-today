@@ -46,8 +46,12 @@ export class AppComponent implements OnDestroy {
 
   private windowSizeChangeTimeout: ReturnType<typeof setTimeout> | null = null;
   private readonly languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
+  private readonly sideNavCollapsedStorageKey = `${environment.localStoragePrefix}side-nav-collapsed`;
 
   readonly alwaysShowSideNav = signal(CommonHelper.isLargeScreen());
+  readonly sideNavCollapsed = signal(
+    BrowserStorage.getLocalStorageItem(this.sideNavCollapsedStorageKey) === 'true',
+  );
   readonly currentUrl = signal('/');
   readonly currentLanguageCode = signal(
     LanguageHelper.getAppLanguageCode(
@@ -55,6 +59,8 @@ export class AppComponent implements OnDestroy {
       navigator.languages.length ? navigator.languages : [navigator.language],
     ),
   );
+  readonly collapseNavigationLabel = $localize`:@@menu.collapse-navigation:Collapse navigation`;
+  readonly expandNavigationLabel = $localize`:@@menu.expand-navigation:Expand navigation`;
 
   constructor() {
     this.router.events
@@ -72,7 +78,9 @@ export class AppComponent implements OnDestroy {
   async openSelectLanguage(): Promise<void> {
     const { SelectLanguageComponent } =
       await import('./components/select-language/select-language.component');
-    const bottomSheetRef = this.bottomSheet.open(SelectLanguageComponent);
+    const bottomSheetRef = this.bottomSheet.open(SelectLanguageComponent, {
+      data: { currentLanguageCode: this.currentLanguageCode() },
+    });
 
     bottomSheetRef
       .afterDismissed()
@@ -100,6 +108,13 @@ export class AppComponent implements OnDestroy {
 
   scrollToTop(): void {
     window.scrollTo(0, 0);
+  }
+
+  toggleSideNav(): void {
+    const collapsed = !this.sideNavCollapsed();
+
+    this.sideNavCollapsed.set(collapsed);
+    BrowserStorage.setLocalStorageItem(this.sideNavCollapsedStorageKey, String(collapsed));
   }
 
   private addTitleAndMetaTags(): void {

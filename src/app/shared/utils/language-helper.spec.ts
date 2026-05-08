@@ -9,6 +9,10 @@ describe('LanguageHelper', () => {
     expect(LanguageHelper.getSupportedLanguageCode('es')).toBe('es');
     expect(LanguageHelper.getSupportedLanguageCode('es-ES')).toBe('es');
     expect(LanguageHelper.getSupportedLanguageCode(' es_MX ')).toBe('es');
+    expect(LanguageHelper.getSupportedLanguageCode('de-DE')).toBe('de');
+    expect(LanguageHelper.getSupportedLanguageCode('fr-FR')).toBe('fr');
+    expect(LanguageHelper.getSupportedLanguageCode('it-IT')).toBe('it');
+    expect(LanguageHelper.getSupportedLanguageCode('pt-BR')).toBe('pt');
   });
 
   it('rejects empty and unsupported language tags', () => {
@@ -16,13 +20,17 @@ describe('LanguageHelper', () => {
     expect(LanguageHelper.getSupportedLanguageCode('   ')).toBeNull();
     expect(LanguageHelper.getSupportedLanguageCode(null)).toBeNull();
     expect(LanguageHelper.getSupportedLanguageCode(undefined)).toBeNull();
-    expect(LanguageHelper.getSupportedLanguageCode('fr-FR')).toBeNull();
     expect(LanguageHelper.getSupportedLanguageCode('zh-Hant-TW')).toBeNull();
+    expect(LanguageHelper.getSupportedLanguageCode('ja-JP')).toBeNull();
   });
 
   it('rejects words that only start with a supported language code', () => {
+    expect(LanguageHelper.getSupportedLanguageCode('deutsch')).toBeNull();
     expect(LanguageHelper.getSupportedLanguageCode('english')).toBeNull();
     expect(LanguageHelper.getSupportedLanguageCode('esoteric')).toBeNull();
+    expect(LanguageHelper.getSupportedLanguageCode('french')).toBeNull();
+    expect(LanguageHelper.getSupportedLanguageCode('italian')).toBeNull();
+    expect(LanguageHelper.getSupportedLanguageCode('portuguese')).toBeNull();
   });
 
   it('keeps Spanish variants as Spanish', () => {
@@ -30,13 +38,13 @@ describe('LanguageHelper', () => {
   });
 
   it('falls back to English for unsupported languages', () => {
-    expect(LanguageHelper.normalizeLanguageCode('fr-FR')).toBe('en');
+    expect(LanguageHelper.normalizeLanguageCode('ja-JP')).toBe('en');
     expect(LanguageHelper.normalizeLanguageCode(null)).toBe('en');
   });
 
   it('uses the first supported browser language by priority', () => {
-    expect(LanguageHelper.getPreferredLanguageCode(['fr-FR', 'es-ES', 'en-US'])).toBe('es');
-    expect(LanguageHelper.getPreferredLanguageCode(['fr-FR', 'en-US', 'es-ES'])).toBe('en');
+    expect(LanguageHelper.getPreferredLanguageCode(['ja-JP', 'fr-FR', 'es-ES'])).toBe('fr');
+    expect(LanguageHelper.getPreferredLanguageCode(['ja-JP', 'en-US', 'es-ES'])).toBe('en');
   });
 
   it('skips blank browser language entries', () => {
@@ -46,7 +54,7 @@ describe('LanguageHelper', () => {
   });
 
   it('defaults to English when no browser language is supported', () => {
-    expect(LanguageHelper.getPreferredLanguageCode(['fr-FR', 'de-DE'])).toBe('en');
+    expect(LanguageHelper.getPreferredLanguageCode(['ja-JP', 'zh-Hant-TW'])).toBe('en');
     expect(LanguageHelper.getPreferredLanguageCode([])).toBe('en');
   });
 
@@ -56,20 +64,25 @@ describe('LanguageHelper', () => {
   });
 
   it('ignores unsupported stored languages and falls back to browser priority', () => {
-    expect(LanguageHelper.getAppLanguageCode('fr-FR', ['es-ES', 'en-US'])).toBe('es');
+    expect(LanguageHelper.getAppLanguageCode('ja-JP', ['es-ES', 'en-US'])).toBe('es');
     expect(LanguageHelper.getAppLanguageCode('english', ['es-ES'])).toBe('es');
     expect(LanguageHelper.getAppLanguageCode('', ['es-ES'])).toBe('es');
   });
 
   it('defaults app language to English when storage and browser languages are unsupported', () => {
-    expect(LanguageHelper.getAppLanguageCode('fr-FR', ['de-DE'])).toBe(DEFAULT_LANGUAGE_CODE);
+    expect(LanguageHelper.getAppLanguageCode('ja-JP', ['zh-Hant-TW'])).toBe(DEFAULT_LANGUAGE_CODE);
     expect(LanguageHelper.getAppLanguageCode(null, [])).toBe(DEFAULT_LANGUAGE_CODE);
   });
 
   it('maps Open Graph locales for supported languages', () => {
+    expect(LanguageHelper.getOpenGraphLocale('de')).toBe('de_DE');
     expect(LanguageHelper.getOpenGraphLocale('en')).toBe('en_GB');
     expect(LanguageHelper.getOpenGraphLocale('es')).toBe('es_ES');
+    expect(LanguageHelper.getOpenGraphLocale('fr')).toBe('fr_FR');
+    expect(LanguageHelper.getOpenGraphLocale('it')).toBe('it_IT');
+    expect(LanguageHelper.getOpenGraphLocale('pt')).toBe('pt_PT');
     expect(LanguageHelper.getAlternateOpenGraphLocale('en')).toBe('es_ES');
     expect(LanguageHelper.getAlternateOpenGraphLocale('es')).toBe('en_GB');
+    expect(LanguageHelper.getAlternateOpenGraphLocale('de')).toBe('en_GB');
   });
 });

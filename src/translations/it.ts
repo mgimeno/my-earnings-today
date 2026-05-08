@@ -1,0 +1,155 @@
+import type { AppTranslations } from './app-translations';
+
+export const IT_TRANSLATIONS: AppTranslations = {
+  'index.title': 'I miei guadagni di oggi',
+  'index.meta_description':
+    'Calcola quanto hai già guadagnato oggi e confrontalo con altre persone',
+  'index.meta_og_description':
+    'Calcola quanto hai già guadagnato oggi e confrontalo con altre persone',
+
+  'my-earnings.title': 'Vediamo quanto hai già guadagnato oggi',
+  'my-earnings.calculate': 'Calcola',
+  'my-earnings.share-this': 'Condividi',
+  'my-earnings.back': 'Modifica impostazioni',
+  'my-earnings.compare': 'Confronta',
+
+  'compare-tool.title': 'Confronta i guadagni con altre persone',
+  'compare-tool.add-person': 'Aggiungi persona',
+  'compare-tool.calculate': 'Calcola',
+  'compare-tool.back': 'Modifica impostazioni',
+  'compare-tool.share-this': 'Condividi',
+  'compare-tool.person': 'Persona',
+  'compare-tool.remove-person': 'Rimuovi persona',
+  'compare-tool.remove-person-confirmation-text': 'Vuoi rimuovere questa persona?',
+  'compare-tool.cancel': 'Annulla',
+  'compare-tool.remove': 'Rimuovi',
+
+  'my-earnings-details.you-are-off': 'Oggi non lavori',
+  'my-earnings-details.nothing-yet': 'Ancora niente',
+  'my-earnings-details.you-have-already-earned': 'Oggi hai già guadagnato',
+  'my-earnings-details.more-to-go': 'alla fine',
+  'my-earnings-details.you-earned': 'Oggi hai guadagnato',
+  'my-earnings-details.done-for-today': 'Hai finito per oggi',
+  'my-earnings-details.elapsed': 'trascorsi',
+  'my-earnings-details.out-of': 'su',
+
+  'compare-tool-details.title': 'Oggi avete già guadagnato',
+  'compare-tool-details.charts': 'Grafici',
+  'compare-tool-details.details': 'Dettagli',
+  'compare-tool-details.total-expected': 'Totale previsto',
+  'compare-tool-details.hours-worked-per': 'Ore lavorate per',
+  'compare-tool-details.already-earned': 'Già guadagnato',
+  'compare-tool-details.day': 'giorno',
+  'compare-tool-details.week': 'settimana',
+  'compare-tool-details.month': 'mese',
+  'compare-tool-details.year': 'anno',
+  'compare-tool-details.this-hour': "quest'ora",
+  'compare-tool-details.today': 'oggi',
+  'compare-tool-details.this-week': 'questa settimana',
+  'compare-tool-details.this-month': 'questo mese',
+  'compare-tool-details.this-year': "quest'anno",
+  'compare-tool-details.total-expected-chart': 'Grafico del totale previsto',
+  'compare-tool-details.hours-worked-chart': 'Grafico delle ore lavorate',
+
+  'tiles.stopwatch': 'Cronometro',
+  'tiles.this-hour': "Quest'ora",
+  'tiles.today': 'Oggi',
+  'tiles.this-week': 'Questa settimana',
+  'tiles.this-month': 'Questo mese',
+  'tiles.this-year': "Quest'anno",
+
+  'user-selection.what-is-their-name': 'Il suo nome',
+  'user-selection.what-is-your-name': 'Il tuo nome',
+  'user-selection.how-much-they-earn': 'Quanto guadagna?',
+  'user-selection.how-much-you-earn': 'Quanto guadagni?',
+  'user-selection.their-working-week-is': 'La sua settimana lavorativa è',
+  'user-selection.your-working-week-is': 'La tua settimana lavorativa è',
+  'user-selection.from': 'Da',
+  'user-selection.to': 'A',
+  'user-selection.mon': 'Lun',
+  'user-selection.tue': 'Mar',
+  'user-selection.wed': 'Mer',
+  'user-selection.thu': 'Gio',
+  'user-selection.fri': 'Ven',
+  'user-selection.sat': 'Sab',
+  'user-selection.sun': 'Dom',
+
+  Monday: 'Lunedì',
+  Tuesday: 'Martedì',
+  Wednesday: 'Mercoledì',
+  Thursday: 'Giovedì',
+  Friday: 'Venerdì',
+  Saturday: 'Sabato',
+  Sunday: 'Domenica',
+
+  'menu.title': 'I miei guadagni di oggi',
+  'menu.my-earnings': 'I miei guadagni',
+  'menu.compare': 'Confronta',
+  'menu.language': 'Lingua',
+  'menu.open-navigation': 'Apri navigazione',
+  'menu.collapse-navigation': 'Comprimi navigazione',
+  'menu.expand-navigation': 'Espandi navigazione',
+  'menu.help': 'Aiuto',
+
+  'user-validation.title': 'Dati mancanti',
+  'user-validation.name': 'Inserisci un nome',
+  'user-validation.currency': 'Seleziona un simbolo di valuta',
+  'user-validation.period': 'Seleziona un periodo di pagamento',
+  'user-validation.at-least-one-day': 'Seleziona almeno un giorno della settimana',
+  'user-validation.from': "Seleziona l'orario 'Da'",
+  'user-validation.to': "Seleziona l'orario 'A'",
+  'user-validation.from-greater-than-to': "'Da' deve essere prima di 'A'",
+  'user-validation.at-least-add-one-more': "Aggiungi almeno un'altra persona",
+  'user-validation.got-it': 'Capito',
+  'user-validation.type-how-much-they-earn': 'Inserisci quanto guadagna',
+  'user-validation.type-how-much-you-earn': 'Inserisci quanto guadagni',
+
+  'about.title': "Informazioni sull'app",
+  'about.calculations': 'Calcoli',
+  'about.first-paragraph-line-1':
+    'Questa app ti permette di calcolare quanto hai già guadagnato oggi o in altri periodi.',
+  'about.first-paragraph-line-2':
+    'Usa lo strumento di confronto per confrontare i tuoi guadagni con quelli di altre persone o con te stesso se guadagnassi un importo diverso.',
+  'about.first-paragraph-line-3': 'Non memorizziamo alcun dato.',
+  'about.first-paragraph-line-4': 'I dati vengono memorizzati solo sul tuo dispositivo.',
+  'about.second-paragraph-line-1': 'Se il tuo stipendio è mensile o annuale:',
+  'about.second-paragraph-line-2':
+    "Questo significa che guadagni lo stesso importo ogni mese e ogni anno, indipendentemente dal numero di giorni lavorativi del mese o dell'anno corrente.",
+  'about.second-paragraph-line-3':
+    "Tuttavia, guadagni un importo diverso all'ora, al giorno e alla settimana a seconda di quanti giorni lavorativi ci sono nel mese o nell'anno corrente.",
+  'about.second-paragraph-line-4':
+    "Meno giorni lavorativi ci sono in un mese, più guadagni all'ora, al giorno e alla settimana durante quel mese.",
+  'about.third-paragraph-line-1': 'Se il tuo compenso è orario, giornaliero o settimanale:',
+  'about.third-paragraph-line-2':
+    'Questo significa che guadagni in base alle ore, ai giorni o alle settimane in cui lavori.',
+  'about.third-paragraph-line-3':
+    "Di conseguenza, l'importo guadagnato mensilmente e annualmente varia in base al numero di giorni lavorativi del mese o dell'anno corrente.",
+
+  'share.link-copied': 'Link copiato',
+  'share.copy-failed': 'Impossibile copiare il link',
+
+  'frequencies.per-hour': "all'ora",
+  'frequencies.per-day': 'al giorno',
+  'frequencies.per-week': 'alla settimana',
+  'frequencies.per-month': 'al mese',
+  'frequencies.per-year': "all'anno",
+
+  'first-user-default-name': 'Tu',
+
+  second: 'secondo',
+  seconds: 'secondi',
+  minute: 'minuto',
+  minutes: 'minuti',
+  hour: 'ora',
+  hours: 'ore',
+
+  person: 'Persona',
+
+  'user-selection-model.person': 'Persona',
+  'user-selection-model.you-start-work-in': 'Inizi a lavorare tra',
+  'user-selection-model.you-are-off-until-next': 'Sei libero fino a',
+  'user-selection-model.at': 'alle',
+  'user-selection-model.you-start-work-tomorrow-at': 'Domani inizi a lavorare alle',
+
+  'select-language.select': 'Seleziona una lingua',
+};

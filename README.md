@@ -16,7 +16,7 @@ Data is only stored in your device.
 
 ## Languages
 
-Available in English & Spanish.
+Available in English, Spanish, French, Portuguese, German & Italian.
 
 ## Development
 

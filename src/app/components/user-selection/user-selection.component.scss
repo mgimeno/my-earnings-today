@@ -67,15 +67,25 @@
   }
 
   .mat-mdc-checkbox {
+    --mat-checkbox-state-layer-size: 34px;
+
+    display: block;
     min-height: 42px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    background: var(--surface-muted-color);
+    background: var(--surface-color);
+    cursor: pointer;
     transition:
       border-color var(--motion-standard) var(--motion-ease),
       background-color var(--motion-standard) var(--motion-ease),
       box-shadow var(--motion-standard) var(--motion-ease),
       transform var(--motion-fast) var(--motion-ease);
+
+    &.mat-mdc-checkbox-checked {
+      border-color: var(--primary-color-light);
+      background: var(--primary-color-lightest);
+      box-shadow: inset 0 0 0 1px var(--primary-color-light);
+    }
   }
 
   .show-on-big-screen {

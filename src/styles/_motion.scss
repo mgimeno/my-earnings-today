@@ -23,6 +23,7 @@
 
 .main-container .mat-toolbar .mat-mdc-icon-button,
 .main-container a.title,
+.main-container .sidenav-title,
 .main-container .sidenav-container .mat-mdc-list-item,
 .main-container .grayscale-image-when-not-hover img {
   transition:
@@ -47,12 +48,14 @@
 @media (hover: hover) and (pointer: fine) {
   .main-container .mat-toolbar .mat-mdc-icon-button:hover,
   .main-container a.title:hover,
+  .main-container .sidenav-title:hover,
   .view-toggle button:not(:disabled):hover,
   .charts-container .chart-container:hover {
     transform: translateY(-1px);
   }
 
-  .main-container a.title:hover {
+  .main-container a.title:hover,
+  .main-container .sidenav-title:hover {
     opacity: 0.86;
   }
 

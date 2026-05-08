@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
+import type { SupportedLanguageCode } from '../../shared/utils/language-helper';
+
+interface SelectLanguageData {
+  currentLanguageCode: SupportedLanguageCode;
+}
 
 @Component({
   imports: [MatButtonModule],
@@ -11,8 +16,15 @@ import { MatButtonModule } from '@angular/material/button';
 export class SelectLanguageComponent {
   private readonly bottomSheetRef =
     inject<MatBottomSheetRef<SelectLanguageComponent>>(MatBottomSheetRef);
+  private readonly data = inject<SelectLanguageData>(MAT_BOTTOM_SHEET_DATA);
 
-  selectLanguage(languageCode: string): void {
+  readonly currentLanguageCode = this.data.currentLanguageCode;
+
+  isActiveLanguage(languageCode: SupportedLanguageCode): boolean {
+    return languageCode === this.currentLanguageCode;
+  }
+
+  selectLanguage(languageCode: SupportedLanguageCode): void {
     this.bottomSheetRef.dismiss(languageCode);
   }
 }

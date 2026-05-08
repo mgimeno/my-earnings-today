@@ -572,8 +572,11 @@ export class UserSelection {
   }
 
   setDefaultValues(
-    browserLanguageCodes: readonly (string | null | undefined)[] =
-      CurrencyHelper.getBrowserLanguageCodes(),
+    browserLanguageCodes: readonly (
+      | string
+      | null
+      | undefined
+    )[] = CurrencyHelper.getBrowserLanguageCodes(),
   ): void {
     this.startTime = '09:00';
     this.endTime = '17:00';

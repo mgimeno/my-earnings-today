@@ -19,6 +19,10 @@
                     (click)="removePerson($event, index)"
                     aria-label="Remove person"
                     i18n-aria-label="@@compare-tool.remove-person"
+                    matTooltip="Remove"
+                    matTooltipPosition="above"
+                    matTooltipClass="remove-tooltip"
+                    i18n-matTooltip="@@compare-tool.remove"
                   >
                     <mat-icon class="close-icon">clear</mat-icon>
                   </button>
@@ -45,15 +49,8 @@
             >Add person</span
           >
         </button>
-        <button
-          type="submit"
-          class="text-center"
-          mat-raised-button
-          color="primary"
-          cdkFocusInitial
-          i18n="@@compare-tool.calculate"
-        >
-          Calculate
+        <button type="submit" class="text-center" mat-raised-button color="primary" cdkFocusInitial>
+          <mat-icon>calculate</mat-icon>&nbsp;<span i18n="@@compare-tool.calculate">Calculate</span>
         </button>
       </div>
     </div>
@@ -64,9 +61,9 @@
       <app-compare-tool-details [userSelections]="selections"></app-compare-tool-details>
       <div class="buttons m-t-35">
         <button type="button" mat-raised-button (click)="goBack()">
-          <mat-icon>reply</mat-icon>&nbsp;<span i18n="@@compare-tool.back">Back</span>
+          <mat-icon>edit</mat-icon>&nbsp;<span i18n="@@compare-tool.back">Edit settings</span>
         </button>
-        <button type="button" mat-raised-button (click)="openShareBottomSheet()">
+        <button type="button" mat-raised-button (click)="shareCurrentUrl()">
           <mat-icon>share</mat-icon>&nbsp;<span i18n="@@compare-tool.share-this">Share this</span>
         </button>
       </div>

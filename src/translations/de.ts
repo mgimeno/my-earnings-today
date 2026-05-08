@@ -1,0 +1,155 @@
+import type { AppTranslations } from './app-translations';
+
+export const DE_TRANSLATIONS: AppTranslations = {
+  'index.title': 'Meine heutigen Einnahmen',
+  'index.meta_description':
+    'Berechne, wie viel du heute schon verdient hast, und vergleiche es mit anderen',
+  'index.meta_og_description':
+    'Berechne, wie viel du heute schon verdient hast, und vergleiche es mit anderen',
+
+  'my-earnings.title': 'Sehen wir uns an, wie viel du heute schon verdient hast',
+  'my-earnings.calculate': 'Berechnen',
+  'my-earnings.share-this': 'Teilen',
+  'my-earnings.back': 'Einstellungen bearbeiten',
+  'my-earnings.compare': 'Vergleichen',
+
+  'compare-tool.title': 'Einnahmen mit anderen vergleichen',
+  'compare-tool.add-person': 'Person hinzufügen',
+  'compare-tool.calculate': 'Berechnen',
+  'compare-tool.back': 'Einstellungen bearbeiten',
+  'compare-tool.share-this': 'Teilen',
+  'compare-tool.person': 'Person',
+  'compare-tool.remove-person': 'Person entfernen',
+  'compare-tool.remove-person-confirmation-text': 'Möchtest du diese Person entfernen?',
+  'compare-tool.cancel': 'Abbrechen',
+  'compare-tool.remove': 'Entfernen',
+
+  'my-earnings-details.you-are-off': 'Du hast heute frei',
+  'my-earnings-details.nothing-yet': 'Noch nichts',
+  'my-earnings-details.you-have-already-earned': 'Heute hast du bereits verdient',
+  'my-earnings-details.more-to-go': 'bis zum Feierabend',
+  'my-earnings-details.you-earned': 'Heute hast du verdient',
+  'my-earnings-details.done-for-today': 'Du bist für heute fertig',
+  'my-earnings-details.elapsed': 'vergangen',
+  'my-earnings-details.out-of': 'von',
+
+  'compare-tool-details.title': 'Heute habt ihr bereits verdient',
+  'compare-tool-details.charts': 'Diagramme',
+  'compare-tool-details.details': 'Details',
+  'compare-tool-details.total-expected': 'Erwarteter Gesamtbetrag',
+  'compare-tool-details.hours-worked-per': 'Gearbeitete Stunden pro',
+  'compare-tool-details.already-earned': 'Bereits verdient',
+  'compare-tool-details.day': 'Tag',
+  'compare-tool-details.week': 'Woche',
+  'compare-tool-details.month': 'Monat',
+  'compare-tool-details.year': 'Jahr',
+  'compare-tool-details.this-hour': 'diese Stunde',
+  'compare-tool-details.today': 'heute',
+  'compare-tool-details.this-week': 'diese Woche',
+  'compare-tool-details.this-month': 'diesen Monat',
+  'compare-tool-details.this-year': 'dieses Jahr',
+  'compare-tool-details.total-expected-chart': 'Diagramm des erwarteten Gesamtbetrags',
+  'compare-tool-details.hours-worked-chart': 'Diagramm der gearbeiteten Stunden',
+
+  'tiles.stopwatch': 'Stoppuhr',
+  'tiles.this-hour': 'Diese Stunde',
+  'tiles.today': 'Heute',
+  'tiles.this-week': 'Diese Woche',
+  'tiles.this-month': 'Dieser Monat',
+  'tiles.this-year': 'Dieses Jahr',
+
+  'user-selection.what-is-their-name': 'Name der Person',
+  'user-selection.what-is-your-name': 'Dein Name',
+  'user-selection.how-much-they-earn': 'Wie viel verdient diese Person?',
+  'user-selection.how-much-you-earn': 'Wie viel verdienst du?',
+  'user-selection.their-working-week-is': 'Die Arbeitswoche dieser Person ist',
+  'user-selection.your-working-week-is': 'Deine Arbeitswoche ist',
+  'user-selection.from': 'Von',
+  'user-selection.to': 'Bis',
+  'user-selection.mon': 'Mo',
+  'user-selection.tue': 'Di',
+  'user-selection.wed': 'Mi',
+  'user-selection.thu': 'Do',
+  'user-selection.fri': 'Fr',
+  'user-selection.sat': 'Sa',
+  'user-selection.sun': 'So',
+
+  Monday: 'Montag',
+  Tuesday: 'Dienstag',
+  Wednesday: 'Mittwoch',
+  Thursday: 'Donnerstag',
+  Friday: 'Freitag',
+  Saturday: 'Samstag',
+  Sunday: 'Sonntag',
+
+  'menu.title': 'Meine heutigen Einnahmen',
+  'menu.my-earnings': 'Meine Einnahmen',
+  'menu.compare': 'Vergleichen',
+  'menu.language': 'Sprache',
+  'menu.open-navigation': 'Navigation öffnen',
+  'menu.collapse-navigation': 'Navigation einklappen',
+  'menu.expand-navigation': 'Navigation ausklappen',
+  'menu.help': 'Hilfe',
+
+  'user-validation.title': 'Angaben fehlen',
+  'user-validation.name': 'Gib einen Namen ein',
+  'user-validation.currency': 'Wähle ein Währungssymbol',
+  'user-validation.period': 'Wähle einen Zahlungszeitraum',
+  'user-validation.at-least-one-day': 'Wähle mindestens einen Wochentag aus',
+  'user-validation.from': "Wähle eine 'Von'-Uhrzeit",
+  'user-validation.to': "Wähle eine 'Bis'-Uhrzeit",
+  'user-validation.from-greater-than-to': "'Von' muss vor 'Bis' liegen",
+  'user-validation.at-least-add-one-more': 'Füge mindestens eine weitere Person hinzu',
+  'user-validation.got-it': 'Verstanden',
+  'user-validation.type-how-much-they-earn': 'Gib ein, wie viel diese Person verdient',
+  'user-validation.type-how-much-you-earn': 'Gib ein, wie viel du verdienst',
+
+  'about.title': 'Über die App',
+  'about.calculations': 'Berechnungen',
+  'about.first-paragraph-line-1':
+    'Mit dieser App kannst du berechnen, wie viel du heute oder in anderen Zeiträumen bereits verdient hast.',
+  'about.first-paragraph-line-2':
+    'Mit dem Vergleichswerkzeug kannst du deine Einnahmen mit denen anderer Personen vergleichen oder mit dir selbst, falls du einen anderen Betrag verdienen würdest.',
+  'about.first-paragraph-line-3': 'Wir speichern keinerlei Daten.',
+  'about.first-paragraph-line-4': 'Daten werden nur auf deinem Gerät gespeichert.',
+  'about.second-paragraph-line-1': 'Wenn dein Gehalt monatlich oder jährlich gezahlt wird:',
+  'about.second-paragraph-line-2':
+    'Das bedeutet, dass du monatlich und jährlich denselben Betrag verdienst, unabhängig von der Anzahl der Arbeitstage im aktuellen Monat oder Jahr.',
+  'about.second-paragraph-line-3':
+    'Pro Stunde, Tag und Woche verdienst du jedoch unterschiedlich viel, je nachdem, wie viele Arbeitstage es im aktuellen Monat oder Jahr gibt.',
+  'about.second-paragraph-line-4':
+    'Je weniger Arbeitstage ein Monat hat, desto mehr verdienst du in diesem Monat pro Stunde, Tag und Woche.',
+  'about.third-paragraph-line-1': 'Wenn dein Lohn pro Stunde, Tag oder Woche gezahlt wird:',
+  'about.third-paragraph-line-2':
+    'Das bedeutet, dass du abhängig von den Stunden, Tagen oder Wochen verdienst, die du arbeitest.',
+  'about.third-paragraph-line-3':
+    'Daher hängt der monatlich und jährlich verdiente Betrag von der Anzahl der Arbeitstage im aktuellen Monat oder Jahr ab.',
+
+  'share.link-copied': 'Link kopiert',
+  'share.copy-failed': 'Link konnte nicht kopiert werden',
+
+  'frequencies.per-hour': 'pro Stunde',
+  'frequencies.per-day': 'pro Tag',
+  'frequencies.per-week': 'pro Woche',
+  'frequencies.per-month': 'pro Monat',
+  'frequencies.per-year': 'pro Jahr',
+
+  'first-user-default-name': 'Du',
+
+  second: 'Sekunde',
+  seconds: 'Sekunden',
+  minute: 'Minute',
+  minutes: 'Minuten',
+  hour: 'Stunde',
+  hours: 'Stunden',
+
+  person: 'Person',
+
+  'user-selection-model.person': 'Person',
+  'user-selection-model.you-start-work-in': 'Arbeitsbeginn in',
+  'user-selection-model.you-are-off-until-next': 'Du hast frei bis',
+  'user-selection-model.at': 'um',
+  'user-selection-model.you-start-work-tomorrow-at': 'Morgen beginnst du um',
+
+  'select-language.select': 'Sprache auswählen',
+};

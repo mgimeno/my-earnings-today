@@ -84,8 +84,11 @@ export class CurrencyHelper {
   }
 
   static getPreferredCurrencySymbol(
-    languageCodes: readonly (string | null | undefined)[] =
-      CurrencyHelper.getBrowserLanguageCodes(),
+    languageCodes: readonly (
+      | string
+      | null
+      | undefined
+    )[] = CurrencyHelper.getBrowserLanguageCodes(),
     supportedCurrencySymbols: readonly string[] = AppConstants.Common.CURRENCY_SYMBOLS,
   ): string {
     for (const languageCode of languageCodes) {

@@ -1,8 +1,12 @@
 .mat-toolbar {
   height: var(--header-height);
+  min-height: var(--header-height);
 }
 
 .main-container {
+  --sidenav-width: 260px;
+  --sidenav-collapsed-width: 72px;
+
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -11,46 +15,118 @@
   left: 0;
   right: 0;
 
-  .mat-toolbar {
-    padding: 0 10px;
+  > .sidenav-toggle {
     position: fixed;
-    z-index: 2;
-    background: var(--primary-color-dark);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+    top: 18px;
+    left: var(--sidenav-width);
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    box-shadow: 0 4px 12px rgba(23, 58, 86, 0.08);
+    color: var(--muted-color);
+    line-height: 1;
+    transform: translateX(-50%);
 
-    .mat-mdc-icon-button {
-      color: #fff;
+    &.is-collapsed {
+      left: var(--sidenav-collapsed-width);
     }
-  }
 
-  a.title {
-    margin-left: 10px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 17px;
-    font-weight: 800;
+    .mat-icon {
+      margin: 0;
+    }
   }
 
   .sidenav-container {
-    margin-top: var(--header-height);
+    --main-content-bg:
+      linear-gradient(180deg, rgba(56, 163, 165, 0.08), transparent 220px), var(--page-bg);
+    --content-offset: var(--sidenav-width);
+
+    background: var(--main-content-bg);
     flex: 1 0 auto;
 
+    &.has-top-bar {
+      --content-offset: 0px;
+
+      margin-top: var(--header-height);
+    }
+
+    &.is-collapsed {
+      --content-offset: var(--sidenav-collapsed-width);
+
+      .mat-sidenav {
+        width: var(--sidenav-collapsed-width);
+      }
+
+      .sidenav-title,
+      .nav-item-text {
+        display: none;
+      }
+
+      .mat-mdc-list-item {
+        --mat-list-list-item-leading-icon-start-space: 12px;
+        --mat-list-list-item-leading-icon-end-space: 0;
+
+        justify-content: center;
+        width: 48px;
+        margin: 4px auto;
+        padding: 0;
+      }
+
+      .mat-mdc-list-item.active {
+        box-shadow: none;
+      }
+
+      .nav-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: 0;
+        transform: translate(-50%, -50%);
+      }
+    }
+
     .mat-sidenav {
-      width: 206px;
+      width: var(--sidenav-width);
+      overflow-x: hidden;
       border-right: 1px solid var(--border-color);
       background:
         linear-gradient(180deg, rgba(34, 87, 122, 0.07), transparent 180px), var(--surface-color);
+      transition: width var(--motion-standard) var(--motion-ease);
     }
 
     .mat-sidenav-content {
-      background:
-        linear-gradient(180deg, rgba(56, 163, 165, 0.08), transparent 220px), var(--page-bg);
+      margin-left: var(--content-offset) !important;
+      background: var(--main-content-bg);
       padding: 30px 18px 38px;
+      transition: margin-left var(--motion-standard) var(--motion-ease);
 
       .router-outlet-container {
         max-width: var(--max-content-width);
         margin: 0 auto;
       }
+    }
+
+    .sidenav-header {
+      margin: 6px 10px 16px;
+      padding: 10px 0 12px;
+      border-bottom: 1px solid var(--soft-divider-color);
+    }
+
+    .sidenav-title {
+      display: block;
+      padding: 8px 0;
+      color: var(--primary-color-dark);
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+      text-align: center;
+      white-space: nowrap;
     }
 
     .mat-mdc-list-item.active {
@@ -66,19 +142,23 @@
       color: var(--ink-color);
     }
 
+    .language-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+    }
+
     .grayscale-image-when-not-hover {
       img {
         filter: grayscale(100%);
       }
     }
-  }
-}
-
-@supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
-  .main-container .mat-toolbar {
-    background: color-mix(in srgb, var(--primary-color-dark) 88%, transparent);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
   }
 }
 

@@ -1,0 +1,54 @@
+.dialog-title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--primary-color-lightest);
+  color: var(--primary-color-dark);
+  font-size: 21px;
+}
+
+.dialog-title-icon-danger {
+  background: color-mix(in srgb, var(--danger-color) 13%, var(--surface-color));
+  color: var(--danger-color);
+}
+
+.dialog-cancel-button {
+  background: var(--surface-color);
+  color: var(--ink-color);
+}
+
+.dialog-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  .mat-icon {
+    margin: 0;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.dialog-action-primary.mat-mdc-raised-button:not(:disabled) {
+  --mat-button-protected-container-color: var(--primary-color);
+  --mat-button-protected-label-text-color: #fff;
+  --mat-button-protected-ripple-color: rgba(255, 255, 255, 0.18);
+  --mat-button-protected-state-layer-color: #fff;
+
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.dialog-action-danger.mat-mdc-raised-button:not(:disabled) {
+  --mat-button-protected-container-color: var(--danger-color);
+  --mat-button-protected-label-text-color: #fff;
+  --mat-button-protected-ripple-color: rgba(255, 255, 255, 0.18);
+  --mat-button-protected-state-layer-color: #fff;
+
+  background-color: var(--danger-color);
+  color: #fff;
+}

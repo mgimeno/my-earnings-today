@@ -14,11 +14,12 @@
             mat-raised-button
             color="primary"
             cdkFocusInitial
-            i18n="@@my-earnings.calculate"
           >
-            Calculate
+            <mat-icon>calculate</mat-icon>&nbsp;<span i18n="@@my-earnings.calculate"
+              >Calculate</span
+            >
           </button>
-          <button type="button" mat-button (click)="openShareBottomSheet()">
+          <button type="button" mat-button (click)="shareCurrentUrl()">
             <mat-icon>share</mat-icon>&nbsp;<span i18n="@@my-earnings.share-this">Share this</span>
           </button>
         </div>
@@ -30,14 +31,14 @@
         <app-my-earnings-details [userSelection]="currentUserSelection"></app-my-earnings-details>
         <div class="buttons m-t-40">
           <button type="button" mat-raised-button (click)="goBack()">
-            <mat-icon>reply</mat-icon>&nbsp;<span i18n="@@my-earnings.back">Back</span>
+            <mat-icon>edit</mat-icon>&nbsp;<span i18n="@@my-earnings.back">Edit settings</span>
           </button>
           <button type="button" mat-raised-button color="primary" (click)="goToCompare()">
             <mat-icon>compare_arrows</mat-icon>&nbsp;<span i18n="@@my-earnings.compare"
               >Compare</span
             >
           </button>
-          <button type="button" mat-raised-button (click)="openShareBottomSheet()">
+          <button type="button" mat-raised-button (click)="shareCurrentUrl()">
             <mat-icon>share</mat-icon>&nbsp;<span i18n="@@my-earnings.share-this">Share this</span>
           </button>
         </div>

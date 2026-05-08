@@ -2,17 +2,117 @@
   <h1 i18n="@@select-language.select">Select language</h1>
 
   <div class="buttons">
-    <button type="button" class="big-button" mat-raised-button (click)="selectLanguage('en')">
+    <button
+      type="button"
+      class="big-button"
+      mat-raised-button
+      [class.active]="isActiveLanguage('en')"
+      (click)="selectLanguage('en')"
+    >
       <div class="button-with-right-icon">
         <div>English</div>
-        <img src="assets/images/flags/en.svg" width="64" height="64" alt="English" />
+        <img
+          class="flag-image"
+          src="assets/images/flags/en.svg"
+          width="20"
+          height="20"
+          alt="English"
+        />
       </div>
     </button>
 
-    <button type="button" class="big-button" mat-raised-button (click)="selectLanguage('es')">
+    <button
+      type="button"
+      class="big-button"
+      mat-raised-button
+      [class.active]="isActiveLanguage('es')"
+      (click)="selectLanguage('es')"
+    >
       <div class="button-with-right-icon">
         <div>Español</div>
-        <img src="assets/images/flags/es.svg" width="64" height="64" alt="Español" />
+        <img
+          class="flag-image"
+          src="assets/images/flags/es.svg"
+          width="20"
+          height="20"
+          alt="Español"
+        />
+      </div>
+    </button>
+
+    <button
+      type="button"
+      class="big-button"
+      mat-raised-button
+      [class.active]="isActiveLanguage('fr')"
+      (click)="selectLanguage('fr')"
+    >
+      <div class="button-with-right-icon">
+        <div>Français</div>
+        <img
+          class="flag-image"
+          src="assets/images/flags/fr.svg"
+          width="20"
+          height="20"
+          alt="Français"
+        />
+      </div>
+    </button>
+
+    <button
+      type="button"
+      class="big-button"
+      mat-raised-button
+      [class.active]="isActiveLanguage('de')"
+      (click)="selectLanguage('de')"
+    >
+      <div class="button-with-right-icon">
+        <div>Deutsch</div>
+        <img
+          class="flag-image"
+          src="assets/images/flags/de.svg"
+          width="20"
+          height="20"
+          alt="Deutsch"
+        />
+      </div>
+    </button>
+
+    <button
+      type="button"
+      class="big-button"
+      mat-raised-button
+      [class.active]="isActiveLanguage('it')"
+      (click)="selectLanguage('it')"
+    >
+      <div class="button-with-right-icon">
+        <div>Italiano</div>
+        <img
+          class="flag-image"
+          src="assets/images/flags/it.svg"
+          width="20"
+          height="20"
+          alt="Italiano"
+        />
+      </div>
+    </button>
+
+    <button
+      type="button"
+      class="big-button"
+      mat-raised-button
+      [class.active]="isActiveLanguage('pt')"
+      (click)="selectLanguage('pt')"
+    >
+      <div class="button-with-right-icon">
+        <div>Português</div>
+        <img
+          class="flag-image"
+          src="assets/images/flags/pt.svg"
+          width="20"
+          height="20"
+          alt="Português"
+        />
       </div>
     </button>
   </div>

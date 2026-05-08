@@ -42,6 +42,8 @@ html {
   @include mat.list-theme($earnings-theme);
   @include mat.select-theme($earnings-theme);
   @include mat.sidenav-theme($earnings-theme);
+  @include mat.snack-bar-theme($earnings-theme);
   @include mat.tabs-theme($earnings-theme);
+  @include mat.tooltip-theme($earnings-theme);
   @include mat.toolbar-theme($earnings-theme);
 }

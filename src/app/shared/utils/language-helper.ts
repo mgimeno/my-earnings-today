@@ -1,7 +1,24 @@
-export type SupportedLanguageCode = 'en' | 'es';
+export type SupportedLanguageCode = 'de' | 'en' | 'es' | 'fr' | 'it' | 'pt';
 
 export const DEFAULT_LANGUAGE_CODE: SupportedLanguageCode = 'en';
 export const LANGUAGE_STORAGE_KEY = 'language';
+export const SUPPORTED_LANGUAGE_CODES: readonly SupportedLanguageCode[] = [
+  'de',
+  'en',
+  'es',
+  'fr',
+  'it',
+  'pt',
+];
+
+const OPEN_GRAPH_LOCALES: Record<SupportedLanguageCode, string> = {
+  de: 'de_DE',
+  en: 'en_GB',
+  es: 'es_ES',
+  fr: 'fr_FR',
+  it: 'it_IT',
+  pt: 'pt_PT',
+};
 
 export class LanguageHelper {
   static getSupportedLanguageCode(
@@ -13,11 +30,7 @@ export class LanguageHelper {
       .split('-')[0]
       ?.toLowerCase();
 
-    if (normalizedLanguageCode === 'en' || normalizedLanguageCode === 'es') {
-      return normalizedLanguageCode;
-    }
-
-    return null;
+    return SUPPORTED_LANGUAGE_CODES.find((code) => code === normalizedLanguageCode) ?? null;
   }
 
   static normalizeLanguageCode(languageCode: string | null | undefined): SupportedLanguageCode {
@@ -49,10 +62,12 @@ export class LanguageHelper {
   }
 
   static getOpenGraphLocale(languageCode: SupportedLanguageCode): string {
-    return languageCode === 'es' ? 'es_ES' : 'en_GB';
+    return OPEN_GRAPH_LOCALES[languageCode];
   }
 
   static getAlternateOpenGraphLocale(languageCode: SupportedLanguageCode): string {
-    return languageCode === 'es' ? 'en_GB' : 'es_ES';
+    return OPEN_GRAPH_LOCALES[
+      languageCode === DEFAULT_LANGUAGE_CODE ? 'es' : DEFAULT_LANGUAGE_CODE
+    ];
   }
 }

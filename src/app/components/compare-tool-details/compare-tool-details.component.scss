@@ -50,6 +50,11 @@
   button {
     min-width: 108px;
     border-radius: 6px;
+
+    &[aria-pressed='false'] {
+      background: var(--surface-color);
+      color: var(--ink-color);
+    }
   }
 }
 
@@ -66,6 +71,11 @@
     color: var(--ink-color);
     font-size: 17px;
     font-weight: 800;
+  }
+
+  .chart-expected-select,
+  .chart-hours-select {
+    width: 190px;
   }
 
   .chart-container {

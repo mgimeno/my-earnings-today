@@ -14,9 +14,10 @@ html {
   --mat-select-focused-arrow-color: var(--primary-color-light);
   --mat-option-label-text-font: var(--font-family-base);
   --mat-option-label-text-tracking: 0;
-  --mat-option-selected-state-label-text-color: var(--primary-color-dark);
+  --mat-option-selected-state-label-text-color: #fff;
+  --mat-option-selected-state-layer-color: var(--primary-color);
   --mat-pseudo-checkbox-full-selected-icon-color: var(--primary-color-light);
-  --mat-pseudo-checkbox-minimal-selected-checkmark-color: var(--primary-color-light);
+  --mat-pseudo-checkbox-minimal-selected-checkmark-color: #fff;
   --mat-dialog-container-color: var(--surface-color);
   --mat-dialog-container-shape: 8px;
   --mat-dialog-container-elevation-shadow: var(--lifted-shadow);
@@ -94,8 +95,34 @@ html {
   font-weight: 700;
 }
 
-.mat-mdc-select-arrow {
+.mat-mdc-form-field .mat-mdc-select-arrow-wrapper {
+  width: 28px;
+  justify-content: center;
+  margin-right: -4px;
+}
+
+.mat-mdc-form-field .mat-mdc-select .mat-mdc-select-arrow {
+  width: 24px;
+  height: 24px;
   color: var(--muted-color);
+
+  svg {
+    width: 24px !important;
+    height: 24px !important;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+}
+
+.mat-mdc-select-panel mat-option[role='option'][aria-selected='true']:not([aria-disabled='true']) {
+  --mat-pseudo-checkbox-minimal-selected-checkmark-color: #fff;
+
+  background-color: var(--primary-color);
+  color: #fff;
+
+  > span,
+  .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+    color: #fff;
+  }
 }
 
 .mat-mdc-checkbox .mdc-checkbox {
@@ -110,6 +137,38 @@ html {
   font-size: 14px;
   font-weight: 600;
   transition: color var(--motion-standard) var(--motion-ease);
+}
+
+.week-days .mat-mdc-checkbox {
+  .mat-internal-form-field {
+    align-items: center;
+    width: 100%;
+    min-height: 40px;
+  }
+
+  .mdc-form-field,
+  .mdc-label {
+    cursor: pointer;
+  }
+
+  .mdc-checkbox {
+    margin-right: 0;
+  }
+
+  .mdc-label {
+    display: flex;
+    flex: 1;
+    align-self: stretch;
+    align-items: center;
+    min-width: 0;
+    padding-right: 10px;
+    color: var(--muted-color);
+  }
+
+  &.mat-mdc-checkbox-checked .mdc-label {
+    color: var(--primary-color-dark);
+    font-weight: 800;
+  }
 }
 
 .mat-mdc-checkbox:not(.mat-mdc-checkbox-disabled).mat-accent
@@ -160,14 +219,161 @@ html {
 }
 
 .mat-mdc-dialog-actions {
-  justify-content: center;
-  margin-top: 10px;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 16px 24px 22px;
+}
+
+.mat-mdc-dialog-container {
+  .mat-mdc-dialog-surface {
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background:
+      linear-gradient(180deg, rgba(56, 163, 165, 0.08), transparent 120px), var(--surface-color);
+  }
+
+  .mat-mdc-dialog-title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 0;
+    padding: 22px 24px 8px;
+    color: var(--ink-color);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .mat-mdc-dialog-content {
+    padding: 6px 24px 0;
+    color: var(--muted-color);
+  }
+}
+
+.main-container .sidenav-container {
+  .mat-sidenav,
+  .mat-mdc-nav-list {
+    overflow-x: hidden;
+  }
+
+  .mat-mdc-list-item {
+    box-sizing: border-box;
+    width: calc(100% - 20px);
+    border: 0;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  button.mat-mdc-list-item {
+    appearance: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+  }
+}
+
+.main-container .top-toolbar {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  gap: 8px;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  position: fixed;
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(56, 163, 165, 0.22), transparent 60%), var(--primary-color-dark);
+  box-shadow: 0 8px 22px rgba(23, 58, 86, 0.18);
+
+  .mat-mdc-icon-button {
+    justify-self: start;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+
+    .mat-icon {
+      margin: 0;
+    }
+  }
+
+  .title {
+    overflow: hidden;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.15;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .toolbar-spacer {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .mat-bottom-sheet-container {
   border-radius: 8px 8px 0 0;
   background: var(--surface-color);
   box-shadow: var(--lifted-shadow);
+}
+
+.mat-mdc-snack-bar-container.app-snackbar {
+  --mat-snack-bar-container-shape: 8px;
+
+  .mat-mdc-snackbar-surface {
+    min-width: min(340px, calc(100vw - 32px));
+    padding: 13px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 14px 30px rgba(23, 58, 86, 0.22);
+  }
+
+  .mat-mdc-snack-bar-label {
+    padding: 0;
+  }
+}
+
+.mat-mdc-snack-bar-container.app-snackbar-success {
+  --mat-snack-bar-container-color: var(--success-color);
+  --mat-snack-bar-supporting-text-color: #fff;
+}
+
+.mat-mdc-snack-bar-container.app-snackbar-error {
+  --mat-snack-bar-container-color: var(--danger-color);
+  --mat-snack-bar-supporting-text-color: #fff;
+}
+
+.mat-mdc-tooltip.remove-tooltip {
+  --mat-tooltip-container-color: var(--primary-color-dark);
+  --mat-tooltip-container-shape: 6px;
+  --mat-tooltip-supporting-text-color: #fff;
+  --mat-tooltip-supporting-text-font: var(--font-family-base);
+  --mat-tooltip-supporting-text-tracking: 0;
+  --mat-tooltip-supporting-text-weight: 800;
+
+  .mat-mdc-tooltip-surface {
+    padding: 6px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 18px rgba(23, 58, 86, 0.2);
+  }
+}
+
+button.dialog-action-danger.mat-mdc-raised-button:not(:disabled) {
+  --mat-button-protected-container-color: var(--danger-color);
+  --mat-button-protected-label-text-color: #fff;
+  --mat-button-protected-ripple-color: rgba(255, 255, 255, 0.18);
+  --mat-button-protected-state-layer-color: #fff;
+
+  background-color: var(--danger-color);
+  color: #fff;
 }
 
 .mat-mdc-button.mat-primary,
@@ -184,8 +390,36 @@ html {
   --mat-button-tonal-label-text-color: #fff;
 }
 
+@supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  .main-container .top-toolbar {
+    background:
+      linear-gradient(90deg, rgba(56, 163, 165, 0.22), transparent 60%),
+      color-mix(in srgb, var(--primary-color-dark) 88%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+}
+
 @media (min-height: 800px) {
   .mat-mdc-form-field {
     margin: 10px 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .main-container .top-toolbar {
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    gap: 6px;
+    padding: 0 8px;
+
+    .mat-mdc-icon-button,
+    .toolbar-spacer {
+      width: 38px;
+      height: 38px;
+    }
+
+    .title {
+      font-size: 15px;
+    }
   }
 }

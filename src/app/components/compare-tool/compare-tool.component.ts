@@ -7,16 +7,17 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AppConstants } from '../../shared/constants/app.constant';
 import { IConfirmDialog } from '../../shared/intefaces/confirm-dialog.interface';
 import { UserSelection } from '../../shared/models/user-selection.model';
+import { ShareService } from '../../shared/services/share.service';
 import { StorageService } from '../../shared/services/storage-service';
 import { CommonHelper } from '../../shared/utils/common-helper';
 import { CompareToolDetailsComponent } from '../compare-tool-details/compare-tool-details.component';
@@ -28,6 +29,7 @@ import { UserSelectionComponent } from '../user-selection/user-selection.compone
     MatButtonModule,
     MatIconModule,
     MatTabsModule,
+    MatTooltipModule,
     UserSelectionComponent,
   ],
   templateUrl: './compare-tool.component.html',
@@ -36,8 +38,8 @@ import { UserSelectionComponent } from '../user-selection/user-selection.compone
 })
 export class CompareToolComponent implements OnDestroy {
   private readonly activeRoute = inject(ActivatedRoute);
-  private readonly bottomSheet = inject(MatBottomSheet);
   private readonly storageService = inject(StorageService);
+  private readonly shareService = inject(ShareService);
   private readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
@@ -136,9 +138,12 @@ export class CompareToolComponent implements OnDestroy {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
+        title: $localize`:@@compare-tool.remove-person:Remove person`,
         body: $localize`:@@compare-tool.remove-person-confirmation-text:Do you want to remove this person?`,
         cancelButtonText: $localize`:@@compare-tool.cancel:Cancel`,
         confirmButtonText: $localize`:@@compare-tool.remove:Remove`,
+        confirmButtonIcon: 'delete',
+        confirmButtonType: 'danger',
       } as IConfirmDialog,
     });
 
@@ -163,11 +168,8 @@ export class CompareToolComponent implements OnDestroy {
     window.scrollTo(0, 0);
   }
 
-  async openShareBottomSheet(): Promise<void> {
-    const { ShareBottomSheetComponent } =
-      await import('../share-bottom-sheet/share-bottom-sheet.component');
-
-    this.bottomSheet.open(ShareBottomSheetComponent);
+  async shareCurrentUrl(): Promise<void> {
+    await this.shareService.shareCurrentUrl();
   }
 
   private reorderUserSelections(): void {

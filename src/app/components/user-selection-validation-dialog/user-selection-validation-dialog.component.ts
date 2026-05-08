@@ -7,10 +7,11 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { UserSelection } from '../../shared/models/user-selection.model';
 
 @Component({
-  imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle],
+  imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatIconModule],
   templateUrl: './user-selection-validation-dialog.component.html',
   styleUrls: ['./user-selection-validation-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -24,18 +24,18 @@
     [color]="isShowCharts() ? 'primary' : null"
     [attr.aria-pressed]="isShowCharts()"
     (click)="showCharts()"
-    i18n="@@compare-tool-details.charts"
   >
-    Charts
+    <mat-icon>bar_chart</mat-icon>
+    <span i18n="@@compare-tool-details.charts">Charts</span>
   </button>
   <button
     mat-flat-button
     [color]="!isShowCharts() ? 'primary' : null"
     [attr.aria-pressed]="!isShowCharts()"
     (click)="showDetails()"
-    i18n="@@compare-tool-details.details"
   >
-    Details
+    <mat-icon>list_alt</mat-icon>
+    <span i18n="@@compare-tool-details.details">Details</span>
   </button>
 </div>
 

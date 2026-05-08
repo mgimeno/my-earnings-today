@@ -1,13 +1,34 @@
 @if (data.title) {
-  <h1 mat-dialog-title>{{ data.title }}</h1>
+  <h1 mat-dialog-title>
+    <mat-icon
+      class="dialog-title-icon"
+      [class.dialog-title-icon-danger]="confirmButtonType === 'danger'"
+      aria-hidden="true"
+    >
+      {{ confirmButtonIcon }}
+    </mat-icon>
+    <span>{{ data.title }}</span>
+  </h1>
 }
 <mat-dialog-content>
   {{ data.body }}
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button (click)="onCancel()">{{ data.cancelButtonText }}</button>
-  <button mat-raised-button color="warn" (click)="onConfirm()" cdkFocusInitial>
-    {{ data.confirmButtonText }}
+  <button mat-raised-button class="dialog-cancel-button" (click)="onCancel()">
+    {{ data.cancelButtonText }}
+  </button>
+  <button
+    mat-raised-button
+    class="dialog-action-button"
+    [class.dialog-action-danger]="confirmButtonType === 'danger'"
+    [class.dialog-action-primary]="confirmButtonType === 'primary'"
+    [style.background-color]="actionBackgroundColor"
+    [style.color]="'#fff'"
+    (click)="onConfirm()"
+    cdkFocusInitial
+  >
+    <mat-icon aria-hidden="true">{{ confirmButtonIcon }}</mat-icon>
+    <span>{{ data.confirmButtonText }}</span>
   </button>
 </mat-dialog-actions>
