@@ -17,7 +17,9 @@
   }
 
   <mat-form-field class="rate-form-field">
+    <!-- eslint-disable @angular-eslint/template/no-autofocus -->
     <input
+      #rateInput
       type="number"
       inputmode="decimal"
       min="1"
@@ -28,7 +30,9 @@
       (ngModelChange)="selection.rate = $event"
       [ngModelOptions]="{ standalone: true }"
       autocomplete="off"
+      autofocus
     />
+    <!-- eslint-enable @angular-eslint/template/no-autofocus -->
   </mat-form-field>
 
   <mat-form-field class="currency-form-field">
@@ -104,8 +108,6 @@
       <span class="show-on-small-screen" i18n="@@user-selection.fri">Fri</span>
       <span class="show-on-big-screen" i18n="@@Friday">Friday</span>
     </mat-checkbox>
-  </section>
-  <section class="week-days">
     <mat-checkbox
       [ngModel]="selection.weekWorkingDays[6]"
       (ngModelChange)="selection.weekWorkingDays[6] = $event"
@@ -122,12 +124,11 @@
       <span class="show-on-small-screen" i18n="@@user-selection.sun">Sun</span>
       <span class="show-on-big-screen" i18n="@@Sunday">Sunday</span>
     </mat-checkbox>
-    <span class="empty-block"></span>
-    <span class="empty-block"></span>
-    <span class="empty-block"></span>
   </section>
 
   <br />
+
+  <p class="section-description">{{ workingHoursText() }}</p>
 
   <mat-form-field class="time-form-field">
     <input

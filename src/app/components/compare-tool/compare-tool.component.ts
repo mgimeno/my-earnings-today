@@ -5,6 +5,7 @@ import {
   inject,
   OnDestroy,
   signal,
+  viewChildren,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,6 +44,8 @@ export class CompareToolComponent implements OnDestroy {
   private readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly userSelectionComponents = viewChildren(UserSelectionComponent);
+  private focusRateInputTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   readonly userSelections = signal<UserSelection[]>([]);
   readonly showResults = signal(false);
@@ -125,6 +128,7 @@ export class CompareToolComponent implements OnDestroy {
 
     this.userSelections.update((current) => [...current, newUserSelection]);
     this.activeTabIndex.set(personNumber - 1);
+    this.focusNewestUserRateInput();
   }
 
   canAddMorePersons(): boolean {
@@ -135,11 +139,11 @@ export class CompareToolComponent implements OnDestroy {
     event.stopPropagation();
 
     const { ConfirmDialogComponent } = await import('../confirm-dialog/confirm-dialog.component');
+    const personName = this.getPersonNameToRemove(this.userSelections()[tabIndex]);
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: $localize`:@@compare-tool.remove-person:Remove person`,
-        body: $localize`:@@compare-tool.remove-person-confirmation-text:Do you want to remove this person?`,
+        title: $localize`:@@compare-tool.remove-person-title:Remove ${personName}:personName:`,
         cancelButtonText: $localize`:@@compare-tool.cancel:Cancel`,
         confirmButtonText: $localize`:@@compare-tool.remove:Remove`,
         confirmButtonIcon: 'delete',
@@ -160,6 +164,29 @@ export class CompareToolComponent implements OnDestroy {
           this.activeTabIndex.set(this.userSelections()[tabIndex] ? tabIndex : tabIndex - 1);
         }
       });
+  }
+
+  private getPersonNameToRemove(userSelection: UserSelection): string {
+    const personName = userSelection.name?.trim();
+
+    return (
+      personName || `${$localize`:@@compare-tool.person:Person`} ${userSelection.personNumber}`
+    );
+  }
+
+  private focusNewestUserRateInput(): void {
+    if (this.focusRateInputTimeoutId) {
+      clearTimeout(this.focusRateInputTimeoutId);
+    }
+
+    this.focusRateInputTimeoutId = window.setTimeout(() => {
+      const userSelectionComponents = this.userSelectionComponents();
+      const newestUserSelectionComponent =
+        userSelectionComponents[userSelectionComponents.length - 1];
+
+      newestUserSelectionComponent?.focusRateInput();
+      this.focusRateInputTimeoutId = null;
+    });
   }
 
   goBack(): void {
@@ -215,6 +242,10 @@ export class CompareToolComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.focusRateInputTimeoutId) {
+      clearTimeout(this.focusRateInputTimeoutId);
+    }
+
     this.clearAllIntervals();
   }
 }

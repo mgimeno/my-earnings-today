@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   HostListener,
   inject,
@@ -14,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter, take } from 'rxjs';
@@ -32,6 +34,7 @@ import { LANGUAGE_STORAGE_KEY, LanguageHelper } from './shared/utils/language-he
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTooltipModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -48,7 +51,8 @@ export class AppComponent implements OnDestroy {
   private readonly languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
   private readonly sideNavCollapsedStorageKey = `${environment.localStoragePrefix}side-nav-collapsed`;
 
-  readonly alwaysShowSideNav = signal(CommonHelper.isLargeScreen());
+  readonly screenSize = signal(CommonHelper.getScreenSize());
+  readonly isDesktopScreen = computed(() => this.screenSize() === 'desktop');
   readonly sideNavCollapsed = signal(
     BrowserStorage.getLocalStorageItem(this.sideNavCollapsedStorageKey) === 'true',
   );
@@ -102,7 +106,7 @@ export class AppComponent implements OnDestroy {
     }
 
     this.windowSizeChangeTimeout = setTimeout(() => {
-      this.alwaysShowSideNav.set(CommonHelper.isLargeScreen());
+      this.screenSize.set(CommonHelper.getScreenSize());
     }, 100);
   }
 

@@ -40,9 +40,16 @@
   color: #fff;
   font-size: 13px;
   font-weight: 700;
+  line-height: 1.15;
 
   .add-icon {
+    flex: 0 0 auto;
+    margin-right: 5px;
     color: #fff;
+  }
+
+  .add-person-text {
+    white-space: normal;
   }
 }
 

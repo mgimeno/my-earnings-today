@@ -1,3 +1,5 @@
+@use '../styles/breakpoints';
+
 .mat-toolbar {
   height: var(--header-height);
   min-height: var(--header-height);
@@ -162,7 +164,7 @@
   }
 }
 
-@media (min-width: 800px) {
+@include breakpoints.desktop-up {
   .main-container .sidenav-container .mat-sidenav-content {
     padding: 40px 34px 48px;
   }

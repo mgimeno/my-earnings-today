@@ -10,9 +10,11 @@
     <span>{{ data.title }}</span>
   </h1>
 }
-<mat-dialog-content>
-  {{ data.body }}
-</mat-dialog-content>
+@if (data.body) {
+  <mat-dialog-content>
+    {{ data.body }}
+  </mat-dialog-content>
+}
 
 <mat-dialog-actions>
   <button mat-raised-button class="dialog-cancel-button" (click)="onCancel()">

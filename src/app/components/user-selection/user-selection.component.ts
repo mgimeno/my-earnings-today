@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  input,
+  OnDestroy,
+  AfterViewInit,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
@@ -22,9 +31,12 @@ import { UserSelection } from '../../shared/models/user-selection.model';
   styleUrls: ['./user-selection.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserSelectionComponent {
+export class UserSelectionComponent implements AfterViewInit, OnDestroy {
   readonly userSelection = input.required<UserSelection>();
   readonly isCompareTool = input(false);
+  readonly autoFocusRate = input(true);
+  private readonly rateInput = viewChild<ElementRef<HTMLInputElement>>('rateInput');
+  private focusRateInputTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   readonly fromPlaceholder = $localize`:@@user-selection.from:From`;
   readonly toPlaceholder = $localize`:@@user-selection.to:To`;
@@ -44,10 +56,36 @@ export class UserSelectionComponent {
       ? $localize`:@@user-selection.their-working-week-is:Their working week is`
       : $localize`:@@user-selection.your-working-week-is:Your working week is`,
   );
+  readonly workingHoursText = computed(() =>
+    this.isOtherPerson()
+      ? $localize`:@@user-selection.their-working-hours-are:Their working hours are`
+      : $localize`:@@user-selection.your-working-hours-are:Your working hours are`,
+  );
 
   readonly allCurrencySymbols = AppConstants.Common.CURRENCY_SYMBOLS;
   readonly allFrequencies = AppConstants.Common.FREQUENCIES;
   readonly showName = computed(() => this.isCompareTool());
+
+  focusRateInput(): void {
+    this.rateInput()?.nativeElement.focus();
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.autoFocusRate()) {
+      return;
+    }
+
+    this.focusRateInputTimeoutId = window.setTimeout(() => {
+      this.focusRateInput();
+      this.focusRateInputTimeoutId = null;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.focusRateInputTimeoutId) {
+      clearTimeout(this.focusRateInputTimeoutId);
+    }
+  }
 
   private isOtherPerson(): boolean {
     return this.isCompareTool() && this.userSelection().personNumber > 1;

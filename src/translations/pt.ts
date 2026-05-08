@@ -18,7 +18,7 @@ export const PT_TRANSLATIONS: AppTranslations = {
   'compare-tool.share-this': 'Partilhar',
   'compare-tool.person': 'Pessoa',
   'compare-tool.remove-person': 'Remover pessoa',
-  'compare-tool.remove-person-confirmation-text': 'Queres remover esta pessoa?',
+  'compare-tool.remove-person-title': 'Remover {$personName}',
   'compare-tool.cancel': 'Cancelar',
   'compare-tool.remove': 'Remover',
 
@@ -62,6 +62,8 @@ export const PT_TRANSLATIONS: AppTranslations = {
   'user-selection.how-much-you-earn': 'Quanto ganhas?',
   'user-selection.their-working-week-is': 'A semana de trabalho da pessoa é',
   'user-selection.your-working-week-is': 'A tua semana de trabalho é',
+  'user-selection.their-working-hours-are': 'O horário de trabalho da pessoa é',
+  'user-selection.your-working-hours-are': 'O teu horário de trabalho é',
   'user-selection.from': 'Das',
   'user-selection.to': 'Às',
   'user-selection.mon': 'Seg',

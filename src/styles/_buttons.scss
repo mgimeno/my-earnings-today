@@ -1,3 +1,5 @@
+@use 'breakpoints';
+
 .buttons {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,8 @@
   text-align: center;
 
   button {
-    width: var(--button-width);
+    width: auto;
+    min-width: var(--button-width);
     max-width: 100%;
     min-height: 44px;
     border-radius: 8px;
@@ -66,7 +69,7 @@
     transform var(--motion-fast) var(--motion-ease);
 }
 
-@media (min-width: 640px) {
+@include breakpoints.tablet-up {
   .buttons {
     flex-flow: row wrap;
     justify-content: center;

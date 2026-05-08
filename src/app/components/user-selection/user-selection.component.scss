@@ -1,3 +1,5 @@
+@use '../../../styles/breakpoints';
+
 .user-selection {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -18,15 +20,16 @@
     border-color: var(--primary-border-hover);
     box-shadow: var(--lifted-shadow);
   }
+
 }
 
 .rate-form-field {
-  grid-column: span 9;
+  grid-column: span 8;
   width: 100%;
 }
 
 .currency-form-field {
-  grid-column: span 3;
+  grid-column: span 4;
   width: 100%;
 }
 
@@ -46,7 +49,7 @@
 
 .section-description {
   grid-column: 1 / -1;
-  margin: 2px 0 -2px;
+  margin: 18px 0 -2px;
   text-align: left;
   font-size: 14px;
   color: var(--primary-color);
@@ -92,7 +95,7 @@
     display: none;
   }
 
-  @media only screen and (min-width: 635px) {
+  @include breakpoints.tablet-up {
     .show-on-small-screen {
       display: none;
     }
@@ -116,22 +119,26 @@ br {
   display: none;
 }
 
-@media (max-width: 520px) {
+@include breakpoints.tablet-up {
+  .rate-form-field {
+    grid-column: span 6;
+  }
+
+  .currency-form-field {
+    grid-column: span 2;
+  }
+
+  .frequency-form-field {
+    grid-column: span 4;
+  }
+}
+
+@include breakpoints.mobile-only {
   .user-selection {
     padding: 14px;
   }
 
-  .rate-form-field,
-  .currency-form-field,
-  .time-form-field {
-    grid-column: 1 / -1;
-  }
-
   .week-days {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    .empty-block {
-      display: none;
-    }
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

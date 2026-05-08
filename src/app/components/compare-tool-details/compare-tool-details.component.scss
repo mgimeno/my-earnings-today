@@ -1,3 +1,5 @@
+@use '../../../styles/breakpoints';
+
 .today-earned-container {
   display: grid;
   gap: 10px;
@@ -94,7 +96,7 @@
   }
 }
 
-@media (max-width: 520px) {
+@include breakpoints.mobile-only {
   .today-earned-container .person {
     grid-template-columns: 1fr;
     gap: 6px;

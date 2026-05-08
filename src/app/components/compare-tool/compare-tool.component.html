@@ -32,6 +32,7 @@
             <app-user-selection
               [userSelection]="userSelection"
               [isCompareTool]="true"
+              [autoFocusRate]="activeTabIndex() === index"
             ></app-user-selection>
           </mat-tab>
         }
@@ -44,10 +45,8 @@
           [disabled]="!canAddMorePersons()"
           (click)="addPerson()"
         >
-          <mat-icon class="add-icon">person_add</mat-icon>&nbsp;<span
-            i18n="@@compare-tool.add-person"
-            >Add person</span
-          >
+          <mat-icon class="add-icon">person_add</mat-icon>
+          <span class="add-person-text" i18n="@@compare-tool.add-person">Add person</span>
         </button>
         <button type="submit" class="text-center" mat-raised-button color="primary" cdkFocusInitial>
           <mat-icon>calculate</mat-icon>&nbsp;<span i18n="@@compare-tool.calculate">Calculate</span>

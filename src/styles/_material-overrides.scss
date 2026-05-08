@@ -113,6 +113,10 @@ html {
   }
 }
 
+.user-selection .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
 .mat-mdc-select-panel mat-option[role='option'][aria-selected='true']:not([aria-disabled='true']) {
   --mat-pseudo-checkbox-minimal-selected-checkmark-color: #fff;
 
@@ -152,7 +156,7 @@ html {
   }
 
   .mdc-checkbox {
-    margin-right: 0;
+    margin-right: -2px;
   }
 
   .mdc-label {
@@ -289,6 +293,9 @@ html {
 
   .mat-mdc-icon-button {
     justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     padding: 0;
@@ -298,7 +305,11 @@ html {
     color: #fff;
 
     .mat-icon {
+      display: block;
+      width: 24px;
+      height: 24px;
       margin: 0;
+      line-height: 24px;
     }
   }
 

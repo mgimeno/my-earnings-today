@@ -1,9 +1,9 @@
 <div class="main-container">
-  @let largeScreen = alwaysShowSideNav();
+  @let desktopScreen = isDesktopScreen();
   @let url = currentUrl();
-  @let sideNavIsCollapsed = largeScreen && sideNavCollapsed();
+  @let sideNavIsCollapsed = desktopScreen && sideNavCollapsed();
 
-  @if (!largeScreen) {
+  @if (!desktopScreen) {
     <mat-toolbar color="primary" class="top-toolbar">
       <button
         mat-icon-button
@@ -21,21 +21,21 @@
 
   <mat-sidenav-container
     class="sidenav-container"
-    [class.has-top-bar]="!largeScreen"
+    [class.has-top-bar]="!desktopScreen"
     [class.is-collapsed]="sideNavIsCollapsed"
-    [autosize]="largeScreen"
-    [hasBackdrop]="!largeScreen"
+    [autosize]="desktopScreen"
+    [hasBackdrop]="!desktopScreen"
   >
     <mat-sidenav
       #snav
-      [fixedTopGap]="largeScreen ? 0 : 56"
+      [fixedTopGap]="desktopScreen ? 0 : 56"
       role="navigation"
-      [mode]="largeScreen ? 'side' : 'over'"
-      [opened]="largeScreen"
+      [mode]="desktopScreen ? 'side' : 'over'"
+      [opened]="desktopScreen"
       [fixedInViewport]="true"
     >
       <mat-nav-list>
-        @if (largeScreen) {
+        @if (desktopScreen) {
           <div class="sidenav-header">
             <a
               class="sidenav-title"
@@ -51,10 +51,15 @@
         <a
           mat-list-item
           [routerLink]="['/']"
-          (click)="scrollToTop(); !largeScreen && snav.toggle()"
+          (click)="scrollToTop(); !desktopScreen && snav.toggle()"
           [class.active]="url === '/' || url.startsWith('/?')"
           aria-label="My earnings"
           i18n-aria-label="@@menu.my-earnings"
+          matTooltip="My earnings"
+          i18n-matTooltip="@@menu.my-earnings"
+          [matTooltipDisabled]="!sideNavIsCollapsed"
+          matTooltipPosition="right"
+          matTooltipClass="remove-tooltip"
         >
           <mat-icon matListItemIcon class="nav-icon">payments</mat-icon>
           <span matListItemTitle class="nav-item-text" i18n="@@menu.my-earnings">
@@ -64,10 +69,15 @@
         <a
           mat-list-item
           [routerLink]="['/compare']"
-          (click)="scrollToTop(); !largeScreen && snav.toggle()"
+          (click)="scrollToTop(); !desktopScreen && snav.toggle()"
           [class.active]="url.startsWith('/compare')"
           aria-label="Compare"
           i18n-aria-label="@@menu.compare"
+          matTooltip="Compare"
+          i18n-matTooltip="@@menu.compare"
+          [matTooltipDisabled]="!sideNavIsCollapsed"
+          matTooltipPosition="right"
+          matTooltipClass="remove-tooltip"
         >
           <mat-icon matListItemIcon class="nav-icon">compare_arrows</mat-icon>
           <span matListItemTitle class="nav-item-text" i18n="@@menu.compare">Compare</span>
@@ -75,10 +85,15 @@
         <button
           mat-list-item
           type="button"
-          (click)="openSelectLanguage(); !largeScreen && snav.toggle()"
-          [class.grayscale-image-when-not-hover]="largeScreen"
+          (click)="openSelectLanguage(); !desktopScreen && snav.toggle()"
+          [class.grayscale-image-when-not-hover]="desktopScreen"
           aria-label="Language"
           i18n-aria-label="@@menu.language"
+          matTooltip="Language"
+          i18n-matTooltip="@@menu.language"
+          [matTooltipDisabled]="!sideNavIsCollapsed"
+          matTooltipPosition="right"
+          matTooltipClass="remove-tooltip"
         >
           <span matListItemIcon class="nav-icon language-icon">
             <img
@@ -94,10 +109,15 @@
         <a
           mat-list-item
           [routerLink]="['/about']"
-          (click)="scrollToTop(); !largeScreen && snav.toggle()"
+          (click)="scrollToTop(); !desktopScreen && snav.toggle()"
           [class.active]="url.startsWith('/about')"
           aria-label="Help"
           i18n-aria-label="@@menu.help"
+          matTooltip="Help"
+          i18n-matTooltip="@@menu.help"
+          [matTooltipDisabled]="!sideNavIsCollapsed"
+          matTooltipPosition="right"
+          matTooltipClass="remove-tooltip"
         >
           <mat-icon matListItemIcon class="nav-icon">help</mat-icon>
           <span matListItemTitle class="nav-item-text" i18n="@@menu.help">Help</span>
@@ -112,7 +132,7 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 
-  @if (largeScreen) {
+  @if (desktopScreen) {
     <button
       mat-icon-button
       type="button"
