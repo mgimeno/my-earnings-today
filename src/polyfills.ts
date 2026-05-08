@@ -6,7 +6,7 @@ import { APP_TRANSLATIONS } from './translations/translations';
 
 const languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
 const storedLanguage = BrowserStorage.getLocalStorageItem(languageStorageKey);
-const browserLanguages = navigator.languages.length ? navigator.languages : [navigator.language];
+const browserLanguages = LanguageHelper.getBrowserLanguageCodes();
 const language = LanguageHelper.getAppLanguageCode(storedLanguage, browserLanguages);
 const translations = APP_TRANSLATIONS[language];
 

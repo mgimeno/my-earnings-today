@@ -8,7 +8,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { IConfirmDialog } from '../../shared/intefaces/confirm-dialog.interface';
+import { IConfirmDialog } from '../../shared/interfaces/confirm-dialog.interface';
 
 @Component({
   imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatIconModule],

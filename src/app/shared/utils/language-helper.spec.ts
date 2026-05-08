@@ -1,7 +1,37 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { DEFAULT_LANGUAGE_CODE, LanguageHelper } from './language-helper';
 
 describe('LanguageHelper', () => {
+  const originalLanguages = navigator.languages;
+  const originalLanguage = navigator.language;
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    setNavigatorValue('languages', originalLanguages);
+    setNavigatorValue('language', originalLanguage);
+  });
+
+  it('gets browser language codes by browser priority', () => {
+    setNavigatorValue('languages', ['fr-FR', 'es-ES']);
+    setNavigatorValue('language', 'en-US');
+
+    expect(LanguageHelper.getBrowserLanguageCodes()).toEqual(['fr-FR', 'es-ES']);
+  });
+
+  it('falls back to the primary browser language', () => {
+    setNavigatorValue('languages', []);
+    setNavigatorValue('language', 'de-DE');
+
+    expect(LanguageHelper.getBrowserLanguageCodes()).toEqual(['de-DE']);
+  });
+
+  it('returns an empty language list when the browser exposes none', () => {
+    setNavigatorValue('languages', []);
+    setNavigatorValue('language', '');
+
+    expect(LanguageHelper.getBrowserLanguageCodes()).toEqual([]);
+  });
+
   it('normalizes supported language tags', () => {
     expect(LanguageHelper.getSupportedLanguageCode('en')).toBe('en');
     expect(LanguageHelper.getSupportedLanguageCode('en-US')).toBe('en');
@@ -13,6 +43,7 @@ describe('LanguageHelper', () => {
     expect(LanguageHelper.getSupportedLanguageCode('fr-FR')).toBe('fr');
     expect(LanguageHelper.getSupportedLanguageCode('it-IT')).toBe('it');
     expect(LanguageHelper.getSupportedLanguageCode('pt-BR')).toBe('pt');
+    expect(LanguageHelper.getSupportedLanguageCode('pt_BR_variant')).toBe('pt');
   });
 
   it('rejects empty and unsupported language tags', () => {
@@ -85,4 +116,11 @@ describe('LanguageHelper', () => {
     expect(LanguageHelper.getAlternateOpenGraphLocale('es')).toBe('en_GB');
     expect(LanguageHelper.getAlternateOpenGraphLocale('de')).toBe('en_GB');
   });
+
+  function setNavigatorValue(key: 'language' | 'languages', value: unknown): void {
+    Object.defineProperty(navigator, key, {
+      configurable: true,
+      value,
+    });
+  }
 });

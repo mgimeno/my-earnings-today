@@ -34,8 +34,8 @@ export class UserSelectionValidationDialogComponent {
 
   getValidationMessageForRate(userSelection: UserSelection): string {
     return userSelection.personNumber > 1
-      ? $localize`:@@user-validation.type-how-much-they-earn:Type how much they earn`
-      : $localize`:@@user-validation.type-how-much-you-earn:Type how much you earn`;
+      ? $localize`:@@user-validation.how-much-they-earn:How much they earn`
+      : $localize`:@@user-validation.how-much-you-earn:How much you earn`;
   }
 
   onClose(): void {

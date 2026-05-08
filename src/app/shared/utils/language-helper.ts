@@ -21,12 +21,20 @@ const OPEN_GRAPH_LOCALES: Record<SupportedLanguageCode, string> = {
 };
 
 export class LanguageHelper {
+  static getBrowserLanguageCodes(): readonly string[] {
+    if (navigator.languages.length) {
+      return navigator.languages;
+    }
+
+    return navigator.language ? [navigator.language] : [];
+  }
+
   static getSupportedLanguageCode(
     languageCode: string | null | undefined,
   ): SupportedLanguageCode | null {
     const normalizedLanguageCode = languageCode
       ?.trim()
-      .replace('_', '-')
+      .replace(/_/g, '-')
       .split('-')[0]
       ?.toLowerCase();
 

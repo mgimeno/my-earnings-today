@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { AppConstants } from '../constants/app.constant';
 import { StorageKeyEnum } from '../enums/storage-keys.enum';
 import { WeekDaysEnum } from '../enums/week-days.enum';
-import { INameValue } from '../intefaces/name-value.interface';
+import { INameValue } from '../interfaces/name-value.interface';
 import { UserSelection } from '../models/user-selection.model';
 import { BrowserStorage } from '../utils/browser-storage';
 import { CurrencyHelper } from '../utils/currency-helper';

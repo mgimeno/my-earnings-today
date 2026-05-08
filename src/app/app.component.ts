@@ -60,7 +60,7 @@ export class AppComponent implements OnDestroy {
   readonly currentLanguageCode = signal(
     LanguageHelper.getAppLanguageCode(
       BrowserStorage.getLocalStorageItem(this.languageStorageKey),
-      navigator.languages.length ? navigator.languages : [navigator.language],
+      LanguageHelper.getBrowserLanguageCodes(),
     ),
   );
   readonly collapseNavigationLabel = $localize`:@@menu.collapse-navigation:Collapse navigation`;

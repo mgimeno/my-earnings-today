@@ -1,4 +1,5 @@
 import { AppConstants } from '../constants/app.constant';
+import { LanguageHelper } from './language-helper';
 
 export class CurrencyHelper {
   private static readonly REGION_CURRENCY_SYMBOLS = new Map<string, string>([
@@ -62,14 +63,6 @@ export class CurrencyHelper {
     ['XK', '€'],
   ]);
 
-  static getBrowserLanguageCodes(): readonly string[] {
-    if (navigator.languages.length) {
-      return navigator.languages;
-    }
-
-    return navigator.language ? [navigator.language] : [];
-  }
-
   static getSupportedCurrencySymbol(
     currencySymbol: string | null | undefined,
     supportedCurrencySymbols: readonly string[] = AppConstants.Common.CURRENCY_SYMBOLS,
@@ -88,7 +81,7 @@ export class CurrencyHelper {
       | string
       | null
       | undefined
-    )[] = CurrencyHelper.getBrowserLanguageCodes(),
+    )[] = LanguageHelper.getBrowserLanguageCodes(),
     supportedCurrencySymbols: readonly string[] = AppConstants.Common.CURRENCY_SYMBOLS,
   ): string {
     for (const languageCode of languageCodes) {

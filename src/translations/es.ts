@@ -92,7 +92,7 @@ export const ES_TRANSLATIONS: AppTranslations = {
   'menu.help': 'Ayuda',
 
   'user-validation.title': 'Faltan datos',
-  'user-validation.name': 'Escribe un nombre',
+  'user-validation.name': 'Nombre',
   'user-validation.currency': 'Selecciona una divisa',
   'user-validation.period': 'Selecciona un periodo de pago',
   'user-validation.at-least-one-day': 'Selecciona al menos un día de la semana',
@@ -101,8 +101,8 @@ export const ES_TRANSLATIONS: AppTranslations = {
   'user-validation.from-greater-than-to': "'Desde' debe ser antes que 'Hasta'",
   'user-validation.at-least-add-one-more': 'Añade al menos una persona más',
   'user-validation.got-it': 'Entendido',
-  'user-validation.type-how-much-they-earn': 'Escribe cuánto gana',
-  'user-validation.type-how-much-you-earn': 'Escribe cuánto ganas',
+  'user-validation.how-much-they-earn': 'Cuánto gana',
+  'user-validation.how-much-you-earn': 'Cuánto ganas',
 
   'about.title': 'Sobre la app',
   'about.calculations': 'Cálculos',

@@ -28,7 +28,7 @@ import ChartDataLabels, { Context as ChartDataLabelsContext } from 'chartjs-plug
 import { AppConstants } from '../../shared/constants/app.constant';
 import { CurrencyDirective } from '../../shared/directives/currency.directive';
 import { PeriodEnum } from '../../shared/enums/period.enum';
-import { INameValue } from '../../shared/intefaces/name-value.interface';
+import { INameValue } from '../../shared/interfaces/name-value.interface';
 import { UserSelection } from '../../shared/models/user-selection.model';
 import { CommonHelper } from '../../shared/utils/common-helper';
 import { DateHelper } from '../../shared/utils/date-helper';

@@ -1,4 +1,4 @@
-import { INameValue } from '../intefaces/name-value.interface';
+import { INameValue } from '../interfaces/name-value.interface';
 
 export type EarningTileAmountProperty =
   | 'stopwatchAmount'

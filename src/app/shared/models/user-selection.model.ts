@@ -1,8 +1,9 @@
 import { AppConstants } from '../constants/app.constant';
 import { PeriodEnum } from '../enums/period.enum';
-import { INameValue } from '../intefaces/name-value.interface';
+import { INameValue } from '../interfaces/name-value.interface';
 import { CurrencyHelper } from '../utils/currency-helper';
 import { DateHelper } from '../utils/date-helper';
+import { LanguageHelper } from '../utils/language-helper';
 import { TranslationHelper } from '../utils/translation-helper';
 
 interface DateRange {
@@ -576,7 +577,7 @@ export class UserSelection {
       | string
       | null
       | undefined
-    )[] = CurrencyHelper.getBrowserLanguageCodes(),
+    )[] = LanguageHelper.getBrowserLanguageCodes(),
   ): void {
     this.startTime = '09:00';
     this.endTime = '17:00';

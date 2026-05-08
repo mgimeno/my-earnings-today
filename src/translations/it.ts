@@ -94,7 +94,7 @@ export const IT_TRANSLATIONS: AppTranslations = {
   'menu.help': 'Aiuto',
 
   'user-validation.title': 'Dati mancanti',
-  'user-validation.name': 'Inserisci un nome',
+  'user-validation.name': 'Nome',
   'user-validation.currency': 'Seleziona un simbolo di valuta',
   'user-validation.period': 'Seleziona un periodo di pagamento',
   'user-validation.at-least-one-day': 'Seleziona almeno un giorno della settimana',
@@ -103,8 +103,8 @@ export const IT_TRANSLATIONS: AppTranslations = {
   'user-validation.from-greater-than-to': "'Da' deve essere prima di 'A'",
   'user-validation.at-least-add-one-more': "Aggiungi almeno un'altra persona",
   'user-validation.got-it': 'Capito',
-  'user-validation.type-how-much-they-earn': 'Inserisci quanto guadagna',
-  'user-validation.type-how-much-you-earn': 'Inserisci quanto guadagni',
+  'user-validation.how-much-they-earn': 'Quanto guadagna',
+  'user-validation.how-much-you-earn': 'Quanto guadagni',
 
   'about.title': "Informazioni sull'app",
   'about.calculations': 'Calcoli',

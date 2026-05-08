@@ -16,7 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AppConstants } from '../../shared/constants/app.constant';
-import { IConfirmDialog } from '../../shared/intefaces/confirm-dialog.interface';
+import { IConfirmDialog } from '../../shared/interfaces/confirm-dialog.interface';
 import { UserSelection } from '../../shared/models/user-selection.model';
 import { ShareService } from '../../shared/services/share.service';
 import { StorageService } from '../../shared/services/storage-service';
@@ -140,15 +140,16 @@ export class CompareToolComponent implements OnDestroy {
 
     const { ConfirmDialogComponent } = await import('../confirm-dialog/confirm-dialog.component');
     const personName = this.getPersonNameToRemove(this.userSelections()[tabIndex]);
+    const dialogData: IConfirmDialog = {
+      title: $localize`:@@compare-tool.remove-person-title:Remove ${personName}:personName:`,
+      cancelButtonText: $localize`:@@compare-tool.cancel:Cancel`,
+      confirmButtonText: $localize`:@@compare-tool.remove:Remove`,
+      confirmButtonIcon: 'delete',
+      confirmButtonType: 'danger',
+    };
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        title: $localize`:@@compare-tool.remove-person-title:Remove ${personName}:personName:`,
-        cancelButtonText: $localize`:@@compare-tool.cancel:Cancel`,
-        confirmButtonText: $localize`:@@compare-tool.remove:Remove`,
-        confirmButtonIcon: 'delete',
-        confirmButtonType: 'danger',
-      } as IConfirmDialog,
+      data: dialogData,
     });
 
     dialogRef

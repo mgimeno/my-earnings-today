@@ -1,4 +1,4 @@
-import { ITimeBetweenDates } from '../intefaces/time-between-dates.interface';
+import { ITimeBetweenDates } from '../interfaces/time-between-dates.interface';
 
 const MILLISECONDS_PER_SECOND = 1000;
 const SECONDS_PER_HOUR = 3600;

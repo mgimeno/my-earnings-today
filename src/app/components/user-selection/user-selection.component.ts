@@ -1,11 +1,11 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
   input,
   OnDestroy,
-  AfterViewInit,
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';

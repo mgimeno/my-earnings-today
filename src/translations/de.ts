@@ -94,7 +94,7 @@ export const DE_TRANSLATIONS: AppTranslations = {
   'menu.help': 'Hilfe',
 
   'user-validation.title': 'Angaben fehlen',
-  'user-validation.name': 'Gib einen Namen ein',
+  'user-validation.name': 'Name',
   'user-validation.currency': 'Wähle ein Währungssymbol',
   'user-validation.period': 'Wähle einen Zahlungszeitraum',
   'user-validation.at-least-one-day': 'Wähle mindestens einen Wochentag aus',
@@ -103,8 +103,8 @@ export const DE_TRANSLATIONS: AppTranslations = {
   'user-validation.from-greater-than-to': "'Von' muss vor 'Bis' liegen",
   'user-validation.at-least-add-one-more': 'Füge mindestens eine weitere Person hinzu',
   'user-validation.got-it': 'Verstanden',
-  'user-validation.type-how-much-they-earn': 'Gib ein, wie viel diese Person verdient',
-  'user-validation.type-how-much-you-earn': 'Gib ein, wie viel du verdienst',
+  'user-validation.how-much-they-earn': 'Wie viel diese Person verdient',
+  'user-validation.how-much-you-earn': 'Wie viel du verdienst',
 
   'about.title': 'Über die App',
   'about.calculations': 'Berechnungen',

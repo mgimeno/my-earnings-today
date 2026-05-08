@@ -94,7 +94,7 @@ export const FR_TRANSLATIONS: AppTranslations = {
   'menu.help': 'Aide',
 
   'user-validation.title': 'Informations manquantes',
-  'user-validation.name': 'Saisissez un nom',
+  'user-validation.name': 'Nom',
   'user-validation.currency': 'Sélectionnez un symbole monétaire',
   'user-validation.period': 'Sélectionnez une période de paiement',
   'user-validation.at-least-one-day': 'Sélectionnez au moins un jour de la semaine',
@@ -103,8 +103,8 @@ export const FR_TRANSLATIONS: AppTranslations = {
   'user-validation.from-greater-than-to': "'De' doit être avant 'À'",
   'user-validation.at-least-add-one-more': 'Ajoutez au moins une personne de plus',
   'user-validation.got-it': 'Compris',
-  'user-validation.type-how-much-they-earn': 'Saisissez combien gagne cette personne',
-  'user-validation.type-how-much-you-earn': 'Saisissez combien vous gagnez',
+  'user-validation.how-much-they-earn': 'Combien gagne cette personne',
+  'user-validation.how-much-you-earn': 'Combien vous gagnez',
 
   'about.title': "À propos de l'app",
   'about.calculations': 'Calculs',
@@ -130,7 +130,7 @@ export const FR_TRANSLATIONS: AppTranslations = {
   'share.link-copied': 'Lien copié',
   'share.copy-failed': 'Impossible de copier le lien',
 
-  'frequencies.per-hour': "de l'heure",
+  'frequencies.per-hour': 'par heure',
   'frequencies.per-day': 'par jour',
   'frequencies.per-week': 'par semaine',
   'frequencies.per-month': 'par mois',
