@@ -42,10 +42,11 @@
 @if (isShowCharts()) {
   <div class="charts-container">
     <h2>
-      <span i18n="@@compare-tool-details.total-expected">Total expected</span>&nbsp;<mat-form-field
+      <span i18n="@@compare-tool-details.total-expected">Total expected</span><mat-form-field
         class="chart-expected-select highlight-select"
       >
         <mat-select
+          panelClass="highlight-select-panel"
           [(ngModel)]="chartSelectedExpectedPeriod"
           [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="onChartExpectedPeriodChanged()"
@@ -66,8 +67,9 @@
     </div>
     <h2>
       <span i18n="@@compare-tool-details.hours-worked-per">Hours worked per</span
-      >&nbsp;<mat-form-field class="chart-hours-select highlight-select">
+      ><mat-form-field class="chart-hours-select highlight-select">
         <mat-select
+          panelClass="highlight-select-panel"
           [(ngModel)]="chartSelectedHoursPeriod"
           [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="onChartHoursPeriodChanged()"
@@ -94,6 +96,7 @@
     <h2>
       <mat-form-field class="details-type-select highlight-select">
         <mat-select
+          panelClass="highlight-select-panel"
           [ngModel]="detailsSelectedType()"
           [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="detailsSelectedType.set($event)"

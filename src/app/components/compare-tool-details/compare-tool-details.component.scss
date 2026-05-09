@@ -65,9 +65,9 @@
 
   h2 {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+    align-items: baseline;
     justify-content: center;
     margin: 30px 0 12px;
     color: var(--ink-color);
@@ -77,7 +77,7 @@
 
   .chart-expected-select,
   .chart-hours-select {
-    width: 190px;
+    width: auto;
   }
 
   .chart-container {
