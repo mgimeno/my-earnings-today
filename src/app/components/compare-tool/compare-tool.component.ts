@@ -21,6 +21,7 @@ import { UserSelection } from '../../shared/models/user-selection.model';
 import { ShareService } from '../../shared/services/share.service';
 import { StorageService } from '../../shared/services/storage-service';
 import { CommonHelper } from '../../shared/utils/common-helper';
+import { ScrollHelper } from '../../shared/utils/scroll-helper';
 import { CompareToolDetailsComponent } from '../compare-tool-details/compare-tool-details.component';
 import { UserSelectionComponent } from '../user-selection/user-selection.component';
 
@@ -119,7 +120,7 @@ export class CompareToolComponent implements OnDestroy {
   }
 
   addPerson(): void {
-    window.scrollTo(0, 0);
+    ScrollHelper.scrollToTop();
 
     const personNumber = this.userSelections().length + 1;
 
@@ -193,7 +194,7 @@ export class CompareToolComponent implements OnDestroy {
   goBack(): void {
     void this.router.navigate(['/compare']);
 
-    window.scrollTo(0, 0);
+    ScrollHelper.scrollToTop();
   }
 
   async shareCurrentUrl(): Promise<void> {

@@ -23,6 +23,7 @@ import { environment } from '../environments/environment';
 import { BrowserStorage } from './shared/utils/browser-storage';
 import { CommonHelper } from './shared/utils/common-helper';
 import { LANGUAGE_STORAGE_KEY, LanguageHelper } from './shared/utils/language-helper';
+import { ScrollHelper } from './shared/utils/scroll-helper';
 
 @Component({
   selector: 'app-root',
@@ -85,6 +86,7 @@ export class AppComponent implements OnDestroy {
       .subscribe((event) => {
         if (event instanceof NavigationEnd) {
           this.currentUrl.set(event.urlAfterRedirects);
+          this.scrollToTop();
           return;
         }
 
@@ -132,7 +134,7 @@ export class AppComponent implements OnDestroy {
   }
 
   scrollToTop(): void {
-    window.scrollTo(0, 0);
+    ScrollHelper.scrollToTop();
   }
 
   toggleSideNav(): void {
