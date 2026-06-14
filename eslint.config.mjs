@@ -11,6 +11,12 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   ...angular.configs.tsRecommended,
   {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
     files: ['**/*.ts'],
     languageOptions: {
       globals: globals.browser,

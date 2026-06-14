@@ -81,23 +81,21 @@ export class AppComponent implements OnDestroy {
   }
 
   constructor() {
-    this.router.events
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this.currentUrl.set(event.urlAfterRedirects);
-          this.scrollToTop();
-          return;
-        }
+    this.router.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl.set(event.urlAfterRedirects);
+        this.scrollToTop();
+        return;
+      }
 
-        if (event instanceof NavigationError && this.isStaleChunkError(event)) {
-          // A new deployment has produced new chunk filenames. The currently
-          // running app still references deleted chunks, so lazy-load
-          // navigations fail. Reload to fetch the new index.html.
-          console.error(`Stale chunk detected. Reloading: ${event.url}`, event);
-          window.location.assign(event.url || window.location.href);
-        }
-      });
+      if (event instanceof NavigationError && this.isStaleChunkError(event)) {
+        // A new deployment has produced new chunk filenames. The currently
+        // running app still references deleted chunks, so lazy-load
+        // navigations fail. Reload to fetch the new index.html.
+        console.error(`Stale chunk detected. Reloading: ${event.url}`, event);
+        window.location.assign(event.url || window.location.href);
+      }
+    });
 
     this.addTitleAndMetaTags();
   }
