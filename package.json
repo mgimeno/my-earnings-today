@@ -17,7 +17,9 @@
     "lint": "eslint .",
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "check-all-updatable-dependencies": "npx npm-check-updates -u",
+    "update-all-dependencies": "npx npm-check-updates -u && npm i -f"
   },
   "browserslist": [
     "last 2 Chrome versions",
