@@ -20,6 +20,7 @@ import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { NavigationEnd, NavigationError, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { take } from 'rxjs';
 import { environment } from '../environments/environment';
+import { ChunkLoadReloadService } from './shared/services/chunk-load-reload.service';
 import { BrowserStorage } from './shared/utils/browser-storage';
 import { CommonHelper } from './shared/utils/common-helper';
 import { LANGUAGE_STORAGE_KEY, LanguageHelper } from './shared/utils/language-helper';
@@ -47,6 +48,7 @@ export class AppComponent implements OnDestroy {
   private readonly title = inject(Title);
   private readonly bottomSheet = inject(MatBottomSheet);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly chunkLoadReloadService = inject(ChunkLoadReloadService);
 
   private windowSizeChangeTimeout: ReturnType<typeof setTimeout> | null = null;
   private readonly languageStorageKey = `${environment.localStoragePrefix}${LANGUAGE_STORAGE_KEY}`;
@@ -67,19 +69,6 @@ export class AppComponent implements OnDestroy {
   readonly collapseNavigationLabel = $localize`:@@menu.collapse-navigation:Collapse navigation`;
   readonly expandNavigationLabel = $localize`:@@menu.expand-navigation:Expand navigation`;
 
-  private readonly CHUNK_ERROR_PATTERNS = [
-    /Loading chunk [\w.-]+ failed/i,
-    /ChunkLoadError/i,
-    /Failed to fetch dynamically imported module/i,
-    /error loading dynamically imported module/i,
-    /Importing a module script failed/i,
-  ];
-
-  private isStaleChunkError(event: NavigationError): boolean {
-    const msg = event.error?.message ?? String(event.error ?? '');
-    return this.CHUNK_ERROR_PATTERNS.some((pattern) => pattern.test(msg));
-  }
-
   constructor() {
     this.router.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -88,12 +77,8 @@ export class AppComponent implements OnDestroy {
         return;
       }
 
-      if (event instanceof NavigationError && this.isStaleChunkError(event)) {
-        // A new deployment has produced new chunk filenames. The currently
-        // running app still references deleted chunks, so lazy-load
-        // navigations fail. Reload to fetch the new index.html.
-        console.error(`Stale chunk detected. Reloading: ${event.url}`, event);
-        window.location.assign(event.url || window.location.href);
+      if (event instanceof NavigationError) {
+        this.chunkLoadReloadService.reloadIfChunkLoadError(event.error, event.url);
       }
     });
 
