@@ -1,4 +1,6 @@
+@use 'functions' as *;
+
 h1 {
-  max-width: 620px;
-  margin: 0 auto 26px;
+  max-width: px-to-rem(620px);
+  margin: 0 auto px-to-rem(26px);
 }

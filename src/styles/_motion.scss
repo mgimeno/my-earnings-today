@@ -1,7 +1,9 @@
+@use 'functions' as *;
+
 @keyframes app-content-enter {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(px-to-rem(8px));
   }
 
   to {
@@ -51,7 +53,7 @@
   .main-container .sidenav-title:hover,
   .view-toggle button:not(:disabled):hover,
   .charts-container .chart-container:hover {
-    transform: translateY(-1px);
+    transform: translateY(px-to-rem(-1px));
   }
 
   .main-container a.title:hover,
@@ -66,13 +68,13 @@
 
   .main-container .sidenav-container .mat-mdc-list-item:hover {
     background-color: var(--surface-muted-color);
-    transform: translateX(2px);
+    transform: translateX(px-to-rem(2px));
   }
 
   .today-earned-container .person:hover {
     border-color: var(--primary-color-light);
     box-shadow: var(--soft-shadow);
-    transform: translateY(-2px);
+    transform: translateY(px-to-rem(-2px));
   }
 
   .charts-container .chart-container:hover {

@@ -1,16 +1,18 @@
+@use 'functions' as *;
+
 .amount-earned {
   display: inline-flex;
   align-items: baseline;
   justify-content: center;
-  min-width: min(100%, 320px);
-  margin: 8px 0 12px;
-  padding: 18px 24px;
-  border: 1px solid color-mix(in srgb, var(--success-color) 22%, var(--border-color));
-  border-radius: 8px;
+  min-width: min(100%, px-to-rem(320px));
+  margin: px-to-rem(8px) 0 px-to-rem(12px);
+  padding: px-to-rem(18px) px-to-rem(24px);
+  border: px-to-rem(1px) solid color-mix(in srgb, var(--success-color) 22%, var(--border-color));
+  border-radius: px-to-rem(8px);
   background: color-mix(in srgb, var(--success-color) 9%, var(--surface-color));
   color: var(--success-color);
   box-shadow: var(--soft-shadow);
-  font-size: clamp(38px, 9vw, 58px);
+  font-size: clamp(px-to-rem(38px), 9vw, px-to-rem(58px));
   font-weight: 900;
   line-height: 1;
   transition:
@@ -20,15 +22,15 @@
 }
 
 .note {
-  margin: 0 0 20px;
+  margin: 0 0 px-to-rem(20px);
   color: var(--muted-color);
-  font-size: 15px;
+  font-size: px-to-rem(15px);
   font-weight: 700;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .amount-earned:hover {
     box-shadow: var(--lifted-shadow);
-    transform: translateY(-1px);
+    transform: translateY(px-to-rem(-1px));
   }
 }

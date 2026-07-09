@@ -1,3 +1,5 @@
+@use 'functions' as *;
+
 .chart-expected-select,
 .chart-hours-select {
   font-weight: 700;
@@ -14,7 +16,7 @@
 
   .mat-mdc-text-field-wrapper {
     padding: 0;
-    border-width: 0 0 2px;
+    border-width: 0 0 px-to-rem(2px);
     border-style: solid;
     border-color: var(--primary-color-light);
     border-radius: 0;
@@ -30,7 +32,7 @@
   .mat-mdc-form-field-infix {
     width: auto;
     min-height: 0;
-    padding: 0 0 10px 0 !important;
+    padding: 0 0 px-to-rem(10px) 0 !important;
   }
 
   .mat-mdc-select {
@@ -89,7 +91,7 @@
 .highlight-select-panel.mat-mdc-select-panel {
   width: max-content;
   min-width: max-content;
-  max-width: calc(100vw - 32px);
+  max-width: calc(100vw - px-to-rem(32px));
 
   /* stylelint-disable selector-class-pattern */
   .mat-mdc-option,

@@ -1,13 +1,15 @@
+@use 'functions' as *;
+
 .dialog-title-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: px-to-rem(34px);
+  height: px-to-rem(34px);
   border-radius: 50%;
   background: var(--primary-color-lightest);
   color: var(--primary-color-dark);
-  font-size: 21px;
+  font-size: px-to-rem(21px);
 }
 
 .dialog-title-icon-danger {
@@ -23,13 +25,13 @@
 .dialog-action-button {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: px-to-rem(6px);
 
   .mat-icon {
     margin: 0;
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: px-to-rem(20px);
+    width: px-to-rem(20px);
+    height: px-to-rem(20px);
   }
 }
 

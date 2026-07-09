@@ -1,3 +1,5 @@
+@use 'functions' as *;
+
 .compare-tool {
   display: block;
 }
@@ -5,7 +7,7 @@
 .tab-label {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: px-to-rem(4px);
   min-width: 0;
 
   .title {
@@ -15,8 +17,8 @@
   }
 
   .close-button {
-    width: 32px;
-    height: 32px;
+    width: px-to-rem(32px);
+    height: px-to-rem(32px);
     padding: 0;
     color: var(--muted-color);
     transition:
@@ -25,9 +27,9 @@
       transform var(--motion-fast) var(--motion-ease);
 
     .close-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
+      font-size: px-to-rem(20px);
+      width: px-to-rem(20px);
+      height: px-to-rem(20px);
     }
   }
 }
@@ -38,13 +40,13 @@
 
   background-color: var(--accent-color);
   color: #fff;
-  font-size: 13px;
+  font-size: px-to-rem(13px);
   font-weight: 700;
   line-height: 1.15;
 
   .add-icon {
     flex: 0 0 auto;
-    margin-right: 5px;
+    margin-right: px-to-rem(5px);
     color: #fff;
   }
 

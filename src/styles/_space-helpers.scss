@@ -1,3 +1,5 @@
+@use 'functions' as *;
+
 @mixin margin-top($size) {
   margin-top: $size;
 }
@@ -7,21 +9,21 @@
 }
 
 .m-t-20 {
-  @include margin-top(20px);
+  @include margin-top(px-to-rem(20px));
 }
 
 .m-t-30 {
-  @include margin-top(30px);
+  @include margin-top(px-to-rem(30px));
 }
 
 .m-b-30 {
-  @include margin-bottom(30px);
+  @include margin-bottom(px-to-rem(30px));
 }
 
 .m-t-35 {
-  @include margin-top(35px);
+  @include margin-top(px-to-rem(35px));
 }
 
 .m-t-40 {
-  @include margin-top(40px);
+  @include margin-top(px-to-rem(40px));
 }

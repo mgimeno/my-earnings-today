@@ -1,3 +1,5 @@
+@use 'functions' as *;
+
 html,
 body {
   min-height: 100%;
@@ -6,7 +8,8 @@ body {
 
 html {
   background:
-    linear-gradient(180deg, rgba(216, 227, 236, 0.7) 0, transparent 260px), var(--page-bg);
+    linear-gradient(180deg, rgba(216, 227, 236, 0.7) 0, transparent px-to-rem(260px)),
+    var(--page-bg);
   color: var(--ink-color);
   color-scheme: light;
   text-size-adjust: 100%;
@@ -14,12 +17,12 @@ html {
 }
 
 body {
-  min-width: 320px;
+  min-width: px-to-rem(320px);
   min-height: 100vh;
   min-height: 100dvh;
   color: var(--ink-color);
   font-family: var(--font-family-base);
-  font-size: 16px;
+  font-size: px-to-rem(16px);
   line-height: 1.5;
   overflow-wrap: break-word;
   text-rendering: optimizelegibility;
@@ -47,23 +50,23 @@ canvas {
 }
 
 .flag-image {
-  width: 20px;
-  height: 20px;
+  width: px-to-rem(20px);
+  height: px-to-rem(20px);
   border-radius: 50%;
   object-fit: cover;
 }
 
 h1 {
-  margin: 0 0 28px;
+  margin: 0 0 px-to-rem(28px);
   color: var(--ink-color);
-  font-size: 24px;
+  font-size: px-to-rem(24px);
   font-weight: 700;
   line-height: 1.18;
 }
 
 h2 {
   color: var(--ink-color);
-  font-size: 17px;
+  font-size: px-to-rem(17px);
   line-height: 1.25;
 }
 

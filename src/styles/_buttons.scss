@@ -1,18 +1,19 @@
 @use 'breakpoints';
+@use 'functions' as *;
 
 .buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: px-to-rem(10px);
   text-align: center;
 
   button {
     width: auto;
     min-width: var(--button-width);
     max-width: 100%;
-    min-height: 44px;
-    border-radius: 8px;
+    min-height: px-to-rem(44px);
+    border-radius: px-to-rem(8px);
     text-align: left;
     transition:
       transform var(--motion-fast) var(--motion-ease),
@@ -31,7 +32,7 @@
 
     .mat-icon {
       flex: 0 0 auto;
-      margin-right: 5px;
+      margin-right: px-to-rem(5px);
       color: currentcolor;
       opacity: 0.76;
       transition:
@@ -48,20 +49,20 @@
 @media (hover: hover) and (pointer: fine) {
   .buttons button:not(:disabled):hover {
     box-shadow: var(--soft-shadow);
-    transform: translateY(-1px);
+    transform: translateY(px-to-rem(-1px));
 
     .mat-icon {
       opacity: 1;
-      transform: translateX(1px);
+      transform: translateX(px-to-rem(1px));
     }
   }
 }
 
 .big-button {
-  width: 168px;
+  width: px-to-rem(168px);
   max-width: 100%;
-  min-height: 50px;
-  border-radius: 8px;
+  min-height: px-to-rem(50px);
+  border-radius: px-to-rem(8px);
   font-size: 1.05em !important;
   transition:
     border-color var(--motion-standard) var(--motion-ease),

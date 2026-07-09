@@ -1,19 +1,21 @@
+@use 'functions' as *;
+
 .notification-snackbar {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: 10px;
+  grid-template-columns: px-to-rem(24px) minmax(0, 1fr);
+  gap: px-to-rem(10px);
   align-items: center;
-  min-width: min(320px, calc(100vw - 48px));
+  min-width: min(px-to-rem(320px), calc(100vw - px-to-rem(48px)));
   color: #fff;
   font-weight: 800;
   line-height: 1.25;
 
   .mat-icon {
-    width: 24px;
-    height: 24px;
+    width: px-to-rem(24px);
+    height: px-to-rem(24px);
     margin: 0;
     color: #fff;
-    font-size: 24px;
+    font-size: px-to-rem(24px);
   }
 
   span {

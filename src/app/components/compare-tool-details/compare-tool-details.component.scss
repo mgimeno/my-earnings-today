@@ -1,28 +1,29 @@
 @use '../../../styles/breakpoints';
+@use 'functions' as *;
 
 .today-earned-container {
   display: grid;
-  gap: 10px;
-  margin: 26px auto;
-  max-width: 620px;
+  gap: px-to-rem(10px);
+  margin: px-to-rem(26px) auto;
+  max-width: px-to-rem(620px);
 
   .person {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 16px;
+    gap: px-to-rem(16px);
     align-items: center;
-    min-height: 70px;
-    padding: 14px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    min-height: px-to-rem(70px);
+    padding: px-to-rem(14px) px-to-rem(16px);
+    border: px-to-rem(1px) solid var(--border-color);
+    border-radius: px-to-rem(8px);
     background:
       linear-gradient(90deg, rgba(87, 204, 153, 0.14), transparent 52%), var(--surface-color);
-    box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
+    box-shadow: 0 px-to-rem(8px) px-to-rem(22px) rgba(23, 58, 86, 0.08);
 
     .name {
       overflow: hidden;
       color: var(--muted-color);
-      font-size: 15px;
+      font-size: px-to-rem(15px);
       font-weight: 800;
       text-align: left;
       text-overflow: ellipsis;
@@ -32,7 +33,7 @@
     .amount {
       min-width: 0;
       color: var(--success-color);
-      font-size: clamp(24px, 6vw, 36px);
+      font-size: clamp(px-to-rem(24px), 6vw, px-to-rem(36px));
       font-weight: 900;
       line-height: 1.05;
       overflow-wrap: anywhere;
@@ -43,15 +44,15 @@
 
 .view-toggle {
   display: inline-flex;
-  gap: 6px;
-  padding: 4px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  gap: px-to-rem(6px);
+  padding: px-to-rem(4px);
+  border: px-to-rem(1px) solid var(--border-color);
+  border-radius: px-to-rem(8px);
   background: var(--surface-muted-color);
 
   button {
-    min-width: 108px;
-    border-radius: 6px;
+    min-width: px-to-rem(108px);
+    border-radius: px-to-rem(6px);
 
     &[aria-pressed='false'] {
       background: var(--surface-color);
@@ -61,17 +62,17 @@
 }
 
 .charts-container {
-  margin-top: 28px;
+  margin-top: px-to-rem(28px);
 
   h2 {
     display: flex;
     flex-wrap: nowrap;
-    gap: 5px;
+    gap: px-to-rem(5px);
     align-items: baseline;
     justify-content: center;
-    margin: 30px 0 12px;
+    margin: px-to-rem(30px) 0 px-to-rem(12px);
     color: var(--ink-color);
-    font-size: 17px;
+    font-size: px-to-rem(17px);
     font-weight: 800;
   }
 
@@ -83,10 +84,10 @@
   .chart-container {
     position: relative;
     width: 100%;
-    min-height: 240px;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    min-height: px-to-rem(240px);
+    padding: px-to-rem(14px);
+    border: px-to-rem(1px) solid var(--border-color);
+    border-radius: px-to-rem(8px);
     background: var(--surface-color);
     box-shadow: var(--soft-shadow);
 
@@ -99,7 +100,7 @@
 @include breakpoints.mobile-only {
   .today-earned-container .person {
     grid-template-columns: 1fr;
-    gap: 6px;
+    gap: px-to-rem(6px);
 
     .amount {
       text-align: left;

@@ -1,29 +1,31 @@
+@use 'functions' as *;
+
 .buttons {
-  --language-button-width: calc(var(--button-width) + 10px);
+  --language-button-width: calc(var(--button-width) + #{px-to-rem(10px)});
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 18px;
+  gap: px-to-rem(10px);
+  margin-top: px-to-rem(18px);
 }
 
 .big-button {
   width: var(--language-button-width);
-  border: 1px solid var(--border-color);
+  border: px-to-rem(1px) solid var(--border-color);
   background: var(--surface-color);
   color: var(--ink-color);
-  box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
+  box-shadow: 0 px-to-rem(8px) px-to-rem(22px) rgba(23, 58, 86, 0.08);
   transition:
     border-color var(--motion-standard) var(--motion-ease),
     box-shadow var(--motion-standard) var(--motion-ease),
     transform var(--motion-fast) var(--motion-ease);
 
   img {
-    width: 20px;
-    height: 20px;
+    width: px-to-rem(20px);
+    height: px-to-rem(20px);
     border-radius: 50%;
-    box-shadow: 0 0 0 2px var(--surface-color);
+    box-shadow: 0 0 0 px-to-rem(2px) var(--surface-color);
   }
 
   &.active {
@@ -37,10 +39,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  width: calc(
-    var(--language-button-width) - (var(--mat-button-protected-horizontal-padding, 24px) * 2)
+  gap: px-to-rem(10px);
+
+  --language-button-horizontal-padding: var(
+    --mat-button-protected-horizontal-padding,
+    #{px-to-rem(24px)}
   );
+
+  width: calc(var(--language-button-width) - (var(--language-button-horizontal-padding) * 2));
 
   div {
     text-align: left;
@@ -51,6 +57,6 @@
   .big-button:hover {
     border-color: var(--primary-color-light);
     box-shadow: var(--soft-shadow);
-    transform: translateY(-1px);
+    transform: translateY(px-to-rem(-1px));
   }
 }

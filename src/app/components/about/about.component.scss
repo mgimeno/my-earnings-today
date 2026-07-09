@@ -1,16 +1,18 @@
+@use 'functions' as *;
+
 h1 {
-  margin-bottom: 18px;
+  margin-bottom: px-to-rem(18px);
 }
 
 h2 {
-  margin: 36px 0 14px;
+  margin: px-to-rem(36px) 0 px-to-rem(14px);
   font-weight: 800;
 }
 
 p {
-  margin: 0 0 18px;
+  margin: 0 0 px-to-rem(18px);
   color: var(--ink-color);
-  font-size: 15px;
+  font-size: px-to-rem(15px);
   line-height: 1.7;
 
   b {
@@ -21,21 +23,21 @@ p {
 .profile-link-container {
   display: flex;
   justify-content: center;
-  margin: 42px 0 20px;
+  margin: px-to-rem(42px) 0 px-to-rem(20px);
 
   .profile-link {
     display: inline-grid;
-    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-columns: px-to-rem(44px) minmax(0, 1fr);
     align-items: center;
-    gap: 12px;
-    min-height: 60px;
-    padding: 8px 16px 8px 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    gap: px-to-rem(12px);
+    min-height: px-to-rem(60px);
+    padding: px-to-rem(8px) px-to-rem(16px) px-to-rem(8px) px-to-rem(10px);
+    border: px-to-rem(1px) solid var(--border-color);
+    border-radius: px-to-rem(8px);
     background: var(--surface-color);
-    box-shadow: 0 8px 22px rgba(23, 58, 86, 0.08);
+    box-shadow: 0 px-to-rem(8px) px-to-rem(22px) rgba(23, 58, 86, 0.08);
     color: var(--ink-color);
-    font-size: 14px;
+    font-size: px-to-rem(14px);
     font-weight: 600;
     text-decoration: none;
     transition:
@@ -44,17 +46,17 @@ p {
       transform var(--motion-fast) var(--motion-ease);
 
     .profile-link-avatar {
-      width: 44px;
-      height: 44px;
+      width: px-to-rem(44px);
+      height: px-to-rem(44px);
       border-radius: 50%;
       background: url('../../../assets/images/profile-picture.gif') center / cover no-repeat;
-      box-shadow: 0 0 0 2px var(--surface-color);
+      box-shadow: 0 0 0 px-to-rem(2px) var(--surface-color);
     }
 
     .profile-link-text {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: px-to-rem(4px);
       flex-wrap: wrap;
       line-height: 1.35;
     }
@@ -76,7 +78,7 @@ p {
   .profile-link-container .profile-link:hover {
     border-color: var(--primary-color-light);
     box-shadow: var(--soft-shadow);
-    transform: translateY(-2px);
+    transform: translateY(px-to-rem(-2px));
 
     .heart {
       color: #c44736;

@@ -1,4 +1,5 @@
 @use '../styles/breakpoints';
+@use 'functions' as *;
 
 .mat-toolbar {
   height: var(--header-height);
@@ -6,8 +7,8 @@
 }
 
 .main-container {
-  --sidenav-width: 260px;
-  --sidenav-collapsed-width: 72px;
+  --sidenav-width: #{px-to-rem(260px)};
+  --sidenav-collapsed-width: #{px-to-rem(72px)};
 
   display: flex;
   flex-direction: column;
@@ -19,18 +20,18 @@
 
   > .sidenav-toggle {
     position: fixed;
-    top: 18px;
+    top: px-to-rem(18px);
     left: var(--sidenav-width);
     z-index: 1000;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: px-to-rem(36px);
+    height: px-to-rem(36px);
     padding: 0;
-    border: 1px solid var(--border-color);
+    border: px-to-rem(1px) solid var(--border-color);
     background: var(--surface-color);
-    box-shadow: 0 4px 12px rgba(23, 58, 86, 0.08);
+    box-shadow: 0 px-to-rem(4px) px-to-rem(12px) rgba(23, 58, 86, 0.08);
     color: var(--muted-color);
     line-height: 1;
     transform: translateX(-50%);
@@ -46,14 +47,15 @@
 
   .sidenav-container {
     --main-content-bg:
-      linear-gradient(180deg, rgba(56, 163, 165, 0.08), transparent 220px), var(--page-bg);
+      linear-gradient(180deg, rgba(56, 163, 165, 0.08), transparent #{px-to-rem(220px)}),
+      var(--page-bg);
     --content-offset: var(--sidenav-width);
 
     background: var(--main-content-bg);
     flex: 1 0 auto;
 
     &.has-top-bar {
-      --content-offset: 0px;
+      --content-offset: #{px-to-rem(0px)};
 
       margin-top: var(--header-height);
     }
@@ -71,12 +73,12 @@
       }
 
       .mat-mdc-list-item {
-        --mat-list-list-item-leading-icon-start-space: 12px;
+        --mat-list-list-item-leading-icon-start-space: #{px-to-rem(12px)};
         --mat-list-list-item-leading-icon-end-space: 0;
 
         justify-content: center;
-        width: 48px;
-        margin: 4px auto;
+        width: px-to-rem(48px);
+        margin: px-to-rem(4px) auto;
         padding: 0;
       }
 
@@ -96,16 +98,17 @@
     .mat-sidenav {
       width: var(--sidenav-width);
       overflow-x: hidden;
-      border-right: 1px solid var(--border-color);
+      border-right: px-to-rem(1px) solid var(--border-color);
       background:
-        linear-gradient(180deg, rgba(34, 87, 122, 0.07), transparent 180px), var(--surface-color);
+        linear-gradient(180deg, rgba(34, 87, 122, 0.07), transparent px-to-rem(180px)),
+        var(--surface-color);
       transition: width var(--motion-standard) var(--motion-ease);
     }
 
     .mat-sidenav-content {
       margin-left: var(--content-offset) !important;
       background: var(--main-content-bg);
-      padding: 30px 18px 38px;
+      padding: px-to-rem(30px) px-to-rem(18px) px-to-rem(38px);
       transition: margin-left var(--motion-standard) var(--motion-ease);
 
       .router-outlet-container {
@@ -115,16 +118,16 @@
     }
 
     .sidenav-header {
-      margin: 6px 10px 16px;
-      padding: 10px 0 12px;
-      border-bottom: 1px solid var(--soft-divider-color);
+      margin: px-to-rem(6px) px-to-rem(10px) px-to-rem(16px);
+      padding: px-to-rem(10px) 0 px-to-rem(12px);
+      border-bottom: px-to-rem(1px) solid var(--soft-divider-color);
     }
 
     .sidenav-title {
       display: block;
-      padding: 8px 0;
+      padding: px-to-rem(8px) 0;
       color: var(--primary-color-dark);
-      font-size: 16px;
+      font-size: px-to-rem(16px);
       font-weight: 800;
       text-decoration: none;
       text-align: center;
@@ -135,12 +138,12 @@
       background-color: var(--primary-color-lightest);
       color: var(--primary-color-dark);
       font-weight: 800;
-      box-shadow: inset 3px 0 0 var(--primary-color-light);
+      box-shadow: inset px-to-rem(3px) 0 0 var(--primary-color-light);
     }
 
     .mat-mdc-list-item {
-      margin: 4px 10px;
-      border-radius: 8px;
+      margin: px-to-rem(4px) px-to-rem(10px);
+      border-radius: px-to-rem(8px);
       color: var(--ink-color);
     }
 
@@ -150,8 +153,8 @@
       justify-content: center;
 
       img {
-        width: 20px;
-        height: 20px;
+        width: px-to-rem(20px);
+        height: px-to-rem(20px);
         border-radius: 50%;
       }
     }
@@ -166,6 +169,6 @@
 
 @include breakpoints.desktop-up {
   .main-container .sidenav-container .mat-sidenav-content {
-    padding: 40px 34px 48px;
+    padding: px-to-rem(40px) px-to-rem(34px) px-to-rem(48px);
   }
 }

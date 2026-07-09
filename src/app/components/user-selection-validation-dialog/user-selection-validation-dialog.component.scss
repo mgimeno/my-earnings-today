@@ -1,10 +1,12 @@
+@use 'functions' as *;
+
 .mat-mdc-dialog-title {
   display: flex;
-  gap: 10px;
+  gap: px-to-rem(10px);
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: px-to-rem(4px);
   color: var(--ink-color);
-  font-size: 18px;
+  font-size: px-to-rem(18px);
   font-weight: 800;
 }
 
@@ -12,24 +14,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: px-to-rem(34px);
+  height: px-to-rem(34px);
   border-radius: 50%;
   background: color-mix(in srgb, var(--danger-color) 13%, var(--surface-color));
   color: var(--danger-color);
-  font-size: 21px;
+  font-size: px-to-rem(21px);
 }
 
 .content {
   color: var(--muted-color);
-  font-size: 16px;
+  font-size: px-to-rem(16px);
   line-height: 1.5;
 
   p {
-    margin: 8px 0;
-    padding: 8px 10px;
-    border-left: 3px solid var(--danger-color);
-    border-radius: 6px;
+    margin: px-to-rem(8px) 0;
+    padding: px-to-rem(8px) px-to-rem(10px);
+    border-left: px-to-rem(3px) solid var(--danger-color);
+    border-radius: px-to-rem(6px);
     background: color-mix(in srgb, var(--danger-color) 7%, var(--surface-color));
     color: var(--ink-color);
   }
@@ -38,12 +40,12 @@
 .dialog-action-button {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: px-to-rem(6px);
 
   .mat-icon {
     margin: 0;
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: px-to-rem(20px);
+    width: px-to-rem(20px);
+    height: px-to-rem(20px);
   }
 }
