@@ -10,6 +10,7 @@
     "build": "ng build",
     "build:production": "ng build --configuration production",
     "build:prod": "ng build --configuration production && npm run pre-brotli:dist",
+    "generate:material-symbols-font": "tsx scripts/generate-material-symbols-font.ts",
     "pre-gzip:dist": "node scripts/pre-gzip-dist.mjs",
     "pre-brotli:dist": "node scripts/pre-brotli-dist.mjs",
     "test": "vitest run",
@@ -62,6 +63,7 @@
     "stylelint": "^17.14.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-scss": "^7.2.0",
+    "tsx": "^4.23.1",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.63.0",
     "vitest": "^4.1.10"
