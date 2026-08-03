@@ -4,6 +4,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "composite": true,
+    "experimentalDecorators": true,
     "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": false,
