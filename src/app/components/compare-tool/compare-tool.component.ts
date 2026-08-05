@@ -224,7 +224,7 @@ export class CompareToolComponent implements OnDestroy {
     }
   }
 
-  private clearAllIntervals(): void {
+  private clearAllResults(): void {
     this.userSelections().forEach((us) => {
       us.clearResults();
     });
@@ -238,7 +238,7 @@ export class CompareToolComponent implements OnDestroy {
           return;
         }
 
-        this.clearAllIntervals();
+        this.clearAllResults();
         this.showResults.set(false);
       });
   }
@@ -248,6 +248,6 @@ export class CompareToolComponent implements OnDestroy {
       clearTimeout(this.focusRateInputTimeoutId);
     }
 
-    this.clearAllIntervals();
+    this.clearAllResults();
   }
 }

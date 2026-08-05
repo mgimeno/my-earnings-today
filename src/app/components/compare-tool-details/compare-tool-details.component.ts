@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
+  inject,
   input,
   OnDestroy,
   OnInit,
@@ -30,6 +32,7 @@ import { CurrencyDirective } from '../../shared/directives/currency.directive';
 import { PeriodEnum } from '../../shared/enums/period.enum';
 import { INameValue } from '../../shared/interfaces/name-value.interface';
 import { UserSelection } from '../../shared/models/user-selection.model';
+import { ClockService } from '../../shared/services/clock.service';
 import { CommonHelper } from '../../shared/utils/common-helper';
 import { DateHelper } from '../../shared/utils/date-helper';
 
@@ -59,8 +62,20 @@ Chart.register(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompareToolDetailsComponent implements OnInit, OnDestroy {
+  private readonly clock = inject(ClockService);
+
   readonly userSelections = input.required<UserSelection[]>();
-  readonly timeElapsedSinceCalculated = signal('00:00');
+
+  // The amounts live on the models as plain fields, so the template reads this
+  // signal to make the tick an explicit change detection dependency.
+  private readonly amountsUpdatedAt = signal(new Date());
+
+  readonly timeElapsedSinceCalculated = computed(() =>
+    DateHelper.getFormattedTimeBetweenDates(
+      this.userSelections()[0].dateTimeWhenClickedCalculate,
+      this.amountsUpdatedAt(),
+    ),
+  );
   readonly isShowCharts = signal(true);
   readonly detailsAllTypes: INameValue[] = [
     {
@@ -82,7 +97,6 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
       : AppConstants.Common.TILES.slice(1),
   );
 
-  private stopWatchIntervalId: number | null = null;
   private showChartsTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private hoursPerWeekChart: Chart<'bar'> | null = null;
   private compareEarningsChart: Chart<'bar'> | null = null;
@@ -115,23 +129,17 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
 
   private readonly localeDecimalsSeparator = CommonHelper.getLocaleDecimalSeparator();
 
-  ngOnInit(): void {
-    this.setupTimeElapsedInterval();
-    this.showCharts();
+  constructor() {
+    effect(() => {
+      const now = this.clock.now();
+
+      this.userSelections().forEach((userSelection) => userSelection.updateAmounts(now));
+      this.amountsUpdatedAt.set(now);
+    });
   }
 
-  private setupTimeElapsedInterval(): void {
-    if (this.stopWatchIntervalId) {
-      clearInterval(this.stopWatchIntervalId);
-    }
-
-    this.stopWatchIntervalId = window.setInterval(() => {
-      this.timeElapsedSinceCalculated.set(
-        DateHelper.getFormattedTimeBetweenDates(
-          this.userSelections()[0].dateTimeWhenClickedCalculate,
-        ),
-      );
-    }, AppConstants.Common.UPDATE_STOPWATCH_FREQUENCY_IN_MS);
+  ngOnInit(): void {
+    this.showCharts();
   }
 
   onChartExpectedPeriodChanged(): void {
@@ -351,9 +359,6 @@ export class CompareToolDetailsComponent implements OnInit, OnDestroy {
       clearTimeout(this.showChartsTimeoutId);
     }
 
-    if (this.stopWatchIntervalId) {
-      clearInterval(this.stopWatchIntervalId);
-    }
     this.destroyCharts();
   }
 

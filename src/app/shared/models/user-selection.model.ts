@@ -54,8 +54,6 @@ export class UserSelection {
   totalDayAmountWhenNotOff: number = null;
   totalHourAmountWhenNotOff: number = null;
 
-  updateAmountsIntervalId: number = null;
-
   constructor(personNumber: number) {
     this.personNumber = personNumber;
 
@@ -79,46 +77,44 @@ export class UserSelection {
   }
 
   calculate(): void {
-    this.clearInterval();
-
     this.dateTimeWhenClickedCalculate = new Date();
+
+    this.updateAmounts();
+  }
+
+  /**
+   * Recomputes every amount from the given time. Nothing is carried over
+   * between calls, so a late or skipped call cannot drift. The start and end
+   * dates are rebuilt here too, so they stay correct when the day changes.
+   */
+  updateAmounts(now: Date = new Date()): void {
     const workingDaysArray = this.getWeekWorkingDaysArray();
 
-    const updateAmounts = (): void => {
-      // Keep this inside the interval so dates stay correct when the day changes.
-      const now: Date = new Date();
-      this.buildStartAndEndTimeDates(now);
+    this.buildStartAndEndTimeDates(now);
 
-      this.workingHoursToday = DateHelper.hoursBetweenDates(this.dayStartTime, this.dayEndTime);
+    this.workingHoursToday = DateHelper.hoursBetweenDates(this.dayStartTime, this.dayEndTime);
 
-      this.workingHoursThisHour = this.getWorkingHoursThisHour(now);
+    this.workingHoursThisHour = this.getWorkingHoursThisHour(now);
 
-      this.workingDaysThisWeek = workingDaysArray.length;
-      this.workingDaysThisMonth = DateHelper.getDaysWorkedInPeriod(
-        workingDaysArray,
-        DateHelper.getFirstDayOfCurrentMonth(now),
-        DateHelper.getLastDayOfCurrentMonth(now),
-      );
-      this.workingDaysThisYear = DateHelper.getDaysWorkedInPeriod(
-        workingDaysArray,
-        DateHelper.getFirstDayOfCurrentYear(now),
-        DateHelper.getLastDayOfCurrentYear(now),
-      );
-
-      this.workingHoursThisWeek = this.workingDaysThisWeek * this.workingHoursToday;
-      this.workingHoursThisMonth = this.workingDaysThisMonth * this.workingHoursToday;
-      this.workingHoursThisYear = this.workingDaysThisYear * this.workingHoursToday;
-
-      this.updateTotalAmounts(now);
-
-      this.updateCurrentAmounts(now);
-    };
-
-    updateAmounts();
-    this.updateAmountsIntervalId = window.setInterval(
-      updateAmounts,
-      AppConstants.Common.UPDATE_AMOUNTS_FREQUENCY_IN_MS,
+    this.workingDaysThisWeek = workingDaysArray.length;
+    this.workingDaysThisMonth = DateHelper.getDaysWorkedInPeriod(
+      workingDaysArray,
+      DateHelper.getFirstDayOfCurrentMonth(now),
+      DateHelper.getLastDayOfCurrentMonth(now),
     );
+    this.workingDaysThisYear = DateHelper.getDaysWorkedInPeriod(
+      workingDaysArray,
+      DateHelper.getFirstDayOfCurrentYear(now),
+      DateHelper.getLastDayOfCurrentYear(now),
+    );
+
+    this.workingHoursThisWeek = this.workingDaysThisWeek * this.workingHoursToday;
+    this.workingHoursThisMonth = this.workingDaysThisMonth * this.workingHoursToday;
+    this.workingHoursThisYear = this.workingDaysThisYear * this.workingHoursToday;
+
+    this.updateTotalAmounts(now);
+
+    this.updateCurrentAmounts(now);
   }
 
   private getWorkingHoursThisHour(now: Date): number {
@@ -574,9 +570,7 @@ export class UserSelection {
 
   setDefaultValues(
     browserLanguageCodes: readonly (
-      | string
-      | null
-      | undefined
+      string | null | undefined
     )[] = LanguageHelper.getBrowserLanguageCodes(),
   ): void {
     this.startTime = '09:00';
@@ -588,8 +582,6 @@ export class UserSelection {
   }
 
   clearResults(): void {
-    this.clearInterval();
-
     this.stopwatchAmount = null;
     this.currentHourAmount = null;
     this.currentDayAmount = null;
@@ -602,12 +594,5 @@ export class UserSelection {
     this.totalWeekAmount = null;
     this.totalMonthAmount = null;
     this.totalYearAmount = null;
-  }
-
-  private clearInterval(): void {
-    if (this.updateAmountsIntervalId) {
-      clearInterval(this.updateAmountsIntervalId);
-      this.updateAmountsIntervalId = null;
-    }
   }
 }

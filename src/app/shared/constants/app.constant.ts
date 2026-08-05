@@ -9,11 +9,7 @@ export type EarningTileAmountProperty =
   | 'currentYearAmount';
 
 export type EarningTileTotalAmountProperty =
-  | 'totalHourAmount'
-  | 'totalDayAmount'
-  | 'totalWeekAmount'
-  | 'totalMonthAmount'
-  | 'totalYearAmount';
+  'totalHourAmount' | 'totalDayAmount' | 'totalWeekAmount' | 'totalMonthAmount' | 'totalYearAmount';
 
 export interface EarningTile {
   codeName: string;
@@ -59,10 +55,6 @@ export namespace AppConstants {
       { name: $localize`:@@frequencies.per-month:per month`, value: 'month' },
       { name: $localize`:@@frequencies.per-year:per year`, value: 'year' },
     ];
-
-    public static readonly UPDATE_AMOUNTS_FREQUENCY_IN_MS: number = 1000;
-
-    public static readonly UPDATE_STOPWATCH_FREQUENCY_IN_MS: number = 1000;
 
     public static readonly COMPARE_TOOL_MAX_PERSONS: number = 5;
 

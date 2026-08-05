@@ -1,14 +1,16 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
+  effect,
+  inject,
   input,
-  OnDestroy,
-  OnInit,
   signal,
 } from '@angular/core';
 import { AppConstants } from '../../shared/constants/app.constant';
 import { CurrencyDirective } from '../../shared/directives/currency.directive';
 import { UserSelection } from '../../shared/models/user-selection.model';
+import { ClockService } from '../../shared/services/clock.service';
 import { DateHelper } from '../../shared/utils/date-helper';
 
 @Component({
@@ -18,32 +20,29 @@ import { DateHelper } from '../../shared/utils/date-helper';
   styleUrls: ['./my-earnings-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyEarningsDetailsComponent implements OnInit, OnDestroy {
+export class MyEarningsDetailsComponent {
+  private readonly clock = inject(ClockService);
+
   readonly userSelection = input.required<UserSelection>();
-  readonly timeElapsedSinceCalculated = signal('00:00');
   readonly tiles = AppConstants.Common.TILES;
 
-  private stopWatchIntervalId: number | null = null;
+  // The amounts live on the model as plain fields, so the template reads this
+  // signal to make the tick an explicit change detection dependency.
+  private readonly amountsUpdatedAt = signal(new Date());
 
-  ngOnInit(): void {
-    this.setupTimeElapsedInterval();
-  }
+  readonly timeElapsedSinceCalculated = computed(() =>
+    DateHelper.getFormattedTimeBetweenDates(
+      this.userSelection().dateTimeWhenClickedCalculate,
+      this.amountsUpdatedAt(),
+    ),
+  );
 
-  private setupTimeElapsedInterval(): void {
-    if (this.stopWatchIntervalId) {
-      clearInterval(this.stopWatchIntervalId);
-    }
+  constructor() {
+    effect(() => {
+      const now = this.clock.now();
 
-    this.stopWatchIntervalId = window.setInterval(() => {
-      this.timeElapsedSinceCalculated.set(
-        DateHelper.getFormattedTimeBetweenDates(this.userSelection().dateTimeWhenClickedCalculate),
-      );
-    }, AppConstants.Common.UPDATE_STOPWATCH_FREQUENCY_IN_MS);
-  }
-
-  ngOnDestroy(): void {
-    if (this.stopWatchIntervalId) {
-      clearInterval(this.stopWatchIntervalId);
-    }
+      this.userSelection().updateAmounts(now);
+      this.amountsUpdatedAt.set(now);
+    });
   }
 }
