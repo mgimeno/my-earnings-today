@@ -20,4 +20,4 @@ Available in English, Spanish, French, Portuguese, German & Italian.
 
 ## Development
 
-Built with Angular 21. Responsive design for mobile/tablet/desktop.
+Built with Angular 22. Responsive design for mobile/tablet/desktop.
