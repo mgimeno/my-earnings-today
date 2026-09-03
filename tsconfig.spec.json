@@ -2,7 +2,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
+    /* Specs import from "vitest" explicitly, so the ambient `vitest/globals`
+       declarations are deliberately not pulled in. */
     "types": ["vitest"]
   },
-  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+  /* Specs import application source directly, and the root config is `composite`,
+     so every file reachable from a spec has to be listed here — otherwise `tsc -b`
+     reports TS6307 for each one. */
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }
