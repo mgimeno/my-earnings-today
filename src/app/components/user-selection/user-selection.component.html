@@ -12,11 +12,19 @@
         (ngModelChange)="selection.name = $event"
         [ngModelOptions]="{ standalone: true }"
         autocomplete="off"
+        enterkeyhint="next"
+        (keydown.enter)="$event.preventDefault(); focusRateInput()"
       />
     </mat-form-field>
   }
 
   <mat-form-field class="rate-form-field">
+    <!--
+      enterkeyhint="go": Enter here submits the parent form (Calculate).
+      Android Chrome otherwise often shows "Next" on this field, and pressing it
+      moves focus instead of submitting. With "go", Enter submits and runs Calculate.
+      iOS decimal keypad has no Enter key, so the hint has no effect there.
+    -->
     <!-- eslint-disable @angular-eslint/template/no-autofocus -->
     <input
       #rateInput
@@ -30,6 +38,7 @@
       (ngModelChange)="selection.rate = $event"
       [ngModelOptions]="{ standalone: true }"
       autocomplete="off"
+      enterkeyhint="go"
       autofocus
     />
     <!-- eslint-enable @angular-eslint/template/no-autofocus -->
